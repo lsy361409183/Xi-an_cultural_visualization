@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/test?serverTimezone=GMT
+    username: postgres
+    password: 1234
+
+
+mybatis:
+    mapper-locations: classpath:mapper/*.xml
+    type-aliases-package: com.xiaancultural1.demo.pojo
+
+
+

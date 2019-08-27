@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xiaancultural1.demo.mapper.CulturalPointMapper">
+
+    <select id="selectAll" resultType="com.xiaancultural1.demo.pojo.CulturalPoint">
+        select
+           gid, address, lat, lng, city, province, district
+        from
+            public."222"
+    </select>
+
+    <select id="selectAllByRegion" parameterType="String" resultType="com.xiaancultural1.demo.pojo.CulturalPoint">
+        select
+            gid,name,type,address,lat,lng,city,province,district,84lan,84lon
+        from
+            public."222"
+        where
+            district=#{district}
+    </select>
+
+</mapper>
