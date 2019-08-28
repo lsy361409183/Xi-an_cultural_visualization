@@ -3,51 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/css">
-        #select1{
-            height: 25px;width: 80px;display: inline-block;
-        }
-    </script>
+    <script type="text/javascript" src="./src/libs/sea.js" id="seajsnode"></script>
+    <script type="text/javascript" src="./src/libs/seajs-css.js"></script>
 </head>
 <body>
-<div>
-    <table>
-        <tr style="padding: 5px">
-            <form style="padding: 5px 10px">
-                <select id="select1" name="cars" style="height: 25px;width: 80px;display: inline-block;">
-                    <option value="volvo">临潼区</option>
-                    <option value="saab">未央区</option>
-                    <option value="fiat">莲湖区</option>
-                    <option value="audi">新城区</option>
-                    <option value="audi">碑林区</option>
-                    <option value="audi">灞桥区</option>
-                    <option value="audi">长安区</option>
-                    <option value="audi">雁塔区</option>
-                    <option value="audi">户县</option>
-                    <input type="button" value="地区">
-                </select>
-            </form>
-
-        </tr>
-        <tr style="padding: 5px">
-            <form style="padding: 5px 10px">
-                <select id="select2" name="cars" style="height: 25px;width: 80px;display: inline-block;">
-                    <option value="volvo">临潼区</option>
-                    <option value="saab">未央区</option>
-                    <option value="fiat">莲湖区</option>
-                    <option value="audi">新城区</option>
-                    <option value="audi">碑林区</option>
-                    <option value="audi">灞桥区</option>
-                    <option value="audi">长安区</option>
-                    <option value="audi">雁塔区</option>
-                    <option value="audi">户县</option>
-                    <input type="button" value="类别">
-                </select>
-            </form>
-
-        </tr>
-    </table>
+<div id="testDiv">
 
 </div>
 </body>
+<script type="text/javascript">
+    seajs.config({
+        base: '/src',
+        // path: {
+        //     libcss: 'libs/css',
+        // },
+        alias: {
+            jquery: 'libs/jquery-3.3.1.min',
+            bootstrap: 'libs/bootstrap.min',
+            ol: 'libs/ol',
+            handlebar: 'libs/handlebars-v4.1.2'
+        },
+        charset: 'utf-8'
+    });
+
+    seajs.use('js/main');
+</script>
 </html>
