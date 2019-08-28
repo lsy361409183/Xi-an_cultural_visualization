@@ -5,9 +5,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/test?serverTimezone=GMT
+    url: jdbc:postgresql://localhost:8088/test?serverTimezone=GMT
     username: postgres
-    password: 1234
+    password: 1216
 
 
 mybatis:
