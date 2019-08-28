@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <style type="text/css">
+        .select1{
+            height: 25px;width: 80px;display: inline-block;
+        }
+    </style>
+    <script type="text/javascript" src="../../libs/jquery.js"></script>
+    <script type="text/javascript" src="../../libs/handsontable.full.js"></script>
+    <link rel="stylesheet" href="../../libs/css/handsontable.full.css">
+</head>
+<body>
+<div id="menubutton">
+    <table>
+        <tr style="padding: 5px 10px">
+            <td>
+                <form style="padding: 5px 10px">
+                    <select class="select1" name="cars">
+                        <option value="volvo">临潼区</option>
+                        <option value="saab">未央区</option>
+                        <option value="fiat">莲湖区</option>
+                        <option value="audi">新城区</option>
+                        <option value="audi">碑林区</option>
+                        <option value="audi">灞桥区</option>
+                        <option value="audi">长安区</option>
+                        <option value="audi">雁塔区</option>
+                        <option value="audi">户县</option>
+                        <input type="button" value="地区">
+                    </select>
+                </form>
+            </td>
+            <td>
+                <form style="padding: 5px 10px">
+                    <select class="select1" name="cars" >
+                        <option value="volvo">文化精神标识用地</option>
+                        <option value="saab">纪念用地</option>
+                        <option value="fiat">宗教用地</option>
+                        <option value="audi">文化遗产用地</option>
+                        <option value="audi">文化设施用地</option>
+                        <option value="audi">文化产业用地</option>
+                        <input type="button" value="类别">
+                    </select>
+                </form>
+            </td>
+            <td>
+                <form style="padding: 5px 10px;width: 400px;;display: inline-block">
+                    <input type="text" placeholder="按文地名称模糊查询" style="display: inline;height: 23px;width: 150px;border-width: 1px;padding: 0
+;border-style: solid">
+                    <input type="button" value="搜索" style=" height: 25px;width:60px;display: inline-block;margin-left:-4px">
+                </form>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<div class="row">
+        <div class="col-md-6 " id="table">
+        </div>
+        <div class="col-md-6 ">
+        </div>
+
+</div>
+<script>
+    var data = [//四行五列
+        ["", "区域", "地块编号", "编号", "文地名称","区位","规模/面积","建成年代","平面形态","文地分类","文保单位","与道路得关系（）出入口","照片","备注"],
+        ["0",0-0 , , , , , , , , , , , , ,],
+        ["A", 1-0, , ,      , , , , , , , , , ,],
+        ["B", 2-0, , ,      , , , , , , , , , ,],
+
+    ];
+    $("#table").handsontable({
+        data: data,//初始化时候的数据
+        minSpareRows:5,//空出多少行
+        colHeaders:true,//显示表头　
+        contextMenu:true//显示表头下拉菜单
+    })
+</script>
+</body>
+</html>
