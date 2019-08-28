@@ -40,16 +40,16 @@
 .index_body_warp .wl_index_bottom .slide_page_btn ul{
     width: 100%;
     min-height: 6.25rem;
-    height: 25rem;
+    height: 20rem;
     list-style: none;
     /*min-width: 1300px;*/
 }
 .index_body_warp .wl_index_bottom .slide_page_btn ul li{
     float: left;
     text-align: center;
-    width: 20%;
+    width: 14%;
     height: 100%;
-    margin-right: 6%;
+    margin-right: 2%;
     border: 1px solid #ccc;
 }
 .index_body_warp .wl_index_bottom .slide_page_btn ul li:last-child{
@@ -57,8 +57,8 @@
 }
 /*切换按钮icon*/
 .index_body_warp .wl_index_bottom .slide_page_btn .slide_btn_icon{
-    width: 10rem;
-    height: 10rem;
+    width: 6rem;
+    height: 6rem;
     margin: 2rem auto;
 }
 .index_body_warp .wl_index_bottom .slide_page_btn .slide_btn_icon1{
@@ -78,7 +78,7 @@
     background-size: 100% 100%;
 }
 .index_body_warp .wl_index_bottom .slide_btn_text{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
     color: #5e5e5e;
 }
