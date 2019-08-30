@@ -10,8 +10,10 @@
         }
     </style>
     <script type="text/javascript" src="../../libs/jquery.js"></script>
-    <script type="text/javascript" src="../../libs/handsontable.full.js"></script>
-    <link rel="stylesheet" href="../../libs/css/handsontable.full.css">
+    <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
+    <script type="text/javascript" src="../../libs/handsontable.min.js"></script>
+    <link rel="stylesheet" href="../../libs/css/handsontable.full.min.css">
 </head>
 <body>
 <div id="menubutton">
@@ -57,27 +59,84 @@
     </table>
 
 </div>
-<div class="row">
-        <div class="col-md-6 " id="table">
+<div class="container">
+    <div class="row" style="margin-left: -80px">
+        <div class="col-md-8" >
+            <div  id="table"></div>
         </div>
-        <div class="col-md-6 ">
-        </div>
+        <div class="col-md-4">
+            <div class="xpanel-wrapper xpanel-wrapper-1">
+                <div class="xpanel">
+                    <div class="pic" id="photo-pic" >
+                        <img src="../../views/schedule/png/bingmayong.jpg" style="height: 250px;width:400px">
+                    </div>
+                </div>
+            </div>
+            <div class="xpanel-wrapper xpanel-wrapper-2">
+                <div class="xpanel">
+                    <div class="pic" id="map-pic"></div>
+                    <img src="../../views/schedule/png/map-pic.jpg" style="height:250px;width:400px">
 
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
-    var data = [//四行五列
-        ["", "区域", "地块编号", "编号", "文地名称","区位","规模/面积","建成年代","平面形态","文地分类","文保单位","与道路得关系（）出入口","照片","备注"],
-        ["0",0-0 , , , , , , , , , , , , ,],
-        ["A", 1-0, , ,      , , , , , , , , , ,],
-        ["B", 2-0, , ,      , , , , , , , , , ,],
-
+    var data = [
+        ["未央区","E-1","1","西安文景公园","西安市文景北路","51.8","2003","不规则形","四类文地","西汉王夫人墓","西安市政府"],
+        ["未央区","E-1","2","高铁寨汉墓遗址公园","张家堡街道办事处红色村高铁寨","3.63","2017","不规则形","四类文地",
+            "该公园的建设对加强文物遗产保护，对于传承历史文脉，提升城市文化品位具有重要意义","西安市政府"],
     ];
-    $("#table").handsontable({
-        data: data,//初始化时候的数据
-        minSpareRows:5,//空出多少行
-        colHeaders:true,//显示表头　
-        contextMenu:true//显示表头下拉菜单
-    })
+    var container = $('#table')
+    console.log('container',container)
+    container.handsontable({
+        data: data,
+        rowHeaders: false,
+        colHeaders: ['区域','地图编号','编号','名称','区位','规模','建成年代','平面形态','文地分类','依据','文保单位','备注'],
+        filters: true,
+        dropdownMenu: true,
+        width:1000,
+        // wordWrap:true,//自动换行
+        minRows:20,
+        minCols:12,
+        colWidths:['55','65','45','55','55','45','60','70','70','70','60','50'],//x轴上的每行的距离
+        rowWidths:65,
+        // autoColumnSize:true,//当值为true且列宽未设置时，自适应列大小
+        // renderer: Handson_renderer,//渲染
+        // outsideClickDeselects: outsideClickDeselects, //点击其他地方触发
+        // afterRender:afterRender,//完成渲染以后
+    });
+
+    // function negativeValueRenderer(instance, td, row, col, prop, value, cellProperties) {
+    //     Handsontable.renderers.TextRenderer.apply(this, arguments);
+    //     if (prop == 'address') {//修改字体颜色
+    //         td.style.color = '#32CD32';
+    //
+    //         //如果要添加其他样式，可以用以下写法
+    //         //td.style = 'font-weight: bold;';
+    //     }
+
+    // function Handson_renderer(instance, td, row, col, prop, value, cellProperties) {
+    //     Handsontable.renderers.TextRenderer.apply(this, arguments);
+    //     //以下只是设置格子的样式 color，backgroundColor，textAlign，fontSize等css样式都可以使用，大家自由发挥 背景还可以透明"transparent"
+    //     var allstyle = dataStyle["all"];//获取全局样式
+    //     var tconf = {}; //当前样式
+    //     for(var sty in allstyle ) {
+    //         tconf[sty] = allstyle [sty];//拷贝全局样式
+    //     }
+    //     var cellconf = dataStyle.cells[row + "_" + col];//获取指定格子的样式
+    //     if(cellconf) {
+    //         for(var sty in cellconf) {
+    //             if(cellconf[sty]) {
+    //                 tconf[sty] = cellconf[sty];
+    //             }
+    //         }
+    //     }
+    //     for(var sty in tconf ) {
+    //         td.style[sty] = tconf[sty];
+    //     }
+    // }
 </script>
 </body>
 </html>
