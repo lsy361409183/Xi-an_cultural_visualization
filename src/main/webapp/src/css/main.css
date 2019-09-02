@@ -1,3 +1,62 @@
-#navbar .navbar{
+/*导航模板样式*/
+#nav-tpl nav{
     border-radius: 0;
+    color: #ffffff;
+    background-color: #1E90FF;
+    border:none;
+    margin-bottom: 0;
+    /*height: 5rem;*/
+    /*line-height: 5rem;*/
+}
+nav .navbar-header .navbar-brand{
+    font-size: 1.25rem;
+    color: #ffffff;
+}
+nav .navbar-collapse .navbar-nav{
+    margin-left: 5%;
+    /*width: 100%;*/
+}
+nav .navbar-collapse .navbar-nav li > a{
+    color: #ffffff;
+}
+nav .navbar-collapse .navbar-nav li:hover{
+    background-color: #2e6da4;
+}
+#select-conditions .input-group{
+    margin-top: 1.25rem;
+}
+#select-conditions .select-row{
+    margin-bottom: 1.875rem;
+}
+#select-conditions .areas-select{
+    margin-top: 1rem;
+    font-size: 1.875rem;
+}
+#select-conditions .areas-select hr{
+    margin-top: .5rem;
+    height: 0.25rem;
+    border: none;
+    background-color: #1E90FF;
+}
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"]{
+    position: absolute;
+    margin-left: -20px;
+    margin-top: 0;
+}
+#select-conditions .checkbox-inline,
+#select-conditions .category-radio li .radio-inline{
+    font-size: 1.25rem;
+}
+#select-conditions .checkbox-inline input,
+#select-conditions .category-radio li .radio-inline input{
+    height: 100%;
+}
+
+#select-conditions .category-radio{
+    width: 100%;
+    list-style: none;
+}
+#select-conditions .category-radio li{
+    float: left;
+    width: 50%;
 }
