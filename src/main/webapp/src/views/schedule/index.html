@@ -4,16 +4,27 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="../../css/reset.css" />
-    <style type="text/css">
-        .select1{
-            height: 25px;width: 80px;display: inline-block;
-        }
-    </style>
+
     <script type="text/javascript" src="../../libs/jquery.js"></script>
     <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
     <script type="text/javascript" src="../../libs/handsontable.min.js"></script>
     <link rel="stylesheet" href="../../libs/css/handsontable.full.min.css">
+    <style type="text/css">
+        .select1{
+            height: 25px;width: 80px;display: inline-block;
+        }
+        #table tr:hover {
+            background:#288fe0;
+            /*@hover_color;*/
+        }
+        tr:hover td {
+            background: transparent;
+        }
+        .handsontable th, .handsontable td:nth-child(5),.handsontable td:nth-child(10){
+            white-space: nowrap;
+        }
+    </style>
 </head>
 <body>
 <div id="menubutton">
@@ -94,49 +105,67 @@
         data: data,
         rowHeaders: false,
         colHeaders: ['区域','地图编号','编号','名称','区位','规模','建成年代','平面形态','文地分类','依据','文保单位','备注'],
-        filters: true,
-        dropdownMenu: true,
+        // filters: true,
+        // dropdownMenu: true,
         width:1000,
         // wordWrap:true,//自动换行
         minRows:20,
         minCols:12,
-        colWidths:['55','65','45','55','55','45','60','70','70','70','60','50'],//x轴上的每行的距离
+        colWidths:['55','65','45','85','65','45','60','70','70','70','60','50'],//x轴上的每行的距离
         rowWidths:65,
+        contextMenu: true,
+        manualRowResize : true,
+        manualColumnResize : true,
         // autoColumnSize:true,//当值为true且列宽未设置时，自适应列大小
         // renderer: Handson_renderer,//渲染
         // outsideClickDeselects: outsideClickDeselects, //点击其他地方触发
         // afterRender:afterRender,//完成渲染以后
     });
-
+    // function firstRowRenderer(instance,td,row,col,prop,value,cellProperties) {
+    //     Handsontable.renderers.TextRenderer.apply(this, arguments);
+    //     td.style.fontWeight = 'bold';
+    //     td.style.color = 'green';
+    //     td.style.background = '#CEC';
+    // }
     // function negativeValueRenderer(instance, td, row, col, prop, value, cellProperties) {
     //     Handsontable.renderers.TextRenderer.apply(this, arguments);
-    //     if (prop == 'address') {//修改字体颜色
+    //     if (prop == '区域') {//修改字体颜色
     //         td.style.color = '#32CD32';
-    //
-    //         //如果要添加其他样式，可以用以下写法
-    //         //td.style = 'font-weight: bold;';
-    //     }
-
-    // function Handson_renderer(instance, td, row, col, prop, value, cellProperties) {
-    //     Handsontable.renderers.TextRenderer.apply(this, arguments);
-    //     //以下只是设置格子的样式 color，backgroundColor，textAlign，fontSize等css样式都可以使用，大家自由发挥 背景还可以透明"transparent"
-    //     var allstyle = dataStyle["all"];//获取全局样式
-    //     var tconf = {}; //当前样式
-    //     for(var sty in allstyle ) {
-    //         tconf[sty] = allstyle [sty];//拷贝全局样式
-    //     }
-    //     var cellconf = dataStyle.cells[row + "_" + col];//获取指定格子的样式
-    //     if(cellconf) {
-    //         for(var sty in cellconf) {
-    //             if(cellconf[sty]) {
-    //                 tconf[sty] = cellconf[sty];
-    //             }
-    //         }
-    //     }
-    //     for(var sty in tconf ) {
-    //         td.style[sty] = tconf[sty];
+    //         td.style.background = 'red';
+    //         //         //如果要添加其他样式，可以用以下写法
+    //         //         //td.style = 'font-weight: bold;';
     //     }
     // }
+    // Handsontable.renderers.registerRenderer('negativeValueRenderer','negativeValueRenderer');
+    // var hot = new Handsontable(document.getElementById('table'),{
+    //     columns: [ {
+    //         data: '区域',
+    //         type: 'text'
+    //     },
+    //         // {
+    //     //     data: 'riqi',
+    //     //     type: 'date',
+    //     //     dateFormat: 'YYYY-MM-DD'
+    //     // },{
+    //     //     data: 'address',
+    //     //     type: 'text'
+    //     // },{
+    //     //     data: 'goods',
+    //     //     type: 'text'
+    //     // },{
+    //     //     data: 'price',
+    //     //     type: 'numeric'
+    //     // },{
+    //     //     data: 'sales',
+    //     //     type: 'numeric'
+    //     // }
+    //         ],
+    //         cells: function (row, col, prop) {
+    //             var cellProperties = {};
+    //         cellProperties.renderer = "negativeValueRenderer";
+    //         return cellProperties;
+    //     },
+    // });
 </script>
 </body>
 </html>
