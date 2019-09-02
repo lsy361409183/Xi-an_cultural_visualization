@@ -11,11 +11,119 @@
     <script type="text/javascript" src="../../libs/seajs-css.js"></script>
     <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/main.css">
     <title>Document</title>
 </head>
 <body>
-    <div id="navbar"></div>
+    <div id="nav-tpl"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 col-xs-12" id="select-conditions">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="请输入...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">搜索</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="areas-select">
+                            <span class="areas-select-title">区域</span>
+                            <hr />
+                        </div>
+                        <div class="row select-row">
+                            <div class="col-md-3">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="area-1" value="未央区">未央区
+                                </label>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="area-2" value="灞桥区">灞桥区
+                                </label>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="area-3" value="明城区">明城区
+                                </label>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="area-4" value="新城区">新城区
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row select-row">
+                            <div class="col-md-3">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="area-15" value="碑林区">碑林区
+                                </label>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="area-6" value="雁塔区">雁塔区
+                                </label>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="area-7" value="莲湖区">莲湖区
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="areas-select">
+                            <span class="areas-select-title">文地类别</span>
+                            <hr />
+                        </div>
+                        <ul class="category-radio">
+                            <li>
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">文化精神标识用地
+                                </label>
+                            </li>
+                            <li>
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">纪念用地
+                                </label>
+                            </li>
+                            <li>
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">宗教用地
+                                </label>
+                            </li>
+                            <li>
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option3">文化遗产用地
+                                </label>
+                            </li>
+                            <li>
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option3">文化设施用地
+                                </label>
+                            </li>
+                            <li>
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio6" value="option3">文化产业用地
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-12">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 col-xs-12">
+                <div id="visualization-map">
+
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script type="text/javascript">
