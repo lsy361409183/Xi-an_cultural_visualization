@@ -43,8 +43,8 @@ define(function(require, exports, module){
                     ],
                     target: 'visualization-map',
                     view: new ol.View({
-                        center: [0,0],
-                        zoom: 3
+                        center: [108.939621,34.343147],
+                        zoom: 11
                     })
                 })
             }
