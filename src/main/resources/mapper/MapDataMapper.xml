@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaancultural1.demo.mapper.VisualCulturalMapper">
+    <resultMap id="mapData" type="com.xiaancultural1.demo.pojo.MapData">
+        <result column="map_id" property="mapId"/>
+        <result column="map_json"  property="mapJson"/>
+    </resultMap>
+    <!--//查询出json，加载地图-->
+    <select id = "selectJson" resultMap="mapData">
+       SELECT map_id,map_json FROM "tb_map_data" where map_id=#{mapId};
+    </select>
+</mapper>
