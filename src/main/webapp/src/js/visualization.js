@@ -32,6 +32,17 @@ define(function(require, exports, module){
             data: {mapId: 1},
             dataType:"json",
             success:function(res){
+                var projection = new ol.proj.Projection({
+                    code: 'EPSG:4326',
+                    units: 'degrees'
+                });
+                var view = new ol.View({
+                    projection: projection,
+                    center:  [108.939621, 34.343147],
+                    zoom:10,
+                    maxZoom:25,
+                    minZoom:5
+                });
                 var vectorLayer = new ol.layer.Vector({
                     source: new ol.source.Vector({
                         features: (new ol.format.GeoJSON()).readFeatures(res)
@@ -42,10 +53,7 @@ define(function(require, exports, module){
                         vectorLayer
                     ],
                     target: 'visualization-map',
-                    view: new ol.View({
-                        center: [108.939621,34.343147],
-                        zoom: 11
-                    })
+                    view: view
                 })
             }
         });
