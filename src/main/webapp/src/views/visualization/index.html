@@ -10,13 +10,18 @@
     <script type="text/javascript" src="../../libs/seajs-text.js"></script>
     <script type="text/javascript" src="../../libs/seajs-css.js"></script>
     <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../libs/ol.js"></script>
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/reset.css">
-    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="../../libs/css/ol.css" />
+    <link rel="stylesheet" href="../../css/main.css" />
     <title>Document</title>
 </head>
 <body>
     <div id="nav-tpl"></div>
+    <div id="map">
+
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 col-xs-12" id="select-conditions">
@@ -117,7 +122,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-9 col-xs-12">
+            <div class="col-md-9 col-xs-12 map-container">
                 <div id="visualization-map">
 
                 </div>
@@ -128,5 +133,8 @@
 
 <script type="text/javascript">
     seajs.use('../../js/visualization')
+</script>
+<script>
+
 </script>
 </html>
