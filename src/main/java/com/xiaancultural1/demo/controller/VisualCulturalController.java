@@ -3,6 +3,7 @@ package com.xiaancultural1.demo.controller;
 import com.xiaancultural1.demo.pojo.MapData;
 import com.xiaancultural1.demo.pojo.visualBase;
 import com.xiaancultural1.demo.service.VisualCulturalService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +25,7 @@ public class VisualCulturalController {
         List<MapData> mapData = visualCulturalService.selectJson(mapId);
         List<String> json=mapData.stream().map(MapData::getMapJson).collect(Collectors.toList());
         //System.out.println(json.toString());
-        return json.toString();
+        return StringUtils.strip(json.toString(),"[]");
       // return visualCulturalService.selectJson(mapId);
     };
     //查询出文地的基本信息：区域、类别、名称、位置、面积
