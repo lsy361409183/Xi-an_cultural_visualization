@@ -14,11 +14,28 @@ public class TableCulturalService {
     @Autowired
     private TableCulturalMapper tableCulturalMapper;
 
-    public List<tableBase> selectAllTable(){
+    //筛选全部信息
+    public List<tableBase> selectAllTable() {
         return tableCulturalMapper.selectAllTable();
     }
 
-    public Page<tableBase> selectAllTableWithPage(){
+    public Page<tableBase> selectAllTableWithPage() {
         return (Page<tableBase>) tableCulturalMapper.selectAllTable();
+    }
+
+    //根据区域筛选
+    public List<tableBase> selectAllTableByDistrict(){
+        return tableCulturalMapper.selectAllTableByDistrict();
+    }
+    public Page<tableBase> selectAllTableByDistrictWithPage(){
+        return (Page<tableBase>) tableCulturalMapper.selectAllTableByDistrict();
+    }
+
+    //根据分类筛选
+    public List<tableBase> selectAllTableByClassification(){
+        return tableCulturalMapper.selectAllTableByClassification();
+    }
+    public Page<tableBase> selectAllTableByClassificationWithPage(){
+        return (Page<tableBase>) tableCulturalMapper.selectAllTableByClassification();
     }
 }
