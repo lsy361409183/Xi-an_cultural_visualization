@@ -18,21 +18,21 @@ console.log(111)
     hot = new Handsontable(container, {
         data: objectData,
         colHeaders: ['区域','地块编号','编号','名称','区位','规模','建成年代','平面形态','文地分类','依据','文保单位','备注'],
-        // columns: [
-        //     //表头与对应列的关系
-        //     {data:'baseDistrict'},
-        //     {data:'baseDistrictId'},
-        //     {data: 'baseId'},
-        //     {data:'baseName'},
-        //     {data:'baseRegion'},
-        //     {data:'baseArea'},
-        //     {data:'baseDate'},
-        //     {data:'basePlaneform'},
-        //     {data:'baseClassification'},
-        //     {data:'baseBasis'},
-        //     {data:'baseUnit'},
-        //     {data:'baseRemarks'},
-        // ],
+        columns: [
+            //表头与对应列的关系
+            {data:'baseDistrict'},
+            {data:'baseDistrictId'},
+            {data: 'baseId'},
+            {data:'baseName'},
+            {data:'baseRegion'},
+            {data:'baseArea'},
+            {data:'baseDate'},
+            {data:'basePlaneform'},
+            {data:'baseClassification'},
+            {data:'baseBasis'},
+            {data:'baseUnit'},
+            {data:'baseRemarks'},
+        ],
         rowHeaders: false,
         width:1000,
         minRows:20,
@@ -43,33 +43,6 @@ console.log(111)
         manualRowResize : true,
         manualColumnResize : true,
     });
-
-
-    //表格
-    // var data = [
-    //     ["未央区","E-1","1","西安文景公园","西安市文景北路","51.8","2003","不规则形","四类文地","西汉王夫人墓","西安市政府"],
-    //     ["未央区","E-1","2","高铁寨汉墓遗址公园","张家堡街道办事处红色村高铁寨","3.63","2017","不规则形","四类文地",
-    //         "该公园的建设对加强文物遗产保护，对于传承历史文脉，提升城市文化品位具有重要意义","西安市政府"],
-    // ];
-    // var container = $('#table')
-    // console.log('container',container)
-    // container.handsontable({
-    //     data: data,
-    //     rowHeaders: false,
-    //     colHeaders: ['区域','地图编号','编号','名称','区位','规模','建成年代','平面形态','文地分类','依据','文保单位','备注'],
-    //     // filters: true,
-    //     // dropdownMenu: true,
-    //     width:1000,
-    //     // wordWrap:true,//自动换行
-    //     minRows:20,
-    //     minCols:12,
-    //     colWidths:['55','65','45','85','65','45','60','70','70','70','60','50'],//x轴上的每行的距离
-    //     rowWidths:65,
-    //     contextMenu: true,
-    //     manualRowResize : true,
-    //     manualColumnResize : true,
-    // });
-
 
     // 获取表格数据
     getData(function () {
@@ -85,4 +58,47 @@ console.log(111)
         })
     })
 
+    //分页
+    //首页
+    $("#FirstPage").click(function () {
+        href += "&page=" + 1;
+        window.location.href = (window.location.href.indexOf("&") > 0 ? window.location.href.substr(0, window.location.href.indexOf("&")) : window.location.href) + href;
+    });
+//尾页
+    $("#LastPage").click(function () {
+        href += "&page=" + parseInt($("#AllPage").text());
+        window.location.href = (window.location.href.indexOf("&") > 0 ? window.location.href.substr(0, window.location.href.indexOf("&")) : window.location.href) + href;
+    });
+//上一页
+    $("#UpPage").click(function () {
+        if (parseInt($("#CurrentPage").text()) != 1) {
+            href += "&page=" + (parseInt($("#CurrentPage").text()) - 1);
+            window.location.href = (window.location.href.indexOf("&") > 0 ? window.location.href.substr(0, window.location.href.indexOf("&")) : window.location.href) + href;
+        }
+    });
+//下一页
+    $("#DownPage").click(function () {
+        if (parseInt($("#CurrentPage").text()) != parseInt($("#AllPage").text())) {
+            href += "&page=" + (parseInt($("#CurrentPage").text()) + 1);
+            window.location.href = (window.location.href.indexOf("&") > 0 ? window.location.href.substr(0, window.location.href.indexOf("&")) : window.location.href) + href;
+        }
+    });
+//跳转
+    $("#lnkGoto").click(function () {
+        if (parseInt($("#txtNeedPage").val().trim()) > 0 && parseInt($("#txtNeedPage").val().trim()) <= parseInt($("#AllPage").text())) {
+            href += "&page=" + parseInt($("#txtNeedPage").val().trim());
+            window.location.href = (window.location.href.indexOf("&") > 0 ? window.location.href.substr(0, window.location.href.indexOf("&")) : window.location.href) + href;
+        }
+    });
+//跳转后要重新画表的代码么？?
+    // var container = document.querySelector('#deallist');
+//     hot = new newHandsontable(container, {
+//         // colHeaders:@Html.Raw(Model.Headers ==null?"[]":Model.Headers),
+//         data:objectData,
+//         cells: function (row, col, prop) {
+//         var cellProperties = {};
+//         cellProperties.renderer = "negativeValueRenderer";
+//         return cellProperties;
+//     }
+// });
 })

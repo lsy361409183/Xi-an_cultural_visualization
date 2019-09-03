@@ -79,6 +79,29 @@
     <div class="row" style="margin-left: -80px">
         <div class="col-md-8" >
             <div  id="table"></div>
+
+<!--            //页面跳转-->
+            <div>
+                <div id="deallist"></div>
+                <div class="text-center pageInput pagination" style="padding-top:5px;">
+                    <label>第</label>
+                    <span id="CurrentPage">@(Model.CurrentPage)</span>/
+                    <span id="AllPage">@(Model.TotalPages)</span>
+                    <label>页&nbsp;&nbsp;</label>
+                    <label>共</label>
+                    <span id="total">@(Model.TotalItems)</span>
+                    <label>条&nbsp;&nbsp;</label>
+                    <a id="FirstPage" class="a-state" href="javascript:void(0);">首页&nbsp;&nbsp;</a>
+                    <a id="UpPage" class="a-state" href="javascript:void(0);">上一页&nbsp;&nbsp;</a>
+                    <a id="DownPage" class="a-state" href="javascript:void(0);">下一页&nbsp;&nbsp;</a>
+                    <a id="LastPage" class="a-state" href="javascript:void(0);">尾页&nbsp;&nbsp;</a>
+                    <span id="MainContent_gvNewsList_Label2">跳转到：</span>
+                    <input type="text" value="1" id="txtNeedPage" style="height:16px !important;width:30px;">
+                    <a id="lnkGoto" class="a-state" href="javascript:void(0);">
+                        跳转
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
             <div class="xpanel-wrapper xpanel-wrapper-1">
