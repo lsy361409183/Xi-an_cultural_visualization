@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 public class VisualCulturalController {
-    @Autowired
+    @Autowired(required=true)
     private VisualCulturalService visualCulturalService;
 
     //拿到geojson，加载地图
@@ -33,6 +35,29 @@ public class VisualCulturalController {
     @ResponseBody
     public List<visualBase> selectAllInfo(){
         return visualCulturalService.selectAllInfo();
+    }
+
+    //区域和类别筛选
+    @RequestMapping("/getFilterData")
+    @ResponseBody
+    public List<visualBase> selectInfo(@RequestParam(value = "baseDistrict",required = false)String baseDistrict,
+                                       @RequestParam(value = "baseClassification",required = false)String baseClassification,
+                                       HttpServletRequest request) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("UTF-8");
+
+        if(baseDistrict.equals("'全部'")&&baseClassification.equals("'全部'"))
+        {
+            return visualCulturalService.selectAllInfo();
+        }
+        else if (baseDistrict.equals("'全部'")){
+            return visualCulturalService.selectInfoByType(baseClassification);
+        }
+        else if (baseClassification.equals("'全部'")){
+            return visualCulturalService.selectInfoByRegion(baseDistrict);
+        }
+        else{
+            return visualCulturalService.selectInfo(baseDistrict,baseClassification);
+        }
     }
 
 }

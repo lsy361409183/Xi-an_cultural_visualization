@@ -22,4 +22,16 @@ public class VisualCulturalService {
     public List<visualBase> selectAllInfo(){
         return visualCulturalMapper.selectAllInfo();
     }
+    //区域和类别筛选
+    public List<visualBase> selectInfo(String baseDistrict,String baseClassification){
+        return visualCulturalMapper.selectInfo(baseDistrict,baseClassification);
+    }
+    //区域筛选
+    public List<visualBase> selectInfoByRegion(String baseDistrict){
+        return visualCulturalMapper.selectInfoByRegion(baseDistrict);
+    }
+    //类别筛选
+    public List<visualBase> selectInfoByType(String baseClassification){
+        return visualCulturalMapper.selectInfoByType(baseClassification);
+    }
 }

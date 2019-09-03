@@ -12,4 +12,19 @@
     <select id = "selectAllInfo" resultMap="VisualBase">
         select base_name,base_area,base_point,base_district,base_classification from public."tb_base_data";
     </select>
+    <!--//筛选区域、类别-->
+    <select id = "selectInfo" resultMap="VisualBase">
+       select base_name,base_area,base_point,base_district,base_classification from public."tb_base_data"
+        where base_district in(${baseDistrict}) and base_classification in (${baseClassification});
+    </select>
+    <!--//筛选区域-->
+    <select id = "selectInfoByRegion" resultMap="VisualBase">
+       select base_name,base_area,base_point,base_district,base_classification from public."tb_base_data"
+        where base_district in(${baseDistrict}) ;
+    </select>
+    <!--//筛选类别-->
+    <select id = "selectInfoByType" resultMap="VisualBase">
+       select base_name,base_area,base_point,base_district,base_classification from public."tb_base_data"
+        where  base_classification in (${baseClassification});
+    </select>
 </mapper>
