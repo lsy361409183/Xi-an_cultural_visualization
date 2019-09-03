@@ -14,5 +14,11 @@ mybatis:
     mapper-locations: classpath:mapper/*.xml
     type-aliases-package: com.xiaancultural1.demo.pojo
 
+pageHelper:
+  helperDialect: postgresql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
 
 
