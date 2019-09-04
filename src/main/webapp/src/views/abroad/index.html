@@ -5,9 +5,410 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../libs/jquery.js"></script>
+    <script type="text/javascript" src="../../libs/sea.js" id="seajsnode"></script>
+    <script type="text/javascript" src="../../libs/seajs-text.js"></script>
+    <script type="text/javascript" src="../../libs/seajs-css.js"></script>
+    <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../libs/ol.js"></script>
+    <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="../../libs/css/ol.css" />
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
+
     <title>国内外数据</title>
+    <style>
+        html,
+        body,
+        #container {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+        }
+        table{
+            border:2px solid;
+            border-color:rgba(0,0,0,0.5) rgba(0,0,0,1) rgba(0,0,0,1) rgba(0,0,0,0.5);
+        }
+        table td{
+            border:1px solid rgba(0,0,0,0.5);
+            /*text-align:center;*/
+            /*vertical-align: middle;*/
+            padding:4px 5px;
+        }
+        #table{
+            z-index: 999;
+        }
+        #info01{
+            z-index: 966;
+            top: 520px;
+            width: 160px;
+        }
+        #info02{
+            width: 20px;
+            z-index: 966;
+            top: 80px;
+        }
+        #info03{
+            width: 200px;
+            z-index: 966;
+            height: 32px;
+
+        }
+        #info04{
+            width: 200px;
+            height: 32px;
+            z-index: 966;
+        }
+
+    </style>
 </head>
 <body>
+<div id="nav-tpl"></div>
+
+<div id="container" class="container">
+    <div id="info01" class="info">
+    <table id="table" align="center">
+        <caption align="top">国内个城市文地数据</caption>
+        <tr>
+            <td rowspan="1">城市名</td>
+            <td rowspan="1">文地面积</td>
+            <td rowspan="1">文地覆盖率</td>
+        </tr>
+        <tr>
+            <td>天津</td>
+            <td>9842856.60</td>
+            <td>1.87</td>
+        </tr>
+        <tr>
+            <td>广州</td>
+            <td>11920715.84</td>
+            <td>1.72</td>
+        </tr>
+        <tr>
+            <td>杭州</td>
+            <td>20213723.01</td>
+            <td>6.22</td>
+        </tr>
+        <tr>
+            <td>北京</td>
+            <td>35301651.61</td>
+            <td>3.14</td>
+        </tr>
+        <tr>
+            <td>太原</td>
+            <td>938480.42</td>
+            <td>0.44</td>
+        </tr>
+        <tr>
+            <td>沈阳</td>
+            <td>2663342.43</td>
+            <td>0.87</td>
+        </tr>
+        <tr>
+            <td>郑州</td>
+            <td>2309018.39</td>
+            <td>0.75</td>
+        </tr>
+        <tr>
+            <td>西安</td>
+            <td>68585923.22</td>
+            <td>11.76</td>
+        </tr>
+        <tr>
+            <td>深圳</td>
+            <td>7229201.95</td>
+            <td>1.73</td>
+        </tr>
+        <tr>
+            <td>上海</td>
+            <td>5467792.79</td>
+            <td>0.82</td>
+        </tr>
+
+    </table>
+</div>
+
+    <div id="info02" class="info">
+        <select id="info03">
+            <option selected="selected">- 请选择城市 - </option>
+            <option>天津</option>
+            <option>广州</option>
+            <option>杭州</option>
+            <option>北京</option>
+            <option>太原</option>
+            <option>沈阳</option>
+            <option>郑州</option>
+            <option>西安</option>
+            <option>深圳</option>
+            <option>上海</option>
+        </select>
+
+        <select id="info04">
+            <option selected="selected">- 请选择城市 - </option>
+            <option>天津</option>
+            <option>广州</option>
+            <option>杭州</option>
+            <option>北京</option>
+            <option>太原</option>
+            <option>沈阳</option>
+            <option>郑州</option>
+            <option>西安</option>
+            <option>深圳</option>
+            <option>上海</option>
+        </select>
+
+        <button type="button" id="onclickView">对比查看</button>
+
+    </div>
+
+
+</div>
+
+
+
+<script src="//webapi.amap.com/maps?v=1.4.15&key=2f80880dccbc4291d4c02e7964c81ed5&"></script>
+<script src="//webapi.amap.com/loca?v=1.3.0&key=2f80880dccbc4291d4c02e7964c81ed5"></script>
+<script type="text/javascript" src="../../libs/jquery-3.3.1.min.js"></script>
+<script src="../../libs/mainIcon.js?v=1.0.11"></script>
+<!--<script src="//a.amap.com/Loca/static/dist/jquery.min.js"></script>-->
+<script>
+
+    var districts = [
+        { 'name': '北京市', 'center': '116.407394,39.904211' ,'value':'5'},
+        { 'name': '天津市', 'center': '117.200983,39.084158' ,'value':'1.87'},
+        { 'name': '杭州', 'center': '120.210911,30.253831' ,'value':'6.22'},
+        { 'name': '太原', 'center': '112.555821,37.877218' ,'value':'0.44'},
+        { 'name': '广州', 'center': '113.273154,23.138792' ,'value':'1.72'},
+        { 'name': '沈阳', 'center': '123.463621,41.674994' ,'value':'0.87'},
+        { 'name': '郑州', 'center': '113.669935,34.753203' ,'value':'0.75'},
+        { 'name': '西安', 'center': '108.955664,34.354183' ,'value':'11.76'},
+        { 'name': '深圳', 'center': '0,0' ,'value':'1.73'},
+        { 'name': '上海', 'center': '121.482265,31.237164' ,'value':'0.82'},
+    ];
+
+    var map = new AMap.Map('container', {
+        mapStyle: 'amap://styles/dark',
+        viewMode: '3D',
+        features: ['bg', 'road'],
+        zoom: 5,
+        center: [107.4976, 32.1697]
+
+    });
+
+    var infoWin;
+
+    infoWin = new AMap.InfoWindow({
+        closeWhenClickMap: true
+    });
+
+    var vLayer = new Loca.DistrictLayer({
+        fitView: true,
+        eventSupport: true,
+        drillDown: false,
+        map: map
+    });
+
+    vLayer.on('click', function (ev) {
+        var originalEv = ev.originalEvent;
+
+        var lnglat = map.containerToLngLat(new AMap.Pixel(originalEv.clientX, originalEv.clientY));
+        var feature = ev.feature;
+        // var value = ev.value;
+        var property = feature.subFeature.properties;
+
+        infoWin.open(map, lnglat);
+        var content = [
+            '行政区：' + property.name,
+            '<br>',
+            '文地率：' + property.center,
+            '<br>'
+        ];
+        infoWin.setContent(content.join(''));
+    });
+
+    function go2Adcode(event, code) {
+        event.stopPropagation();
+        infoWin.close();
+        vLayer.goto(code);
+    }
+    AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
+    new SimpleMarker({
+        iconLabel: '北京市',
+        //自定义图标地址
+        iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+
+        //设置基点偏移
+        offset: new AMap.Pixel(-19, -60),
+
+        map: map,
+
+        showPositionPoint: true,
+        position: new AMap.LngLat(116.407394,39.904211),
+        zIndex: 100
+    });
+        new SimpleMarker({
+            iconLabel: '天津市',
+            //自定义图标地址
+            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+
+            //设置基点偏移
+            offset: new AMap.Pixel(-19, -60),
+
+            map: map,
+
+            showPositionPoint: true,
+            position: new AMap.LngLat(117.200983,39.084158),
+            zIndex: 100
+        });
+        new SimpleMarker({
+            iconLabel: '杭州',
+            //自定义图标地址
+            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+
+            //设置基点偏移
+            offset: new AMap.Pixel(-19, -60),
+
+            map: map,
+
+            showPositionPoint: true,
+            position: new AMap.LngLat(120.210911,30.253831),
+            zIndex: 100
+        });
+        new SimpleMarker({
+            iconLabel: '广州',
+            //自定义图标地址
+            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+
+            //设置基点偏移
+            offset: new AMap.Pixel(-19, -60),
+
+            map: map,
+
+            showPositionPoint: true,
+            position: new AMap.LngLat(113.273154,23.138792),
+            zIndex: 100
+        });
+        new SimpleMarker({
+            iconLabel: '太原',
+            //自定义图标地址
+            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+
+            //设置基点偏移
+            offset: new AMap.Pixel(-19, -60),
+
+            map: map,
+
+            showPositionPoint: true,
+            position: new AMap.LngLat(112.555821,37.877218),
+            zIndex: 100
+        });
+        new SimpleMarker({
+            iconLabel: '沈阳',
+            //自定义图标地址
+            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+
+            //设置基点偏移
+            offset: new AMap.Pixel(-19, -60),
+
+            map: map,
+
+            showPositionPoint: true,
+            position: new AMap.LngLat(123.463621,41.674994),
+            zIndex: 100
+        });
+        new SimpleMarker({
+            iconLabel: '郑州',
+            //自定义图标地址
+            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+
+            //设置基点偏移
+            offset: new AMap.Pixel(-19, -60),
+
+            map: map,
+
+            showPositionPoint: true,
+            position: new AMap.LngLat(113.669935,34.753203),
+            zIndex: 100
+        });
+        new SimpleMarker({
+            iconLabel: '西安',
+            //自定义图标地址
+            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+
+            //设置基点偏移
+            offset: new AMap.Pixel(-19, -60),
+
+            map: map,
+
+            showPositionPoint: true,
+            position: new AMap.LngLat(108.955664,34.354183),
+            zIndex: 100
+        });
+        new SimpleMarker({
+            iconLabel: '深圳',
+            //自定义图标地址
+            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+
+            //设置基点偏移
+            offset: new AMap.Pixel(-19, -60),
+
+            map: map,
+
+            showPositionPoint: true,
+            position: new AMap.LngLat(114.061103,22.55166),
+            zIndex: 100
+        });
+        new SimpleMarker({
+            iconLabel: '上海',
+            //自定义图标地址
+            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+
+            //设置基点偏移
+            offset: new AMap.Pixel(-19, -60),
+
+            map: map,
+
+            showPositionPoint: true,
+            position: new AMap.LngLat(121.482265,31.237164),
+            zIndex: 100
+        });
+    });
+
+    // var marker = new AMap.Marker({
+    //     position: new AMap.LngLat(116.39, 39.9),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+    //     title: '北京'
+    // });
+    // map.add(marker);
+
+
+
+
+    vLayer.setData(districts, {
+        type: 'json',
+        lnglat: 'center',
+        value: 'value'
+    });
+
+    vLayer.setOptions({
+        mode: 'count',
+        style: {
+            color: ['#ffffcc',]
+        },
+        opacity:0.5,
+        selectStyle: false
+    });
+
+    vLayer.render();
+
+
+
+</script>
 
 </body>
 </html>
+<script type="text/javascript">
+    seajs.use('../../js/abroad')
+</script>
