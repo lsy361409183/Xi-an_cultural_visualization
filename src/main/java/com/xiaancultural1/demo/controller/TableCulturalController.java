@@ -5,10 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.xiaancultural1.demo.pojo.tableBase;
 import com.xiaancultural1.demo.service.TableCulturalService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,8 +23,21 @@ public class TableCulturalController {
         PageInfo<tableBase> pageInfo = new PageInfo<>(tableCulturalService.selectAllTableWithPage());
         return pageInfo;
     }
+
+    @GetMapping("/select1")
+    public PageInfo<tableBase> districtLists(@RequestParam String district,@RequestParam int page){
+        PageHelper.startPage(page,20);
+        PageInfo<tableBase> pageInfo =new PageInfo<>(tableCulturalService.selectAllTableByDistrictWithPage());
+        return pageInfo;
+    }
+    @GetMapping("/select2")
+    public PageInfo<tableBase> classificationLists(@RequestParam String classification,@RequestParam int page){
+        PageHelper.startPage(page,20);
+        PageInfo<tableBase> pageInfo =new PageInfo<>(tableCulturalService.selectAllTableByClassificationtWithPage());
+        return pageInfo;
+    }
 //    //传页码以及每页条数，全部记录
-//    @GetMapping("/select")
+//    @GetMapping("/select1")
 //    public List<tableBase> paraList(@RequestParam(defaultValue = "1") int p,
 //                                    @RequestParam(defaultValue = "20") int size){
 ////        设置分页规则
