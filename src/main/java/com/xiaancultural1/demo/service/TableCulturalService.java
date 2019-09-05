@@ -22,13 +22,13 @@ public class TableCulturalService {
         return (Page<tableBase>) tableCulturalMapper.selectAllTable();
     }
 
-    public Page<tableBase> selectAllTableByDistrictWithPage(){
-        return (Page<tableBase>)tableCulturalMapper.selectAllTableByDistrict();
-    }
-
-    public Page<tableBase> selectAllTableByClassificationtWithPage(){
-        return (Page<tableBase>)tableCulturalMapper.selectAllTableByDistrict();
-    }
+//    public Page<tableBase> selectAllTableByDistrictWithPage(){
+//        return (Page<tableBase>)tableCulturalMapper.selectAllTableByDistrict();
+//    }
+//
+//    public Page<tableBase> selectAllTableByClassificationtWithPage(){
+//        return (Page<tableBase>)tableCulturalMapper.selectAllTableByDistrict();
+//    }
 
 
 }
