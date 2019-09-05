@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class TableCulturalController {
     @Autowired
     private TableCulturalService tableCulturalService;
@@ -18,13 +18,13 @@ public class TableCulturalController {
     //根据页码分页，写死20条，全部记录
     @GetMapping("/select")
     @ResponseBody
-    public List<tableBase> lists(@RequestParam(value = "page") int page){
+    public PageInfo<tableBase> lists(@RequestParam(value = "page") int page){
 //        设置分页规则
        // PageHelper.clearPage();
         PageHelper.startPage(page,20);
 //        返回所有分页信息参数为查询所有记录的信息
         PageInfo<tableBase> pageInfo = new PageInfo<>(tableCulturalService.selectAllTableWithPage());
-        return pageInfo.getList();
+        return pageInfo;
 
 //        return tableCulturalService.selectAllTableWithPage();
     }
