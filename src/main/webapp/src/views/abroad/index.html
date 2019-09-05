@@ -175,6 +175,20 @@
 <script src="../../libs/mainIcon.js?v=1.0.11"></script>
 <!--<script src="//a.amap.com/Loca/static/dist/jquery.min.js"></script>-->
 <script>
+    function load_val2() {
+        var result;
+        $.ajax({
+            url:"/getDomesticData",
+            type:"get",
+            async:false,
+            success: function (data,textStatus) {
+                result = data;
+            }
+        });
+        return result;
+    }
+data = load_val2();
+    console.log(data);
 
     var districts = [
         { 'name': '北京市', 'center': '116.407394,39.904211' ,'value':'5'},
@@ -186,7 +200,7 @@
         { 'name': '郑州', 'center': '113.669935,34.753203' ,'value':'0.75'},
         { 'name': '西安', 'center': '108.955664,34.354183' ,'value':'11.76'},
         { 'name': '深圳', 'center': '0,0' ,'value':'1.73'},
-        { 'name': '上海', 'center': '121.482265,31.237164' ,'value':'0.82'},
+        { 'name': '上海', 'center': '121.482265,31.237164' ,'value':'0.82'}
     ];
 
     var map = new AMap.Map('container', {
@@ -386,16 +400,16 @@
 
 
 
-    vLayer.setData(districts, {
+    vLayer.setData(data, {
         type: 'json',
-        lnglat: 'center',
-        value: 'value'
+        lnglat: 'city_capital',
+        value: 'city_cultural_rate'
     });
 
     vLayer.setOptions({
         mode: 'count',
         style: {
-            color: ['#ffffcc',]
+            color: ['#ffffcc']
         },
         opacity:0.5,
         selectStyle: false

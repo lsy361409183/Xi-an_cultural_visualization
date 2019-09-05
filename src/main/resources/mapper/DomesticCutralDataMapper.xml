@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaancultural1.demo.mapper.DomesticCulturalMapper">
+    <resultMap id="domesticData" type="com.xiaancultural1.demo.pojo.DomesticData">
+        <!--<result column="city_id" jdbcType="INTEGER" property="city_id"/>-->
+        <result column="name" jdbcType="VARCHAR"  property="name"/>
+        <result column="city_area" jdbcType="NUMERIC" property="city_area"/>
+        <result column="city_cultural_rate" jdbcType="NUMERIC" property="city_cultural_rate"/>
+        <result column="city_province" jdbcType="VARCHAR" property="city_province"/>
+        <result column="city_capital" jdbcType="VARCHAR" property="city_capital"/>
+    </resultMap>
+    <!--//查询出json，加载地图-->
+    <select id = "getDomesticCulturalData" resultMap="domesticData">
+     select * from  tb_city_data
+    </select>
+</mapper>
