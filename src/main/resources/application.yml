@@ -10,6 +10,7 @@ spring:
     password: 1234
 
 
+
 mybatis:
     mapper-locations: classpath:mapper/*.xml
     type-aliases-package: com.xiaancultural1.demo.pojo
