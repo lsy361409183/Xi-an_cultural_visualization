@@ -18,7 +18,7 @@ public class TableCulturalController {
     //根据页码分页，写死20条，全部记录
     @GetMapping("/select")
     @ResponseBody
-    public List<tableBase> lists(@RequestParam int page){
+    public List<tableBase> lists(@RequestParam(value = "page") int page){
 //        设置分页规则
        // PageHelper.clearPage();
         PageHelper.startPage(page,20);

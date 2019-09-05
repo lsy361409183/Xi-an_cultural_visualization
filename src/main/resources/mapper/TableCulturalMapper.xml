@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaancultural1.demo.mapper.TableCulturalMapper">
+
+    <resultMap id="Base" type="com.xiaancultural1.demo.pojo.tableBase">
+        <result column="base_district" property="baseDistrict"/>
+        <result column="base_district_id" property="baseDistrictId"/>
+        <result column="base_id" property="baseId"/>
+        <result column="base_name" property="baseName"/>
+        <result column="base_region" property="baseRegion"/>
+        <result column="base_area" property="baseArea"/>
+        <result column="base_date" property="baseDate"/>
+        <result column="base_planeform" property="basePlaneform"/>
+        <result column="base_classification" property="baseClassification"/>
+        <result column="base_basis" property="baseBasis"/>
+        <result column="base_unit" property="baseUnit"/>
+        <result column="base_remarks" property="baseRemarks"/>
+    </resultMap>
+    <!--//查询出文地的基本信息：区域、类别、名称、位置、面积-->
+    <select id="selectAllTable" resultMap="Base">
+                select * from tb_base_data
+    </select>
+
+</mapper>
