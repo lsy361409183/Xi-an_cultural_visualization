@@ -13,22 +13,16 @@ public class TableCulturalService {
     @Autowired
     private TableCulturalMapper tableCulturalMapper;
 
-    //筛选全部信息
-//    public List<tableBase> selectAllTable() {
-//        return tableCulturalMapper.selectAllTable();
-//    }
-
     public Page<tableBase> selectAllTableWithPage() {
         return (Page<tableBase>) tableCulturalMapper.selectAllTable();
     }
 
-//    public Page<tableBase> selectAllTableByDistrictWithPage(){
-//        return (Page<tableBase>)tableCulturalMapper.selectAllTableByDistrict();
-//    }
-//
-//    public Page<tableBase> selectAllTableByClassificationtWithPage(){
-//        return (Page<tableBase>)tableCulturalMapper.selectAllTableByDistrict();
-//    }
+    public Page<tableBase> selectTableWithRegionAndClassificationWithPage(String baseDistrict,String baseClassification){
+
+        return (Page<tableBase>) tableCulturalMapper.selectTableWithRegionAndClassification(baseDistrict,baseClassification);
+    }
+
+
 
 
 }
