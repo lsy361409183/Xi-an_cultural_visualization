@@ -42,8 +42,6 @@ define(function(require, exports, module){
      *
      * */
 
-    var areaCheckedList = [],
-        typeCheckedList = [];
 
     // 设置底图投影
     var projection = new ol.proj.Projection({
@@ -69,7 +67,7 @@ define(function(require, exports, module){
 
 
     // 请求地图geojson
-    function getMapGeoJson () {
+    function getMapGeoJson (render) {
         $.ajax({
             type:"get",
             url:"/getMapData",
@@ -77,6 +75,7 @@ define(function(require, exports, module){
             dataType:"json",
             success:function(res){
                 mapData = res;
+                render(res);
             }
         });
     }
@@ -95,15 +94,18 @@ define(function(require, exports, module){
 
     // 请求文地点数据
     function getPointData(areas, types, render) {
+        var params = {
+            baseDistrict: areas === "'全部'"? areas : areas.map(function (item) {
+                return item
+            }),
+            baseClassification: types
+        };
         $.ajax({
-            type: 'get',
+            type: 'post',
             url: '/getFilterData',
-            contentType: 'application/json;charset=utf-8',
+            // contentType: 'application/json;charset=utf-8',
             dataType: 'json',
-            data: {
-                baseDistrict: areas,
-                baseClassification: types
-            },
+            data: params,
             success: function (res) {
                 pointData = res;
                 render(res)
@@ -112,13 +114,14 @@ define(function(require, exports, module){
     }
 
     // 渲染底图
-    function renderMap () {
+    function renderMap (data) {
         var vectorLayer = new ol.layer.Vector({
             source: new ol.source.Vector({
-                features: (new ol.format.GeoJSON()).readFeatures(mapData)
-            })
+                features: (new ol.format.GeoJSON()).readFeatures(data)
+            }),
+            isBaseLayer: true
         });
-        map.addLayer(vectorLayer)
+        map.addLayer(vectorLayer);
     }
 
     // 渲染文地点
@@ -139,6 +142,7 @@ define(function(require, exports, module){
 
         var cultural_point = new ol.layer.Vector({
             source: pointSource,
+            isBaseLayer:false,
             style: new ol.style.Style({
                 image: new ol.style.Circle({
                     radius: 5,
@@ -151,7 +155,7 @@ define(function(require, exports, module){
                 })
             })
         });
-        map.addLayer(cultural_point);
+        map.addLayer(cultural_point)
     }
 
     // 渲染文地块
@@ -173,10 +177,7 @@ define(function(require, exports, module){
         map.addLayer(cultural_vectorLayer);
     }
     // 加载地图
-    setTimeout(function () {
-        renderMap();
-    },3000);
-    getMapGeoJson();
+    getMapGeoJson(renderMap);
     getPointData("'全部'", "'全部'", renderPoint);
 
 
@@ -189,42 +190,92 @@ define(function(require, exports, module){
 
     // 区域复选点击事件
     $('.area-districts').on('click',function (e) {
+
         var areaCheckedVal = valChange('area-districts');
-        var typeCheckedVal = valChange('areas-types');
-        console.log(areaCheckedVal,typeCheckedVal)
-        if (areaCheckedVal.length === 0) {
+        var typeCheckedVal = valChange('area-types');
+        console.log('点击区域复选参数===========================',areaCheckedVal,typeCheckedVal);
+
+        if (areaCheckedVal.length === 7) {
+            $('#area-all').prop('checked', true);
             getPointData("'全部'", typeCheckedVal, renderPoint)
+        } else if (areaCheckedVal.length === 0) {
+            $('#area-all').prop('checked', false);
+            getPointData("'全部'",typeCheckedVal, renderPoint)
         } else {
+            $('#area-all').prop('checked', false);
             getPointData(areaCheckedVal,typeCheckedVal, renderPoint)
         }
     });
 
+    // 类型复选点击事件
+    $('.area-types').on('click',function (e) {
+
+        var areaCheckedVal = valChange('area-districts');
+        var typeCheckedVal = valChange('area-types');
+        console.log('点击类型复选参数===========================',areaCheckedVal,typeCheckedVal);
+
+        if (typeCheckedVal.length === 6) {
+            $('#type-all').prop('checked', true);
+            getPointData(areaCheckedVal, "'全部'", renderPoint)
+        } else if (typeCheckedVal.length === 0) {
+            $('#type-all').prop('checked', false);
+            getPointData(areaCheckedVal,"'全部'", renderPoint)
+        } else {
+            $('#type-all').prop('checked', false);
+            getPointData(areaCheckedVal,typeCheckedVal, renderPoint)
+        }
+    });
     function valChange (type) {
        var tempArr = $('input[class="'+type+'"]:checked') && $('input[class="'+type+'"]:checked').map(function (index, item) {
             return item.value;
         });
-       return tempArr
+       return $.makeArray(tempArr)
     }
 
     // 区域全选
     $('#area-all').change(function () {
-        var _this = $(this);
-        var typeCheckedVal = valChange('areas-types');
-        if (_this[0].checked === false) {
-            $('.area-districts').map(function (index,item) {
-                item.disabled = false;
-            });
+        var typeCheckedValTemp = valChange('area-types');
+        this.checked === false ? $('.area-districts').prop('checked',false) : $('.area-districts').prop('checked',true);
+        var typeCheckedVal = typeCheckedValTemp &&　typeCheckedValTemp.length === 0 ? "'全部'" : typeCheckedValTemp.join(',');
 
-            var areaCheckedVal = valChange('area-districts');
-            getPointData(areaCheckedVal, typeCheckedVal, renderPoint)
-        } else {
-            $('.area-districts').map(function (index,item) {
-                item.checked = false;
-                item.disabled = true;
-            });
-            getPointData("'全部'", typeCheckedVal, renderPoint);
-        }
-    })
+        console.log('点击区域全选-类型传参==============',typeCheckedVal)
+        getPointData("'全部'", typeCheckedVal, renderPoint);
+    });
+
+    // 类型全选
+    $('#type-all').change(function () {
+        var areaCheckedValTemp = valChange('area-districts');
+        this.checked === false ? $('.area-types').prop('checked', false): $('.area-types').prop('checked', true);
+        var areaCheckedVal = areaCheckedValTemp &&　areaCheckedValTemp.length === 0 ? "'全部'" : areaCheckedValTemp;
+
+        console.log('点击类型全选-区域传参==============',areaCheckedVal)
+        getPointData(areaCheckedVal, "'全部'", renderPoint);
+    });
+
+    // 初次加载默认全选
+    (function defaultChecked(){
+        $('.area-districts').prop('checked', true);
+        $('.area-types').prop('checked', true);
+        $('#area-all').prop('checked', true);
+        $('#type-all').prop('checked', true);
+    })()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
