@@ -5,100 +5,82 @@ define(function(require, exports, module) {
     var navTpl = require('../views/templates/navigation.tpl')
     var nav_container = $('#nav-tpl');
     nav_container.html(navTpl);
-console.log(111)
-    //画表
-    var hot,
-        objectData = [
-        {baseDistrict:'未央区',baseDistrictId:'E-1',baseId:1,baseName:'西安文景公园',baseRegion:'西安市文景北路',baseArea:51.8,
-            baseDate:2003,basePlaneform:'不规则形', baseClassification:'四类文地',baseBasis:'西汉王夫人墓',baseUnit:'西安市政府',
-            baseRemarks:'',}
-        ],
-        container = document.getElementById('table');
-
-    hot = new Handsontable(container, {
-        data: objectData,
-        colHeaders: ['区域','地块编号','编号','名称','区位','规模','建成年代','平面形态','文地分类','依据','文保单位','备注'],
+    //画表,画表是单独的
+    var container = document.getElementById('table');
+    var hot = new Handsontable(container, {
+        data: [],
+        colHeaders: ['区域', '地块编号', '编号', '名称', '区位', '规模', '建成年代', '平面形态', '文地分类', '依据', '文保单位', '备注'],
         columns: [
             //表头与对应列的关系
-            {data:'baseDistrict'},
-            {data:'baseDistrictId'},
+            {data: 'baseDistrict'},
+            {data: 'baseDistrictId'},
             {data: 'baseId'},
-            {data:'baseName'},
-            {data:'baseRegion'},
-            {data:'baseArea'},
-            {data:'baseDate'},
-            {data:'basePlaneform'},
-            {data:'baseClassification'},
-            {data:'baseBasis'},
-            {data:'baseUnit'},
-            {data:'baseRemarks'},
+            {data: 'baseName'},
+            {data: 'baseRegion'},
+            {data: 'baseArea'},
+            {data: 'baseDate'},
+            {data: 'basePlaneform'},
+            {data: 'baseClassification'},
+            {data: 'baseBasis'},
+            {data: 'baseUnit'},
+            {data: 'baseRemarks'},
         ],
         rowHeaders: false,
-        width:1000,
-        minRows:20,
-        minCols:12,
-        colWidths:['55','65','45','85','65','45','60','70','70','70','60','50'],//x轴上的每行的距离
-        rowWidths:65,
+        width: 1000,
+        minRows: 20,
+        minCols: 12,
+        colWidths: ['55', '65', '45', '85', '65', '45', '60', '70', '70', '70', '60', '50'],//x轴上的每行的距离
+        rowWidths: 65,
         contextMenu: true,
-        manualRowResize : true,
-        manualColumnResize : true,
+        manualRowResize: true,
+        manualColumnResize: true,
     });
 
-    // 获取表格数据
-    getData(function () {
-        $.ajax({
-            url:'',
-            type:'get',
-            dataType:'json',
-            // data:JSON.stringify(Data),
-            success:function () {
-                console.log(data)
-                loadData(data)
+    var total = 0;
+    //渲染，把数据加载进表，需要通过分页插件获取鼠标点击选取的页码
+    // cur是插件函数传过来的当前页码
+        function render(cur){
+            $.ajax({
+                url: '/select',
+                type: 'get',
+                async: false,
+                dataType: 'json',
+                data: {
+                    //这个page需要是分页按钮的page
+                    page: cur
+                },
+                success: function (res) {
+                    //加载表格数据
+                    hot.loadData(res.list)
+                    total = res.pages;
+                }
+            })
+        }
+//第一次渲染时的当前页码
+    render(1)
+//bootstrap的分页插件，单独取鼠标选取的页码，传给render()
+        $('#pageUl').bootstrapPaginator({//将id为pageLimit的ul元素设置为分页插件
+            // currentPage: bpPage,//设置当前页码，没有用到
+            size: "small",//设置控件的显示大小，
+            bootstrapMajorVersion: 3,//当前版本
+            alignment: "right",//设置控件的对齐方式
+            totalPages: total ,//设置总页数.
+            itemTexts: function (type, page, current) {//控制每个操作按钮的显示文字。是个函数，有3个参数: type, page, current。
+                //通过这个参数我们就可以将操作按钮上的英文改为中文，如first-->首页，last-->尾页。
+                switch (type) {
+                    case "first": return "首页";
+                    case "prev": return "<";
+                    case "next": return ">";
+                    case "last": return "末页";
+                    case "page": return page;
+                }
+            },
+            onPageClicked: function (event, originalEvent, type, page) {//为操作按钮绑定click事件。
+                // console.log('page', page)
+                //回调函数的参数：event, originalEvent, type,page。
+               //将page参数传给渲染函数
+                render(page)
             }
-        })
-    })
-
-    //分页
-    //首页
-    $("#FirstPage").click(function () {
-        href += "&page=" + 1;
-        window.location.href = (window.location.href.indexOf("&") > 0 ? window.location.href.substr(0, window.location.href.indexOf("&")) : window.location.href) + href;
-    });
-//尾页
-    $("#LastPage").click(function () {
-        href += "&page=" + parseInt($("#AllPage").text());
-        window.location.href = (window.location.href.indexOf("&") > 0 ? window.location.href.substr(0, window.location.href.indexOf("&")) : window.location.href) + href;
-    });
-//上一页
-    $("#UpPage").click(function () {
-        if (parseInt($("#CurrentPage").text()) != 1) {
-            href += "&page=" + (parseInt($("#CurrentPage").text()) - 1);
-            window.location.href = (window.location.href.indexOf("&") > 0 ? window.location.href.substr(0, window.location.href.indexOf("&")) : window.location.href) + href;
-        }
-    });
-//下一页
-    $("#DownPage").click(function () {
-        if (parseInt($("#CurrentPage").text()) != parseInt($("#AllPage").text())) {
-            href += "&page=" + (parseInt($("#CurrentPage").text()) + 1);
-            window.location.href = (window.location.href.indexOf("&") > 0 ? window.location.href.substr(0, window.location.href.indexOf("&")) : window.location.href) + href;
-        }
-    });
-//跳转
-    $("#lnkGoto").click(function () {
-        if (parseInt($("#txtNeedPage").val().trim()) > 0 && parseInt($("#txtNeedPage").val().trim()) <= parseInt($("#AllPage").text())) {
-            href += "&page=" + parseInt($("#txtNeedPage").val().trim());
-            window.location.href = (window.location.href.indexOf("&") > 0 ? window.location.href.substr(0, window.location.href.indexOf("&")) : window.location.href) + href;
-        }
-    });
-//跳转后要重新画表的代码么？?
-    // var container = document.querySelector('#deallist');
-//     hot = new newHandsontable(container, {
-//         // colHeaders:@Html.Raw(Model.Headers ==null?"[]":Model.Headers),
-//         data:objectData,
-//         cells: function (row, col, prop) {
-//         var cellProperties = {};
-//         cellProperties.renderer = "negativeValueRenderer";
-//         return cellProperties;
-//     }
-// });
-})
+        });
+    }
+   )
