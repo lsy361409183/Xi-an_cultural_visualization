@@ -26,7 +26,7 @@ define(function(require, exports, module) {
             {data: 'baseRemarks'},
         ],
         rowHeaders: false,
-        width: 1000,
+        width: 750,
         minRows: 20,
         minCols: 12,
         colWidths: ['55', '65', '45', '85', '65', '45', '60', '70', '70', '70', '60', '50'],//x轴上的每行的距离
@@ -82,5 +82,33 @@ define(function(require, exports, module) {
                 render(page)
             }
         });
+
+//请求单选框数据
+    function getOptionData(area,type){
+        $.ajax({
+            type:'get',
+            url:'',
+            async:'false',
+            dataType:'json',
+            data:{
+                baseDistrict:area,
+                baseClassification: type,
+            },
+            success:function () {
+                hot.loadData(res.list)
+                total = res.pages;
+            }
+        })
     }
-   )
+    getOptionData('全部', '全部');
+    $('.buzhidao').change(function () {
+        var area=$('.select1 option:selected').val()
+        var type=$('.select2 option:selected').val()
+        console.log(area)
+        console.log(type)
+        getOptionData(area,type)
+    })
+
+
+
+})

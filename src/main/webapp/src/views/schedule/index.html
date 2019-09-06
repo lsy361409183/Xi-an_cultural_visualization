@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="../../libs/css/handsontable.full.min.css">
     <link rel="stylesheet" href="../../css/main.css">
     <style type="text/css">
-        .select1{
+        .select1, .select2{
             height: 25px;width: 80px;display: inline-block;
         }
         #table{
@@ -44,45 +44,50 @@
     </style>
 </head>
 <body style="overflow-x:hidden">
+<!--导航栏-->
 <div id="nav-tpl"></div>
 <div id="menubutton">
-    <table>
-        <tr style="padding: 5px 10px">
+    <table style="margin-left:70px">
+        <tr  style="padding: 5px 20px">
             <td>
-                <form style="padding: 5px 10px">
-                    <select class="select1" name="cars">
-                        <option value="volvo">临潼区</option>
-                        <option value="saab">未央区</option>
-                        <option value="fiat">莲湖区</option>
-                        <option value="audi">新城区</option>
-                        <option value="audi">碑林区</option>
-                        <option value="audi">灞桥区</option>
-                        <option value="audi">长安区</option>
-                        <option value="audi">雁塔区</option>
-                        <option value="audi">户县</option>
-                        <input type="button" value="地区">
+                <form id="area-select" class="buzhidao" style="padding: 5px 10px">
+                    <select class="select1" name="区域">
+                        <option id="area-all" class="area-districts" value="全部">全部</option>
+                        <option id="area-1" class="area-districts" value="临潼区">临潼区</option>
+                        <option id="area-2" class="area-districts" value="未央区">未央区</option>
+                        <option id="area-3" class="area-districts" value="莲湖区">莲湖区</option>
+                        <option id="area-4" class="area-districts" value="新城区">新城区</option>
+                        <option id="area-5" class="area-districts" value="碑林区">碑林区</option>
+                        <option id="area-6" class="area-districts" value="灞桥区">灞桥区</option>
+                        <option id="area-7" class="area-districts" value="长安区">长安区</option>
+                        <option id="area-8" class="area-districts" value="雁塔区">雁塔区</option>
+                        <input type="button" class=" areas-select-title" value="地区">
                     </select>
                 </form>
             </td>
             <td>
-                <form style="padding: 5px 10px">
-                    <select class="select1" name="cars" >
-                        <option value="volvo">文化精神标识用地</option>
-                        <option value="saab">纪念用地</option>
-                        <option value="fiat">宗教用地</option>
-                        <option value="audi">文化遗产用地</option>
-                        <option value="audi">文化设施用地</option>
-                        <option value="audi">文化产业用地</option>
-                        <input type="button" value="类别">
+                <form id="type-select" class="buzhidao" style="padding: 5px 10px">
+                    <select class="select2" name="文地类别" >
+                        <option class="areas-types" id="type-all" value="all">全部</option>
+                        <option class="areas-types" id="type1" value="文化精神标识用地">文化精神标识用地</option>
+                        <option class="areas-types" id="type2" value="纪念用地">纪念用地</option>
+                        <option class="areas-types" id="type3" value="宗教用地">宗教用地</option>
+                        <option class="areas-types" id="type4" value="文化遗产用地">文化遗产用地</option>
+                        <option class="areas-types" id="type5" value="文化设施用地">文化设施用地</option>
+                        <option class="areas-types" id="type6" value="文化产业用地">文化产业用地</option>
+                        <input type="button" class="areas-select-title"  value="类别">
                     </select>
                 </form>
             </td>
             <td>
-                <form style="padding: 5px 10px;width: 400px;;display: inline-block">
+                <form style="padding: 5px 10px;width: 240px;;display: inline-block">
                     <input type="text" placeholder="按文地名称模糊查询" style="display: inline;height: 23px;width: 150px;border-width: 1px;padding: 0
 ;border-style: solid">
                     <input type="button" value="搜索" style=" height: 25px;width:60px;display: inline-block;margin-left:-4px">
                 </form>
+            </td>
+            <td>
+                <input type="button" value="导出Excel表格">
             </td>
         </tr>
     </table>
