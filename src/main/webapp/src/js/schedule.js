@@ -46,6 +46,8 @@ define(function(require, exports, module) {
                 async: false,
                 dataType: 'json',
                 data: {
+                    baseDistrict:全部,
+                    baseClassification: 全部,
                     //这个page需要是分页按钮的page
                     page: cur
                 },
@@ -79,20 +81,25 @@ define(function(require, exports, module) {
                 // console.log('page', page)
                 //回调函数的参数：event, originalEvent, type,page。
                //将page参数传给渲染函数
-                render(page)
+                if ( ($('.select1 option:selected').val()||$('.select2 option:selected').val() )==="全部"){
+                    render(page)
+                }else{
+                    getOptionData(page)
+                }
             }
         });
 
 //请求单选框数据
-    function getOptionData(area,type){
+    function getOptionData(area,type,page){
         $.ajax({
             type:'get',
-            url:'',
+            url:'/region',
             async:'false',
             dataType:'json',
             data:{
                 baseDistrict:area,
                 baseClassification: type,
+                page:page
             },
             success:function () {
                 hot.loadData(res.list)
@@ -100,7 +107,7 @@ define(function(require, exports, module) {
             }
         })
     }
-    getOptionData('全部', '全部');
+    getOptionData('全部', '全部','1');
     $('.buzhidao').change(function () {
         var area=$('.select1 option:selected').val()
         var type=$('.select2 option:selected').val()
