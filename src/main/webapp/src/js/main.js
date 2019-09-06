@@ -1,6 +1,6 @@
 define(function (require, exports, module) {
     console.log(module)
-    var $ = require('jquery');
+    // var $ = require('jquery');
     var indexCss = require('css/index.css');
     var resetCss = require('css/reset.css');
     console.log($('#testDiv'))
