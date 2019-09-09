@@ -55,7 +55,36 @@ define(function(require, exports, module){
     });
 
 
+    // 创建点
+    var tempPointArr = pointData.filter(function (item) {
+        return item.basePoint !== null;
+    });
+    var pointArr = tempPointArr.map(function (item) {
+        var pointCoordArr = item.basePoint.split(',');
+        return new ol.Feature(new ol.geom.Point(
+            [Number(pointCoordArr[0]),Number(pointCoordArr[1])]
+        ))
+    });
+    var pointSource = new ol.source.Vector({
+        features: pointArr
+    });
 
+    var cultural_point = new ol.layer.Vector({
+        source: pointSource,
+        zIndex: 1,
+        style: new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 5,
+                stroke: new ol.style.Stroke({
+                    color: '#fff'
+                }),
+                fill: new ol.style.Fill({
+                    color: '#FF0033'
+                })
+            })
+        })
+    });
+    map.addLayer(cultural_point)
 
 
 
@@ -114,7 +143,7 @@ define(function(require, exports, module){
             source: new ol.source.Vector({
                 features: (new ol.format.GeoJSON()).readFeatures(data)
             }),
-            isBaseLayer: true
+            zIndex: 0
         });
        var test =  map.getLayerGroup();
        console.log('test', test)
@@ -123,23 +152,24 @@ define(function(require, exports, module){
 
     // 渲染文地点
     function renderPoint (data) {
+        map.removeLayer(cultural_point)
         // 创建点
-        var tempPointArr = data.filter(function (item) {
+        tempPointArr = data.filter(function (item) {
             return item.basePoint !== null;
         });
-        var pointArr = tempPointArr.map(function (item) {
+        pointArr = tempPointArr.map(function (item) {
             var pointCoordArr = item.basePoint.split(',');
             return new ol.Feature(new ol.geom.Point(
                 [Number(pointCoordArr[0]),Number(pointCoordArr[1])]
             ))
         });
-        var pointSource = new ol.source.Vector({
+        pointSource = new ol.source.Vector({
             features: pointArr
         });
 
-        var cultural_point = new ol.layer.Vector({
+        cultural_point = new ol.layer.Vector({
             source: pointSource,
-            isBaseLayer:false,
+            zIndex: 1,
             style: new ol.style.Style({
                 image: new ol.style.Circle({
                     radius: 5,
@@ -152,7 +182,6 @@ define(function(require, exports, module){
                 })
             })
         });
-        map.removeLayer(cultural_point)
         map.addLayer(cultural_point)
     }
 
