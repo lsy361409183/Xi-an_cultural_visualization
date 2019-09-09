@@ -238,7 +238,7 @@ define(function(require, exports, module){
     $('#area-all').change(function () {
         var typeCheckedValTemp = valChange('area-types');
         this.checked === false ? $('.area-districts').prop('checked',false) : $('.area-districts').prop('checked',true);
-        var typeCheckedVal = typeCheckedValTemp &&　typeCheckedValTemp.length === 0 ? "'全部'" : typeCheckedValTemp.join(',');
+        var typeCheckedVal = typeCheckedValTemp &&　typeCheckedValTemp.length === 0 ? "'全部'" : typeCheckedValTemp;
 
         console.log('点击区域全选-类型传参==============',typeCheckedVal)
         getPointData("'全部'", typeCheckedVal, renderPoint);
