@@ -39,17 +39,17 @@ define(function(require, exports, module) {
     var total = 0;
     //渲染，把数据加载进表，需要通过分页插件获取鼠标点击选取的页码
     // cur是插件函数传过来的当前页码
-        function render(cur){
+        function render(page){
             $.ajax({
                 url: '/select',
                 type: 'get',
                 async: false,
                 dataType: 'json',
                 data: {
-                    baseDistrict:全部,
-                    baseClassification: 全部,
+                    page: page,
+                    baseDistrict:"全部",
+                    baseClassification: "全部",
                     //这个page需要是分页按钮的page
-                    page: cur
                 },
                 success: function (res) {
                     //加载表格数据
@@ -81,14 +81,14 @@ define(function(require, exports, module) {
                 // console.log('page', page)
                 //回调函数的参数：event, originalEvent, type,page。
                //将page参数传给渲染函数
-                if ( ($('.select1 option:selected').val()||$('.select2 option:selected').val() )==="全部"){
+               // 单选框的选择都是全部的时候==没有点击单选框，且运算
+                if ( ($('.select1 option:selected').val())&&($('.select2 option:selected').val() )=='全部'){
                     render(page)
                 }else{
                     getOptionData(page)
                 }
             }
         });
-
 //请求单选框数据
     function getOptionData(area,type,page){
         $.ajax({
@@ -101,19 +101,20 @@ define(function(require, exports, module) {
                 baseClassification: type,
                 page:page
             },
-            success:function () {
+            success:function (res) {
                 hot.loadData(res.list)
                 total = res.pages;
             }
         })
     }
-    getOptionData('全部', '全部','1');
+    getOptionData("全部", "全部",'1');
     $('.buzhidao').change(function () {
-        var area=$('.select1 option:selected').val()
-        var type=$('.select2 option:selected').val()
+        var area=$('.select1 option:selected').val();
+        var type=$('.select2 option:selected').val();
+        var page=1
         console.log(area)
         console.log(type)
-        getOptionData(area,type)
+        getOptionData(area,type,page)
     })
 
 
