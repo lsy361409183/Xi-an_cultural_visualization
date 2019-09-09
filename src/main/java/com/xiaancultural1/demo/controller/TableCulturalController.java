@@ -18,12 +18,14 @@ public class TableCulturalController {
     //根据页码分页，写死20条，全部记录
     @RequestMapping("/select")
     @ResponseBody
-    public PageInfo<tableBase> lists(@RequestParam(value = "page") int page){
+    public PageInfo<tableBase> lists(@RequestParam(value = "page") int page,
+                                     @RequestParam(value = "baseDistrict",defaultValue = "全部")String baseDistrict,
+                                     @RequestParam(value = "baseClassification",defaultValue = "全部")String baseClassification){
 //        设置分页规则
        // PageHelper.clearPage();
         PageHelper.startPage(page,20);
 //        返回所有分页信息参数为查询所有记录的信息
-        PageInfo<tableBase> pageInfo = new PageInfo<>(tableCulturalService.selectAllTableWithPage());
+        PageInfo<tableBase> pageInfo = new PageInfo<>(tableCulturalService.selectAllTableWithPage(baseDistrict,baseClassification));
         return pageInfo;
 
     }

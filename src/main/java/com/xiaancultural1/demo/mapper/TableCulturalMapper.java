@@ -13,7 +13,8 @@ import java.util.List;
 public interface TableCulturalMapper {
 //
 //
-    List<tableBase> selectAllTable();
+    List<tableBase> selectAllTable(@Param("baseDistrict") String baseDistrict,
+                                   @Param("baseClassification") String baseClassification);
 
     List<tableBase> selectTableWithRegionAndClassification(@Param("baseDistrict") String baseDistrict,
                                                            @Param("baseClassification") String baseClassification);

@@ -13,8 +13,8 @@ public class TableCulturalService {
     @Autowired
     private TableCulturalMapper tableCulturalMapper;
 
-    public Page<tableBase> selectAllTableWithPage() {
-        return (Page<tableBase>) tableCulturalMapper.selectAllTable();
+    public Page<tableBase> selectAllTableWithPage(String baseDistrict,String baseClassification) {
+        return (Page<tableBase>) tableCulturalMapper.selectAllTable(baseDistrict,baseClassification);
     }
 
     public Page<tableBase> selectTableWithRegionAndClassificationWithPage(String baseDistrict,String baseClassification){
