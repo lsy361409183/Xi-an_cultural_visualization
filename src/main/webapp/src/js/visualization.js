@@ -95,10 +95,12 @@ define(function(require, exports, module){
     // 请求文地点数据
     function getPointData(areas, types, render) {
         var params = {
-            baseDistrict: areas === "'全部'"? areas : areas.map(function (item) {
+            baseDistrict: areas === "'全部'"? areas : JSON.stringify(areas.map(function (item) {
                 return item
-            }),
-            baseClassification: types
+            })),
+            baseClassification: types === "'全部'"? types : JSON.stringify(types.map(function (item) {
+                return item
+            }))
         };
         $.ajax({
             type: 'post',
