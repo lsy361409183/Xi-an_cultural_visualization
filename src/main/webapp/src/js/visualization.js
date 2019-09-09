@@ -36,13 +36,6 @@ define(function(require, exports, module){
         pointData = [],
         cultural_mapData = {};
 
-    /**
-     * areaCheckedList             区域复选列表
-     * typeCheckedList             文地类型复选列表
-     *
-     * */
-
-
     // 设置底图投影
     var projection = new ol.proj.Projection({
         code: 'EPSG:4326',
@@ -95,12 +88,12 @@ define(function(require, exports, module){
     // 请求文地点数据
     function getPointData(areas, types, render) {
         var params = {
-            baseDistrict: areas === "'全部'"? areas : JSON.stringify(areas.map(function (item) {
-                return item
-            })),
-            baseClassification: types === "'全部'"? types : JSON.stringify(types.map(function (item) {
-                return item
-            }))
+            baseDistrict: areas === "'全部'"? areas : areas.map(function (item) {
+                return "\'" + item + "\'"
+            }).join(','),
+            baseClassification: types === "'全部'"? types : types.map(function (item) {
+                return "\'" + item + "\'"
+            }).join(',')
         };
         $.ajax({
             type: 'post',
@@ -123,6 +116,8 @@ define(function(require, exports, module){
             }),
             isBaseLayer: true
         });
+       var test =  map.getLayerGroup();
+       console.log('test', test)
         map.addLayer(vectorLayer);
     }
 
@@ -157,6 +152,7 @@ define(function(require, exports, module){
                 })
             })
         });
+        map.removeLayer(cultural_point)
         map.addLayer(cultural_point)
     }
 
@@ -196,6 +192,10 @@ define(function(require, exports, module){
         var areaCheckedVal = valChange('area-districts');
         var typeCheckedVal = valChange('area-types');
         console.log('点击区域复选参数===========================',areaCheckedVal,typeCheckedVal);
+
+        // var temp = JSON.stringify(areaCheckedVal);
+        // console.log('temp',temp)
+        // console.log('parse', JSON.parse(temp))
 
         if (areaCheckedVal.length === 7) {
             $('#area-all').prop('checked', true);

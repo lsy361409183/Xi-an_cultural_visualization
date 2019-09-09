@@ -22,4 +22,5 @@ define(function (require, exports, module) {
     $(window).resize(function(){
         setHeight();
     })
+
 })
