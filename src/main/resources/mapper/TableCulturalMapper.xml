@@ -24,5 +24,19 @@
     <select id="selectTableWithRegionAndClassification" resultMap="Base">
         select * from public."tb_base_data" where base_district in(${baseDistrict}) and base_classification in(${baseClassification})
     </select>
+    <!--根据区域进行查询-->
+    <select id="selectTableByRegion" resultMap="Base">
+        select * from public."tb_base_data" where base_district in(${baseDistrict})
+    </select>
+    <!--根据类别进行查询-->
+    <select id="selectTableByClassification" resultMap="Base">
+        select * from public."tb_base_data" where base_classification in(${baseClassification})
+    </select>
+
+    <!--根据名称模糊查询文地信息-->
+    <select id="selectTableFuzzySearch" resultMap="Base">
+        select * from public."tb_base_data"
+        where base_name REGEXP '%${fuzzyName}%'
+    </select>
 
 </mapper>

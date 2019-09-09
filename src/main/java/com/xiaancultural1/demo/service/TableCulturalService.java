@@ -18,8 +18,18 @@ public class TableCulturalService {
     }
 
     public Page<tableBase> selectTableWithRegionAndClassificationWithPage(String baseDistrict,String baseClassification){
-
         return (Page<tableBase>) tableCulturalMapper.selectTableWithRegionAndClassification(baseDistrict,baseClassification);
+    }
+
+    public Page<tableBase> selectTableByRegion(String baseDistrict){
+        return (Page<tableBase>) tableCulturalMapper.selectTableByRegion(baseDistrict);
+    }
+
+    public Page<tableBase> selectTableByClassification(String baseClassification){
+        return (Page<tableBase>) tableCulturalMapper.selectTableByClassification(baseClassification);
+    }
+    public Page<tableBase> selectTableFuzzySearch(String fuzzyName){
+        return (Page<tableBase>) tableCulturalMapper.selectTableFuzzySearch(fuzzyName);
     }
 
 
