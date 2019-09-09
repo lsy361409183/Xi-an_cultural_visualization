@@ -39,82 +39,75 @@ define(function(require, exports, module) {
     var total = 0;
     //渲染，把数据加载进表，需要通过分页插件获取鼠标点击选取的页码
     // cur是插件函数传过来的当前页码
-        function render(page){
+        function render(area,type,page){
             $.ajax({
-                url: '/select',
+                url: '/region',
                 type: 'get',
                 async: false,
                 dataType: 'json',
                 data: {
                     page: page,
-                    baseDistrict:"全部",
-                    baseClassification: "全部",
-                    //这个page需要是分页按钮的page
+                    baseDistrict:"\'" + area + "\'",
+                    baseClassification: "\'" + type + "\'",
                 },
                 success: function (res) {
                     //加载表格数据
+                    console.log(res)
                     hot.loadData(res.list)
                     total = res.pages;
                 }
             })
+            $('#pageUl').bootstrapPaginator({//将id为pageLimit的ul元素设置为分页插件
+                // currentPage: bpPage,//设置当前页码，没有用到
+                size: "small",//设置控件的显示大小，
+                bootstrapMajorVersion: 3,//当前版本
+                alignment: "right",//设置控件的对齐方式
+                totalPages: total ,//设置总页数.
+                itemTexts: function (type, page, current) {//控制每个操作按钮的显示文字。是个函数，有3个参数: type, page, current。
+                    //通过这个参数我们就可以将操作按钮上的英文改为中文，如first-->首页，last-->尾页。
+                    switch (type) {
+                        case "first": return "首页";
+                        case "prev": return "<";
+                        case "next": return ">";
+                        case "last": return "末页";
+                        case "page": return page;
+                    }
+                },
+            })
         }
 //第一次渲染时的当前页码
-    render(1)
+    render("全部", "全部",'1')
 //bootstrap的分页插件，单独取鼠标选取的页码，传给render()
         $('#pageUl').bootstrapPaginator({//将id为pageLimit的ul元素设置为分页插件
-            // currentPage: bpPage,//设置当前页码，没有用到
-            size: "small",//设置控件的显示大小，
-            bootstrapMajorVersion: 3,//当前版本
-            alignment: "right",//设置控件的对齐方式
-            totalPages: total ,//设置总页数.
-            itemTexts: function (type, page, current) {//控制每个操作按钮的显示文字。是个函数，有3个参数: type, page, current。
-                //通过这个参数我们就可以将操作按钮上的英文改为中文，如first-->首页，last-->尾页。
-                switch (type) {
-                    case "first": return "首页";
-                    case "prev": return "<";
-                    case "next": return ">";
-                    case "last": return "末页";
-                    case "page": return page;
-                }
-            },
+            // // currentPage: bpPage,//设置当前页码，没有用到
+            // size: "small",//设置控件的显示大小，
+            // bootstrapMajorVersion: 3,//当前版本
+            // alignment: "right",//设置控件的对齐方式
+            // totalPages: total ,//设置总页数.
+            // itemTexts: function (type, page, current) {//控制每个操作按钮的显示文字。是个函数，有3个参数: type, page, current。
+            //     //通过这个参数我们就可以将操作按钮上的英文改为中文，如first-->首页，last-->尾页。
+            //     switch (type) {
+            //         case "first": return "首页";
+            //         case "prev": return "<";
+            //         case "next": return ">";
+            //         case "last": return "末页";
+            //         case "page": return page;
+            //     }
+            // },
             onPageClicked: function (event, originalEvent, type, page) {//为操作按钮绑定click事件。
-                // console.log('page', page)
-                //回调函数的参数：event, originalEvent, type,page。
-               //将page参数传给渲染函数
-               // 单选框的选择都是全部的时候==没有点击单选框，且运算
-                if ( ($('.select1 option:selected').val())&&($('.select2 option:selected').val() )=='全部'){
-                    render(page)
-                }else{
-                    getOptionData(page)
-                }
+                page:page;
+                var a=$('.select1 option:selected').val();
+              var b=$('.select2 option:selected').val();
+                    render(a,b,page)
             }
         });
-//请求单选框数据
-    function getOptionData(area,type,page){
-        $.ajax({
-            type:'get',
-            url:'/region',
-            async:'false',
-            dataType:'json',
-            data:{
-                baseDistrict:area,
-                baseClassification: type,
-                page:page
-            },
-            success:function (res) {
-                hot.loadData(res.list)
-                total = res.pages;
-            }
-        })
-    }
-    getOptionData("全部", "全部",'1');
     $('.buzhidao').change(function () {
         var area=$('.select1 option:selected').val();
         var type=$('.select2 option:selected').val();
         var page=1
         console.log(area)
         console.log(type)
-        getOptionData(area,type,page)
+        render(area,type,page)
     })
 
 
