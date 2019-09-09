@@ -225,16 +225,16 @@ define(function(require, exports, module){
         // var temp = JSON.stringify(areaCheckedVal);
         // console.log('temp',temp)
         // console.log('parse', JSON.parse(temp))
-
+        var types = typeCheckedVal.length === 6 || typeCheckedVal==0? "'全部'" : typeCheckedVal
         if (areaCheckedVal.length === 7) {
             $('#area-all').prop('checked', true);
-            getPointData("'全部'", typeCheckedVal, renderPoint)
+            getPointData("'全部'", types, renderPoint)
         } else if (areaCheckedVal.length === 0) {
             $('#area-all').prop('checked', false);
-            getPointData("'全部'",typeCheckedVal, renderPoint)
+            getPointData("'全部'",types, renderPoint)
         } else {
             $('#area-all').prop('checked', false);
-            getPointData(areaCheckedVal,typeCheckedVal, renderPoint)
+            getPointData(areaCheckedVal,types, renderPoint)
         }
     });
 
@@ -244,16 +244,16 @@ define(function(require, exports, module){
         var areaCheckedVal = valChange('area-districts');
         var typeCheckedVal = valChange('area-types');
         console.log('点击类型复选参数===========================',areaCheckedVal,typeCheckedVal);
-
+        var areas = areaCheckedVal.length === 7 || areaCheckedVal===0? "'全部'" : areaCheckedVal
         if (typeCheckedVal.length === 6) {
             $('#type-all').prop('checked', true);
-            getPointData(areaCheckedVal, "'全部'", renderPoint)
+            getPointData(areas, "'全部'", renderPoint)
         } else if (typeCheckedVal.length === 0) {
             $('#type-all').prop('checked', false);
-            getPointData(areaCheckedVal,"'全部'", renderPoint)
+            getPointData(areas,"'全部'", renderPoint)
         } else {
             $('#type-all').prop('checked', false);
-            getPointData(areaCheckedVal,typeCheckedVal, renderPoint)
+            getPointData(areas,typeCheckedVal, renderPoint)
         }
     });
     function valChange (type) {
@@ -267,7 +267,8 @@ define(function(require, exports, module){
     $('#area-all').change(function () {
         var typeCheckedValTemp = valChange('area-types');
         this.checked === false ? $('.area-districts').prop('checked',false) : $('.area-districts').prop('checked',true);
-        var typeCheckedVal = typeCheckedValTemp &&　typeCheckedValTemp.length === 0 ? "'全部'" : typeCheckedValTemp;
+        var typeCheckedVal = typeCheckedValTemp &&　typeCheckedValTemp.length === 0 || typeCheckedValTemp.length===6
+            ? "'全部'" : typeCheckedValTemp;
 
         console.log('点击区域全选-类型传参==============',typeCheckedVal)
         getPointData("'全部'", typeCheckedVal, renderPoint);
@@ -277,7 +278,8 @@ define(function(require, exports, module){
     $('#type-all').change(function () {
         var areaCheckedValTemp = valChange('area-districts');
         this.checked === false ? $('.area-types').prop('checked', false): $('.area-types').prop('checked', true);
-        var areaCheckedVal = areaCheckedValTemp &&　areaCheckedValTemp.length === 0 ? "'全部'" : areaCheckedValTemp;
+        var areaCheckedVal = areaCheckedValTemp &&　areaCheckedValTemp.length === 0 || areaCheckedValTemp.length===7
+            ? "'全部'" : areaCheckedValTemp;
 
         console.log('点击类型全选-区域传参==============',areaCheckedVal)
         getPointData(areaCheckedVal, "'全部'", renderPoint);
