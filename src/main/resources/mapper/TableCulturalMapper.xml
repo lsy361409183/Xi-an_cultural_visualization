@@ -36,7 +36,7 @@
     <!--根据名称模糊查询文地信息-->
     <select id="selectTableFuzzySearch" resultMap="Base">
         select * from public."tb_base_data"
-        where base_name REGEXP '%${fuzzyName}%'
+        where base_name like CONCAT(CONCAT('%',#{fuzzyName},'%'))
     </select>
 
 </mapper>
