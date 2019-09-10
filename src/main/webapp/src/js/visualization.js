@@ -267,13 +267,27 @@ define(function(require, exports, module){
 
     // 区域全选
     $('#area-all').change(function () {
-        var typeCheckedValTemp = valChange('area-types');
-        this.checked === false ? $('.area-districts').prop('checked',false) : $('.area-districts').prop('checked',true);
-        var typeCheckedVal = typeCheckedValTemp &&　typeCheckedValTemp.length === 0 || typeCheckedValTemp.length===6
-            ? "'全部'" : typeCheckedValTemp;
+        var poi=$('#POI').val();
+        if(poi == null||poi == ""||poi == undefined) {
+            var typeCheckedValTemp = valChange('area-types');
+            this.checked === false ? $('.area-districts').prop('checked', false) : $('.area-districts').prop('checked', true);
+            var typeCheckedVal = typeCheckedValTemp && typeCheckedValTemp.length === 0 || typeCheckedValTemp.length === 6
+                ? "'全部'" : typeCheckedValTemp;
 
-        console.log('点击区域全选-类型传参==============',typeCheckedVal)
-        getPointData("'全部'", typeCheckedVal, renderPoint);
+            console.log('点击区域全选-类型传参==============', typeCheckedVal)
+            getPointData("'全部'", typeCheckedVal, renderPoint);
+        }
+        else {
+            // if($('#area-all').prop('checked',true)){
+            //     $('.area-districts').prop('checked',true)
+            // }
+            // if($('#area-all').prop('checked',false)){
+            //     $('.area-districts').prop('checked',false)
+            // }
+            var typeCheckedValTemp = valChange('area-types');
+            this.checked === false ? $('.area-districts').
+            prop('checked', false) : $('.area-districts').prop('checked', true);
+        }
     });
 
     // 类型全选
@@ -306,7 +320,6 @@ define(function(require, exports, module){
         var area=areaCheckedVal.map(function (item) {
             return "\'" + item + "\'"}).join(',')
         console.log('转变后的区域是',area)
-
         var params = {
             baseDistrict: area,
             baseName: poi
