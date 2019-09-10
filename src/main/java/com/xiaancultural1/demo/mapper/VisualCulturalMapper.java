@@ -20,4 +20,8 @@ public interface VisualCulturalMapper {
     List<visualBase> selectInfoByRegion(@Param("baseDistrict")String baseDistrict);
     //类别筛选
     List<visualBase> selectInfoByType(@Param("baseClassification")String baseClassification);
+
+    // 模糊查询文地点
+    List<visualBase> selectInfoBySearchText(@Param("baseName") String baseName,
+                                            @Param("baseDistrict") String baseDistrict);
 }

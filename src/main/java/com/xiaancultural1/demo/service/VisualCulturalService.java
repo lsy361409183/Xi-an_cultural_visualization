@@ -34,4 +34,9 @@ public class VisualCulturalService {
     public List<visualBase> selectInfoByType(String baseClassification){
         return visualCulturalMapper.selectInfoByType(baseClassification);
     }
+
+    // 模糊查询
+    public List<visualBase> selectInfoBySearchText(String baseName, String baseDistrict){
+        return visualCulturalMapper.selectInfoBySearchText(baseName, baseDistrict);
+    }
 }

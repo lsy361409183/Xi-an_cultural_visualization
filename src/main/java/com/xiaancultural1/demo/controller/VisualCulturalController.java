@@ -1,12 +1,8 @@
 package com.xiaancultural1.demo.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.xiaancultural1.demo.pojo.MapData;
 import com.xiaancultural1.demo.pojo.visualBase;
 import com.xiaancultural1.demo.service.VisualCulturalService;
-import jdk.nashorn.internal.parser.JSONParser;
-import net.sf.json.JSONArray;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @RestController
@@ -85,5 +79,19 @@ public class VisualCulturalController {
         } else {
             return visualCulturalService.selectInfo(baseDistrict, baseClassification);
         }
+    }
+
+    /**
+     * 关键字模糊查询
+     * baseName             搜索关键字
+     * baseDistrict           区域
+     * */
+    @RequestMapping("/getSearchData")
+    @ResponseBody
+    public List<visualBase> selectInfoBySearchText(@RequestParam(value = "baseName", required = false) String baseName,
+                                                   @RequestParam(value = "baseDistrict", required = false) String baseDistrict,
+                                                   HttpServletRequest request) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("UTF-8");
+        return visualCulturalService.selectInfoBySearchText(baseName, baseDistrict);
     }
 }
