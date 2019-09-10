@@ -217,7 +217,8 @@ define(function(require, exports, module){
 
     // 区域复选点击事件
     $('.area-districts').on('click',function (e) {
-
+        var poi=$('#POI').val();
+        if(poi == null||poi == ""||poi == undefined){
         var areaCheckedVal = valChange('area-districts');
         var typeCheckedVal = valChange('area-types');
         console.log('点击区域复选参数===========================',areaCheckedVal,typeCheckedVal);
@@ -234,7 +235,8 @@ define(function(require, exports, module){
             getPointData("'全部'",types, renderPoint)
         } else {
             $('#area-all').prop('checked', false);
-            getPointData(areaCheckedVal,types, renderPoint)
+            getPointData(areaCheckedVal, types, renderPoint)
+        }
         }
     });
 
@@ -293,10 +295,52 @@ define(function(require, exports, module){
         $('#type-all').prop('checked', true);
     })()
 
+    //POI搜索
+    // 请求POI拿到文地数据
+    function POISelect(render) {
+        var poi=$('#POI').val();
+        console.log('poi',poi)
 
+        var areaCheckedVal = valChange('area-districts');
+            console.log('区域是',areaCheckedVal)
+        var area=areaCheckedVal.map(function (item) {
+            return "\'" + item + "\'"}).join(',')
+        console.log('转变后的区域是',area)
 
-
-
+        var params = {
+            baseDistrict: area,
+            baseName: poi
+        };
+        $.ajax({
+            type:"get",
+            url:"/getSearchData",
+            data: params,
+            dataType:"json",
+            success:function(res){
+                pointData = res;
+                render(res)
+            }
+        });
+    }
+    //点击搜索，调用方法
+    $('#POIName').on('click',function (){
+        POISelect(renderPoint)
+    })
+    //改变焦点 类别变暗
+    $("#POI").on('input propertychange',function(){
+        var poi=$('#POI').val();
+        console.log(poi)
+        if(!(poi == null||poi == ""||poi == undefined))
+        {
+            $('.area-types').prop("disabled",true);
+            $('#type-all').prop("disabled",true);
+        }
+        else
+        {
+            $('.area-types').prop("disabled",false);
+            $('#type-all').prop("disabled",false);
+        }
+    })
 
 
 
