@@ -2,11 +2,12 @@ package com.xiaancultural1.demo.pojo;
 
 public class DomesticData {
 //    private int city_id;
-    private String name;
+    private String city_name;
     private double city_area;
     private double city_cultural_rate;
     private String city_province;
     private String city_capital;
+    private String province_area;
 
 //    public Integer getCity_id() {
 //        return city_id;
@@ -15,11 +16,11 @@ public class DomesticData {
 //        this.city_id = city_id;
 //    }
 
-    public String getName() {
-        return name;
+    public String getCity_name() {
+        return city_name;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String city_name) {
+        this.city_name = city_name;
     }
 
     public double getCity_area() {
@@ -50,5 +51,11 @@ public class DomesticData {
         this.city_capital = city_capital;
     }
 
+    public String getProvince_area() {
+        return province_area;
+    }
+    public void setProvince_area(String province_area) {
+        this.province_area = province_area;
+    }
 
 }

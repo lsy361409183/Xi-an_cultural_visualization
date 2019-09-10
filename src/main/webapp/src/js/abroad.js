@@ -6,3 +6,4 @@ define(function(require, exports, module){
     var nav_container = $('#nav-tpl');
     nav_container.html(navTpl);
 });
+

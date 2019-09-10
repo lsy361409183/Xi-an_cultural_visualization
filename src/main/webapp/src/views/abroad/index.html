@@ -11,6 +11,8 @@
     <script type="text/javascript" src="../../libs/seajs-css.js"></script>
     <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../libs/ol.js"></script>
+    <script type="text/javascript">seajs.use('../../js/abroad')</script>
+    <script src="../../libs/echarts.js"></script>
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/reset.css" />
     <link rel="stylesheet" href="../../libs/css/ol.css" />
@@ -25,7 +27,7 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100%;
+            height: 99%;
             z-index: 3;
         }
         table{
@@ -40,16 +42,18 @@
         }
         #table{
             z-index: 999;
+            width: 230px;
+
         }
         #info01{
             z-index: 966;
-            top: 520px;
-            width: 160px;
+            top: 50%;
+            width: 200px;
         }
         #info02{
             width: 20px;
             z-index: 966;
-            top: 80px;
+            top: 10%;
         }
         #info03{
             width: 200px;
@@ -62,13 +66,29 @@
             height: 32px;
             z-index: 966;
         }
+        #info05{
+            top: 25%;
+            z-index: 966;
+            display: none;
+
+        }
+        /*#main{*/
+            /*z-index: 966;*/
+            /*left: 20px;*/
+            /*display: none;*/
+        /*}*/
+
 
     </style>
 </head>
 <body>
 <div id="nav-tpl"></div>
-
 <div id="container" class="container">
+
+    <div id="info05" class="info">
+    <div class="main" id="main" style="width: 250px;height:200px;left:15px"></div></div>
+
+
     <div id="info01" class="info">
     <table id="table" align="center">
         <caption align="top">国内个城市文地数据</caption>
@@ -160,7 +180,7 @@
             <option>上海</option>
         </select>
 
-        <button type="button" id="onclickView">对比查看</button>
+        <button type="submit" id="onclickView" onclick="btn()">对比查看</button>
 
     </div>
 
@@ -173,8 +193,12 @@
 <script src="//webapi.amap.com/loca?v=1.3.0&key=2f80880dccbc4291d4c02e7964c81ed5"></script>
 <script type="text/javascript" src="../../libs/jquery-3.3.1.min.js"></script>
 <script src="../../libs/mainIcon.js?v=1.0.11"></script>
+<script src="../../js/abroad.js"></script>
+
 <!--<script src="//a.amap.com/Loca/static/dist/jquery.min.js"></script>-->
 <script>
+
+
     function load_val2() {
         var result;
         $.ajax({
@@ -187,21 +211,9 @@
         });
         return result;
     }
-data = load_val2();
+    data = load_val2();
     console.log(data);
 
-    var districts = [
-        { 'name': '北京市', 'center': '116.407394,39.904211' ,'value':'5'},
-        { 'name': '天津市', 'center': '117.200983,39.084158' ,'value':'1.87'},
-        { 'name': '杭州', 'center': '120.210911,30.253831' ,'value':'6.22'},
-        { 'name': '太原', 'center': '112.555821,37.877218' ,'value':'0.44'},
-        { 'name': '广州', 'center': '113.273154,23.138792' ,'value':'1.72'},
-        { 'name': '沈阳', 'center': '123.463621,41.674994' ,'value':'0.87'},
-        { 'name': '郑州', 'center': '113.669935,34.753203' ,'value':'0.75'},
-        { 'name': '西安', 'center': '108.955664,34.354183' ,'value':'11.76'},
-        { 'name': '深圳', 'center': '0,0' ,'value':'1.73'},
-        { 'name': '上海', 'center': '121.482265,31.237164' ,'value':'0.82'}
-    ];
 
     var map = new AMap.Map('container', {
         mapStyle: 'amap://styles/dark',
@@ -236,9 +248,9 @@ data = load_val2();
         infoWin.open(map, lnglat);
         var content = [
             '行政区：' + property.name,
-            '<br>',
-            '文地率：' + property.center,
             '<br>'
+            // '面积：' + property.center,
+            // '<br>'
         ];
         infoWin.setContent(content.join(''));
     });
@@ -249,20 +261,20 @@ data = load_val2();
         vLayer.goto(code);
     }
     AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
-    new SimpleMarker({
-        iconLabel: '北京市',
-        //自定义图标地址
-        iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+        new SimpleMarker({
+            iconLabel: '北京市',
+            //自定义图标地址
+            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
 
-        //设置基点偏移
-        offset: new AMap.Pixel(-19, -60),
+            //设置基点偏移
+            offset: new AMap.Pixel(-19, -60),
 
-        map: map,
+            map: map,
 
-        showPositionPoint: true,
-        position: new AMap.LngLat(116.407394,39.904211),
-        zIndex: 100
-    });
+            showPositionPoint: true,
+            position: new AMap.LngLat(116.407394,39.904211),
+            zIndex: 100
+        });
         new SimpleMarker({
             iconLabel: '天津市',
             //自定义图标地址
@@ -418,11 +430,105 @@ data = load_val2();
     vLayer.render();
 
 
+    var selectchart01 = document.getElementById('info03');
+    var selectchart02 = document.getElementById('info04');
+    var selectCity01;
+    var selectCity02;
+    var selectCityName01;
+    var selectCityName02=null;
 
+    selectchart01.onchange = function () {
+        console.log('当前选中的选项的value值:' + selectchart01.options[selectchart01.selectedIndex].value);
+        console.log('当前选中的选项的text值:' + selectchart01.options[selectchart01.selectedIndex].innerText);
+
+        for (var i = 0; i <data.length; i++) {
+            console.log(data[i].city_name == selectchart01.options[selectchart01.selectedIndex].innerText);
+            console.log(data[i].city_name);
+            console.log(data[i].city_cultural_rate);
+            if(data[i].city_name == selectchart02.options[selectchart02.selectedIndex].innerText){
+                selectCity02 = data[i].city_cultural_rate;
+                selectCityName02 = data[i].city_name;
+            }
+            selectCityName01 = selectchart01.options[selectchart01.selectedIndex].value;
+            selectCity01 = data[i].city_cultural_rate;
+        }
+
+    };
+    selectchart02.onchange = function(){
+        console.log('当前选中的选项的value值:' + selectchart02.options[selectchart02.selectedIndex].value);
+        console.log('当前选中的选项的text值:' + selectchart02.options[selectchart02.selectedIndex].innerText);
+
+        for (var i = 0; i <data.length; i++) {
+            console.log(data[i].city_name == selectchart02.options[selectchart02.selectedIndex].innerText);
+            console.log(data[i].city_name);
+            console.log('aaa',selectCity02);
+            console.log(data[i].city_cultural_rate);
+            if(data[i].city_name == selectchart02.options[selectchart02.selectedIndex].innerText){
+                selectCity02 = data[i].city_cultural_rate;
+                selectCityName02 = data[i].city_name;
+            }
+
+        }
+        console.log('bbb',selectCity02);
+
+    };
+
+
+
+    //文地对比图表
+    var myChart = echarts.init(document.getElementById('main'));
+
+
+
+
+    // 使用刚指定的配置项和数据显示图表。
+    // myChart.setOption(option);
+
+
+
+
+
+    // console.log($("#selectInfo03").val());
+    // var onclickView = document.getElementById(onclickView);
+    var info05 = document.getElementById("info05");
+    //
+    // onclickView.onclick = function(){
+    //     info05.style.display = "block";
+    //     console.log('hmc',info05.style.display);
+    // };
+
+function btn() {
+    info05.style.display = "block";
+    console.log('hmc',info05.style.display);
+    var option = {
+        title : {
+            text: '文地率对比',
+            x:'center'
+        },
+        xAxis: {
+            type: 'category',
+            data: [selectCityName01, selectCityName02 ]
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            color : 'yellow',
+            data: [selectCity01, selectCity02],
+            type: 'bar'
+        }]
+    };
+    myChart.setOption(option);
+    console.log('eee',selectCity02);
+
+}
+
+    // var onclickView = document.getElementById(onclickView);
+    // var chart = document.getElementById(chart);
+    // onclickView.onclick = function () {
+    //     chart.style.display = 'block';
+    // }
 </script>
 
 </body>
 </html>
-<script type="text/javascript">
-    seajs.use('../../js/abroad')
-</script>
