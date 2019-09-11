@@ -99,7 +99,7 @@ public class VisualCulturalController {
     //堆叠柱状图
     @RequestMapping("/getHistogramData")
     @ResponseBody
-    List<HistogramData> selectHistogramData(){
+    public List<HistogramData> selectHistogramData(){
         return visualCulturalService.selectHistogramData();
     }
 }
