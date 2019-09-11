@@ -9,6 +9,7 @@ define(function(require, exports, module) {
     var container = document.getElementById('table');
     var hot = new Handsontable(container, {
         data: [],
+        exportFile: true,
         colHeaders: ['区域', '地块编号', '编号', '名称', '区位', '规模', '建成年代', '平面形态', '文地分类', '依据', '文保单位', '备注'],
         columns: [
             //表头与对应列的关系
@@ -36,6 +37,15 @@ define(function(require, exports, module) {
         manualColumnResize: true,
     });
 
+    var button = document.getElementById('export-file');
+    // console.log('exportPlugin', hot.getPlugin)
+    button.addEventListener('click', function() {
+        hot.getPlugin('exportFile').downloadFile('csv', {
+            filename: '西安文地',
+        });
+    });
+
+
     var total = 0;
     //渲染，把数据加载进表，需要通过分页插件获取鼠标点击选取的页码
     // cur是插件函数传过来的当前页码
@@ -52,13 +62,13 @@ define(function(require, exports, module) {
                 },
                 success: function (res) {
                     //加载表格数据
-                    console.log(res)
                     hot.loadData(res.list)
                     total = res.pages;
+
                 }
             })
             $('#pageUl').bootstrapPaginator({//将id为pageLimit的ul元素设置为分页插件
-                // currentPage: bpPage,//设置当前页码，没有用到
+                currentPage: page,//设置当前页码，没有用到
                 size: "small",//设置控件的显示大小，
                 bootstrapMajorVersion: 3,//当前版本
                 alignment: "right",//设置控件的对齐方式
@@ -79,21 +89,6 @@ define(function(require, exports, module) {
     render("全部", "全部",'1')
 //bootstrap的分页插件，单独取鼠标选取的页码，传给render()
         $('#pageUl').bootstrapPaginator({//将id为pageLimit的ul元素设置为分页插件
-            // // currentPage: bpPage,//设置当前页码，没有用到
-            // size: "small",//设置控件的显示大小，
-            // bootstrapMajorVersion: 3,//当前版本
-            // alignment: "right",//设置控件的对齐方式
-            // totalPages: total ,//设置总页数.
-            // itemTexts: function (type, page, current) {//控制每个操作按钮的显示文字。是个函数，有3个参数: type, page, current。
-            //     //通过这个参数我们就可以将操作按钮上的英文改为中文，如first-->首页，last-->尾页。
-            //     switch (type) {
-            //         case "first": return "首页";
-            //         case "prev": return "<";
-            //         case "next": return ">";
-            //         case "last": return "末页";
-            //         case "page": return page;
-            //     }
-            // },
             onPageClicked: function (event, originalEvent, type, page) {//为操作按钮绑定click事件。
                 page:page;
                 var a=$('.select1 option:selected').val();
@@ -105,11 +100,32 @@ define(function(require, exports, module) {
         var area=$('.select1 option:selected').val();
         var type=$('.select2 option:selected').val();
         var page=1
-        console.log(area)
-        console.log(type)
+        // console.log(area)
+        // console.log(type)
         render(area,type,page)
     })
+    //查询的时候可以一起取搜索框里的内容;
+    function poiRender(){
 
+    }
+    $('#poiSelect').click(function () {
+    var poiText= $('#poiText').val()
+        $.ajax({
+            url:'/fuzzy',
+            type: 'get',
+            async: false,
+            dataType: 'json',
+            data: {
+                page: 1,
+                fuzzyname:poiText,
+            },
+            success: function (res) {
+                //加载表格数据
+                hot.loadData(res.list)
+                total = res.pages;
+            }
+        })
+    })
 
 
 })

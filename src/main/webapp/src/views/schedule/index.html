@@ -12,8 +12,8 @@
     <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
     <script type="text/javascript" src="../../libs/bootstrap-paginator.js"></script>
-    <script type="text/javascript" src="../../libs/handsontable.min.js"></script>
-    <link rel="stylesheet" href="../../libs/css/handsontable.full.min.css">
+    <script type="text/javascript" src="../../libs/handsontable.full.js"></script>
+    <link rel="stylesheet" href="../../libs/css/handsontable.full.css">
     <link rel="stylesheet" href="../../css/main.css">
     <style type="text/css">
         .select1, .select2{
@@ -40,6 +40,13 @@
         }
         .handsontable td:nth-child(5),.handsontable td:nth-child(10),.handsontable td:nth-child(11),.handsontable td:nth-child(12) {
             white-space: nowrap;
+        }
+        #poiText{
+            display: inline;height: 23px;width: 150px;border-width: 1px;padding: 0
+        ;border-style: solid
+        }
+        #poiSelect{
+            height: 25px;width:60px;display: inline-block;margin-left:-4px
         }
     </style>
 </head>
@@ -81,13 +88,12 @@
             </td>
             <td>
                 <form style="padding: 5px 10px;width: 240px;;display: inline-block">
-                    <input type="text" placeholder="按文地名称模糊查询" style="display: inline;height: 23px;width: 150px;border-width: 1px;padding: 0
-;border-style: solid">
-                    <input type="button" value="搜索" style=" height: 25px;width:60px;display: inline-block;margin-left:-4px">
+                    <input type="text" id="poiText" placeholder="按文地名称模糊查询" >
+                    <input type="button" id="poiSelect" value="搜索">
                 </form>
             </td>
             <td>
-                <input type="button" value="导出Excel表格">
+                <input type="button" id="export-file" value="导出Excel表格">
             </td>
         </tr>
     </table>

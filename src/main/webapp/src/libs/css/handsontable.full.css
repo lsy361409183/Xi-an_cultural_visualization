@@ -265,6 +265,8 @@
 }
 
 #hot-display-license-info {
+  display: none;
+  visibility: hidden;
   font-size: 10px;
   color: #323232 ;
   padding: 5px 0 3px 0;
@@ -274,6 +276,8 @@
 
 #hot-display-license-info a {
   font-size: 10px;
+  display: none;
+  visibility: hidden;
 }
 
 /* plugins */
