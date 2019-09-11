@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaancultural1.demo.mapper.VisualCulturalMapper">
+    <resultMap id="histogramData" type="com.xiaancultural1.demo.pojo.HistogramData">
+        <result column="base_district" property="baseDistrict"/>
+        <result column="visual_area"  property="visualArea"/>
+        <result column="visual_first"  property="visualFirst"/>
+        <result column="visual_second" property="visualSecond"/>
+        <result column="visual_third" property="visualThird"/>
+        <result column="visual_fourth" property="visualFourth"/>
+        <result column="visual_fifth" property="visualFifth"/>
+        <result column="visual_sixth" property="visualSixth"/>
+    </resultMap>
+    <!--//堆叠柱状图-->
+    <select id = "selectHistogramData" resultMap="histogramData">
+       select * from tb_visual_data;
+    </select>
+</mapper>

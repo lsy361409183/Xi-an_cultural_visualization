@@ -1,5 +1,6 @@
 package com.xiaancultural1.demo.controller;
 
+import com.xiaancultural1.demo.pojo.HistogramData;
 import com.xiaancultural1.demo.pojo.MapData;
 import com.xiaancultural1.demo.pojo.visualBase;
 import com.xiaancultural1.demo.service.VisualCulturalService;
@@ -93,5 +94,12 @@ public class VisualCulturalController {
                                                    HttpServletRequest request) throws UnsupportedEncodingException {
         request.setCharacterEncoding("UTF-8");
         return visualCulturalService.selectInfoBySearchText(baseName, baseDistrict);
+    }
+
+    //堆叠柱状图
+    @RequestMapping("/getHistogramData")
+    @ResponseBody
+    List<HistogramData> selectHistogramData(){
+        return visualCulturalService.selectHistogramData();
     }
 }

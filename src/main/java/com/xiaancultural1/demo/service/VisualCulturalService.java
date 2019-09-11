@@ -1,6 +1,7 @@
 package com.xiaancultural1.demo.service;
 
 import com.xiaancultural1.demo.mapper.VisualCulturalMapper;
+import com.xiaancultural1.demo.pojo.HistogramData;
 import com.xiaancultural1.demo.pojo.MapData;
 import com.xiaancultural1.demo.pojo.visualBase;
 import org.apache.ibatis.annotations.Param;
@@ -38,5 +39,9 @@ public class VisualCulturalService {
     // 模糊查询
     public List<visualBase> selectInfoBySearchText(String baseName, String baseDistrict){
         return visualCulturalMapper.selectInfoBySearchText(baseName, baseDistrict);
+    }
+    //堆叠柱状图
+    public List<HistogramData> selectHistogramData(){
+        return visualCulturalMapper.selectHistogramData();
     }
 }
