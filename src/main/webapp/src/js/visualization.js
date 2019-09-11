@@ -102,14 +102,15 @@ define(function(require, exports, module){
         });
     }
     // 请求文地块geojson
-    function getCulturalMap() {
+    function getCulturalMap(render) {
         $.ajax({
             type:"get",
             url:"/getMapData",
             data: {mapId: 3},
             dataType:"json",
-            success:function(res){
+            success: function(res){
                 cultural_mapData = res
+                render(res);
             }
         });
     }
@@ -131,6 +132,7 @@ define(function(require, exports, module){
             dataType: 'json',
             data: params,
             success: function (res) {
+                console.log('文地点res==============',res)
                 pointData = res;
                 render(res)
             }
@@ -159,9 +161,13 @@ define(function(require, exports, module){
         });
         pointArr = tempPointArr.map(function (item) {
             var pointCoordArr = item.basePoint.split(',');
-            return new ol.Feature(new ol.geom.Point(
-                [Number(pointCoordArr[0]),Number(pointCoordArr[1])]
-            ))
+            return new ol.Feature({
+                geometry:  new ol.geom.Point([Number(pointCoordArr[0]),Number(pointCoordArr[1])]),
+                baseName: item.baseName,
+                baseArea: item.baseArea,
+                baseDistrict: item.baseDistrict,
+                baseClassfication: item.baseClassfication
+            })
         });
         pointSource = new ol.source.Vector({
             features: pointArr
@@ -206,7 +212,7 @@ define(function(require, exports, module){
     // 加载地图
     getMapGeoJson(renderMap);
     getPointData("'全部'", "'全部'", renderPoint);
-
+    getCulturalMap(renderCulturalMap);
 
 
 
@@ -219,24 +225,24 @@ define(function(require, exports, module){
     $('.area-districts').on('click',function (e) {
         var poi=$('#POI').val();
         if(poi == null||poi == ""||poi == undefined){
-        var areaCheckedVal = valChange('area-districts');
-        var typeCheckedVal = valChange('area-types');
-        console.log('点击区域复选参数===========================',areaCheckedVal,typeCheckedVal);
+            var areaCheckedVal = valChange('area-districts');
+            var typeCheckedVal = valChange('area-types');
+            console.log('点击区域复选参数===========================',areaCheckedVal,typeCheckedVal);
 
-        // var temp = JSON.stringify(areaCheckedVal);
-        // console.log('temp',temp)
-        // console.log('parse', JSON.parse(temp))
-        var types = typeCheckedVal.length === 6 || typeCheckedVal==0? "'全部'" : typeCheckedVal
-        if (areaCheckedVal.length === 7) {
-            $('#area-all').prop('checked', true);
-            getPointData("'全部'", types, renderPoint)
-        } else if (areaCheckedVal.length === 0) {
-            $('#area-all').prop('checked', false);
-            getPointData("'全部'",types, renderPoint)
-        } else {
-            $('#area-all').prop('checked', false);
-            getPointData(areaCheckedVal, types, renderPoint)
-        }
+            // var temp = JSON.stringify(areaCheckedVal);
+            // console.log('temp',temp)
+            // console.log('parse', JSON.parse(temp))
+            var types = typeCheckedVal.length === 6 || typeCheckedVal==0? "'全部'" : typeCheckedVal
+            if (areaCheckedVal.length === 7) {
+                $('#area-all').prop('checked', true);
+                getPointData("'全部'", types, renderPoint)
+            } else if (areaCheckedVal.length === 0) {
+                $('#area-all').prop('checked', false);
+                getPointData("'全部'",types, renderPoint)
+            } else {
+                $('#area-all').prop('checked', false);
+                getPointData(areaCheckedVal, types, renderPoint)
+            }
         }
     });
 
@@ -285,8 +291,7 @@ define(function(require, exports, module){
             //     $('.area-districts').prop('checked',false)
             // }
             var typeCheckedValTemp = valChange('area-types');
-            this.checked === false ? $('.area-districts').
-            prop('checked', false) : $('.area-districts').prop('checked', true);
+            this.checked === false ? $('.area-districts').prop('checked', false) : $('.area-districts').prop('checked', true);
         }
     });
 
@@ -355,7 +360,39 @@ define(function(require, exports, module){
         }
     })
 
+    // 添加新系窗体
+    var popElement = document.getElementById('popup');
 
+    var popup = new ol.Overlay({
+        element: popElement,
+        positioning: 'bottom-center',
+        stopEvent: false,
+        offset: [0, 0]
+    });
+    map.addOverlay(popup);
+
+    map.on('click', function(evt) {
+        console.log('evt',evt)
+        var feature = map.forEachFeatureAtPixel(evt.pixel,
+            function(feature) {
+                console.log('feature============',feature)
+                return feature;
+        });
+        var popContent = "<p>文地名称："+feature.get('baseName')+"</p><p>文地面积："+feature.get('baseArea')+"</p><p>文地区域："+feature.get('baseDistrict')+"</p><p>文地类型："+feature.get('baseClassfication')+"</p>"
+        if (feature) {
+            console.log('feature', feature)
+            var coordinates = feature.getGeometry().getCoordinates();
+            popup.setPosition(coordinates);
+            $(popElement).popover({
+                placement: 'top',
+                html: true,
+                content: popContent
+            });
+            $(popElement).popover('show');
+        } else {
+            $(popElement).popover('destroy');
+        }
+    });
 
 
 
