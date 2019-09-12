@@ -43,8 +43,8 @@ define(function(require, exports, module){
     });
     var view = new ol.View({
         projection: projection,
-        center:  [108.939621, 34.343147],
-        zoom:10,
+        center:  [108.936229,34.26215],
+        zoom:12,
         maxZoom:25,
         minZoom:5
     });
@@ -227,6 +227,8 @@ define(function(require, exports, module){
         if(poi == null||poi == ""||poi == undefined){
             var areaCheckedVal = valChange('area-districts');
             var typeCheckedVal = valChange('area-types');
+
+            getAreaData(areaCheckedVal,typeCheckedVal);
             console.log('点击区域复选参数===========================',areaCheckedVal,typeCheckedVal);
 
             // var temp = JSON.stringify(areaCheckedVal);
@@ -251,6 +253,7 @@ define(function(require, exports, module){
 
         var areaCheckedVal = valChange('area-districts');
         var typeCheckedVal = valChange('area-types');
+        getAreaData(areaCheckedVal,typeCheckedVal);
         console.log('点击类型复选参数===========================',areaCheckedVal,typeCheckedVal);
         var areas = areaCheckedVal.length === 7 || areaCheckedVal===0? "'全部'" : areaCheckedVal
         if (typeCheckedVal.length === 6) {
@@ -282,6 +285,7 @@ define(function(require, exports, module){
 
             console.log('点击区域全选-类型传参==============', typeCheckedVal)
             getPointData("'全部'", typeCheckedVal, renderPoint);
+            getAreaData("'全部'",typeCheckedVal);
         }
         else {
             // if($('#area-all').prop('checked',true)){
@@ -304,6 +308,7 @@ define(function(require, exports, module){
 
         console.log('点击类型全选-区域传参==============',areaCheckedVal)
         getPointData(areaCheckedVal, "'全部'", renderPoint);
+        getAreaData(areaCheckedVal,"'全部'");
     });
 
     // 初次加载默认全选
@@ -411,18 +416,49 @@ define(function(require, exports, module){
             var area =data.map(function (item) {
                 return item.baseDistrict
             });
+            var area1=data.map(function (item) {
+                return item.visualFirst
+            })
+            var area2=data.map(function (item) {
+                return item.visualSecond
+            })
+            var area3=data.map(function (item) {
+                return item.visualThird
+            })
+            var area4=data.map(function (item) {
+                return item.visualFourth
+            })
+            var area5=data.map(function (item) {
+                return item.visualFifth
+            })
+            var area6=data.map(function (item) {
+                return item.visualSixth
+            })
             console.log('地区类别面积数据',area )
+            console.log('地区类别面积数据的值',area1)
+            console.log('地区类别面积数据的值',area2)
+            console.log('地区类别面积数据的值',area3)
+            console.log('地区类别面积数据的值',area4)
+            console.log('地区类别面积数据的值',area5)
+            console.log('地区类别面积数据的值',area6)
+
             var option = {
                 title: {
                     // text: '堆叠柱状图'
                 },
-                tooltip: {},
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
                 legend: {
+                    x:'left',
                     data:['一类文地','二类文地','三类文地','四类文地','五类文地','六类文地']
                 },
                 grid: {
                     left: '3%',
-                    right: '4%',
+                    right: '15%',
                     bottom: '3%',
                     containLabel: true
                 },
@@ -434,53 +470,169 @@ define(function(require, exports, module){
                 ],
                 yAxis : [
                     {
-                        type : 'value'
+                        name:'面积/公顷',
+                        type : 'value',
+                        // axisLabel: {
+                        //     formatter: '{value} 公顷'
+                        // },
                     }
                 ],
                 series : [
                     {
                         name:'一类文地',
                         type:'bar',
-                        data:[320, 332, 301, 334, 390, 330, 320]
+                        data:area1,
                     },
                     {
                         name:'二类文地',
                         type:'bar',
-                        stack: '广告',
-                        data:[120, 132, 101, 134, 90, 230, 210]
+
+                        data:area2,
                     },
                     {
                         name:'三类文地',
                         type:'bar',
-                        stack: '广告',
-                        data:[220, 182, 191, 234, 290, 330, 310]
+
+                        data:area3,
                     },
                     {
                         name:'四类文地',
                         type:'bar',
                         stack: '广告',
-                        data:[150, 232, 201, 154, 190, 330, 410]
+                        data:area4,
                     },
                     {
                         name:'五类文地',
                         type:'bar',
-                        data:[862, 1018, 964, 1026, 1679, 1600, 1570],
+                        data:area5,
+
                     },
                     {
                         name:'六类文地',
                         type:'bar',
                         barWidth : 5,
                         stack: '搜索引擎',
-                        data:[620, 732, 701, 734, 1090, 1130, 1120]
+                        data:area6,
                     }
-
                 ]
+
+                //     ['visualFirst','visualSecond','visualThird'].map(function (item) {
+                //     return {
+                //         name: item === 'visualFirst' ? '一类文地':
+                //         item === 'visualSecond' ? '二类文地': null,
+                //         type:'bar',
+                //         data: data.map(function (child) {
+                //             return child[item]
+                //         })
+                //     }
+                // })
             };
             // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
         }
     })
 
+    // 请求不同类别不同区域面积数据
+    function getAreaData(areas, types) {
+        var params = {
+            baseDistrict: areas === "'全部'"? "'未央区','灞桥区','明城区','新城区','碑林区','莲湖区'" : areas.map(function (item) {
+                return "\'" + item + "\'"
+            }).join(','),
+            baseClassification: types === "'全部'"? "visual_first,visual_second,visual_third,visual_fourth,visual_fifth,visual_sixth" : types.map(function (item) {
+                return item === '一类文地' ? 'visual_first': item === '二类文地' ? 'visual_second' : item === '三类文地' ? 'visual_third' :
+                    item === '四类文地' ? 'visual_fourth' :item === '五类文地' ? 'visual_fifth' :'visual_sixth'
+            }).join(',')
+        };
+        $.ajax({
+            type: 'post',
+            url: '/getAreaData',
+            // contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            data: params,
+            success: function (data) {
+                var area =data.map(function (item) {
+                    return item.baseDistrict
+                });
+                console.log('地区的值',area)
+                // var type =data.map(function (item) {
+                //     return item.options[index].value()
+                // });
+                // console.log('六类类别的多选情况',type)
+                var cc = valChange('area-types');
+                console.log('cccccccccccccccccccccc输出类别的key',   cc.map(function (item) {
+                    return  item === '一类文地' ? 'visualFirst':
+                        item === '二类文地' ? 'visualSecond':
+                            item === '三类文地' ? 'visualThird':
+                                item === '四类文地' ? 'visualFourth':
+                                    item === '五类文地' ? 'visualFifth':
+                                        'visualSixth'
+                }))
+                var option = {
+                    title: {
+                        // text: '堆叠柱状图'
+                    },
+                    tooltip : {
+                        trigger: 'axis',
+                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    legend: {
+                        x:'left',
+                        data:['一类文地','二类文地','三类文地','四类文地','五类文地','六类文地']
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '15%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : area
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            name:'面积/公顷',
+                            type : 'value',
+                            // axisLabel: {
+                            //     formatter: '{value} 公顷'
+                            // },
+                        }
+                    ],
+
+                    series : [
+                        cc.map(function (item) {
+                            return  item === '一类文地' ? 'visualFirst':
+                                item === '二类文地' ? 'visualSecond':
+                                    item === '三类文地' ? 'visualThird':
+                                        item === '四类文地' ? 'visualFourth':
+                                            item === '五类文地' ? 'visualFifth':
+                                                'visualSixth'
+                        })
+                    ].map(function (item) {
+                        return {
+                            name: item === 'visualFirst' ? '一类文地':
+                                item === 'visualSecond' ? '二类文地':
+                                    item === 'visualThird' ? '三类文地':
+                                        item === 'visualFourth' ? '四类文地':
+                                            item === 'visualFifth' ? '五类文地':
+                                                 '六类文地'
+                            ,
+                            type:'bar',
+                            data: data.map(function (child) {
+                                return child[item]
+                            })
+                        }
+                    })
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            }
+        })
+    }
 
 
 });

@@ -44,4 +44,10 @@ public class VisualCulturalService {
     public List<HistogramData> selectHistogramData(){
         return visualCulturalMapper.selectHistogramData();
     }
+
+    //条件筛选堆叠柱状图
+   public List<HistogramData> selectAreaData(@Param("baseDistrict")String baseDistrict,
+                                       @Param("baseClassification")String baseClassification){
+        return visualCulturalMapper.selectAreaData(baseDistrict,baseClassification);
+    }
 }

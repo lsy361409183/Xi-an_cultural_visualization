@@ -3,7 +3,6 @@
 <mapper namespace="com.xiaancultural1.demo.mapper.VisualCulturalMapper">
     <resultMap id="histogramData" type="com.xiaancultural1.demo.pojo.HistogramData">
         <result column="base_district" property="baseDistrict"/>
-        <result column="visual_area"  property="visualArea"/>
         <result column="visual_first"  property="visualFirst"/>
         <result column="visual_second" property="visualSecond"/>
         <result column="visual_third" property="visualThird"/>
@@ -14,5 +13,10 @@
     <!--//堆叠柱状图-->
     <select id = "selectHistogramData" resultMap="histogramData">
        select * from tb_visual_data;
+    </select>
+
+    <!--//条件筛选堆叠柱状图-->
+    <select id = "selectAreaData" resultMap="histogramData">
+       select base_district,${baseClassification} from tb_visual_data where base_district in (${baseDistrict});
     </select>
 </mapper>

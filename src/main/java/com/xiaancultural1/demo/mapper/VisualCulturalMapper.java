@@ -28,4 +28,8 @@ public interface VisualCulturalMapper {
     //堆叠柱状图
     List<HistogramData> selectHistogramData();
 
+    //条件筛选堆叠柱状图
+    List<HistogramData> selectAreaData(@Param("baseDistrict")String baseDistrict,
+                                       @Param("baseClassification")String baseClassification);
+
 }

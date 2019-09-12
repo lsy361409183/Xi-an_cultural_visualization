@@ -5,6 +5,7 @@ import com.xiaancultural1.demo.pojo.MapData;
 import com.xiaancultural1.demo.pojo.visualBase;
 import com.xiaancultural1.demo.service.VisualCulturalService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -101,5 +102,15 @@ public class VisualCulturalController {
     @ResponseBody
     public List<HistogramData> selectHistogramData(){
         return visualCulturalService.selectHistogramData();
+    }
+
+
+    //条件筛选堆叠柱状图
+    @RequestMapping("/getAreaData")
+    @ResponseBody
+    public List<HistogramData> selectAreaData(@Param("baseDistrict")String baseDistrict,
+                                       @Param("baseClassification")String baseClassification){
+        System.out.println("地区："+baseDistrict+"\n"+"类别："+baseClassification);
+        return visualCulturalService.selectAreaData(baseDistrict,baseClassification);
     }
 }
