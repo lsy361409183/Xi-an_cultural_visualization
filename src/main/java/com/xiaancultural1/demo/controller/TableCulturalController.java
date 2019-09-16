@@ -21,7 +21,8 @@ public class TableCulturalController {
     @ResponseBody
     public PageInfo<tableBase> lists(@RequestParam(value = "page") int page,
                                      @RequestParam(value = "baseDistrict",defaultValue = "全部",required = false)String baseDistrict,
-                                     @RequestParam(value = "baseClassification",defaultValue = "全部",required = false)String baseClassification){
+                                     @RequestParam(value = "baseClassification",defaultValue = "全部",required = false)String baseClassification,
+                                     @RequestParam(value = "fuzzyName",required = false)String fuzzyName){
 //        设置分页规则
        // PageHelper.clearPage();
         PageHelper.startPage(page,20);
@@ -35,25 +36,24 @@ public class TableCulturalController {
     @ResponseBody
     public PageInfo<tableBase> RegionLists(@RequestParam(value = "page")int page,
                                            @RequestParam(value = "baseDistrict",required = false)String baseDistrict,
-                                            @RequestParam(value = "baseClassification",required = false)String baseClassification){
+                                            @RequestParam(value = "baseClassification",required = false)String baseClassification,
+                                           @RequestParam(value = "fuzzyName",required = false)String fuzzyName) {
         PageHelper.clearPage();
-        PageHelper.startPage(page,20);
-
-        if(baseDistrict.equals("'全部'")&&baseClassification.equals("'全部'"))
-        {
-            return new PageInfo<tableBase>(tableCulturalService.selectAllTableWithPage(baseDistrict,baseClassification));
-        }
-        else if (baseDistrict.equals("'全部'")){
-            return new PageInfo<tableBase>(tableCulturalService.selectTableByClassification(baseClassification));
-        }
-        else if (baseClassification.equals("'全部'")){
-            return new PageInfo<tableBase>(tableCulturalService.selectTableByRegion(baseDistrict));
-        }
-        else{
-            return  new PageInfo<>(tableCulturalService.selectTableWithRegionAndClassificationWithPage(baseDistrict,baseClassification));
+        PageHelper.startPage(page, 20);
+        if (fuzzyName != null) {
+            return new PageInfo<tableBase>(tableCulturalService.selectTableFuzzySearch(fuzzyName));
+        } else {
+            if (baseDistrict.equals("'全部'") && baseClassification.equals("'全部'")) {
+                return new PageInfo<tableBase>(tableCulturalService.selectAllTableWithPage(baseDistrict, baseClassification));
+            } else if (baseDistrict.equals("'全部'")) {
+                return new PageInfo<tableBase>(tableCulturalService.selectTableByClassification(baseClassification));
+            } else if (baseClassification.equals("'全部'")) {
+                return new PageInfo<tableBase>(tableCulturalService.selectTableByRegion(baseDistrict));
+            } else {
+                return new PageInfo<>(tableCulturalService.selectTableWithRegionAndClassificationWithPage(baseDistrict, baseClassification));
+            }
         }
     }
-
     @RequestMapping("/fuzzy")
     @ResponseBody
     public PageInfo<tableBase> fuzzyLists(@RequestParam(value = "page")int page,

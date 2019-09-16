@@ -4,6 +4,7 @@ package com.xiaancultural1.demo.mapper;
 import com.xiaancultural1.demo.pojo.tableBase;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 import java.util.List;
