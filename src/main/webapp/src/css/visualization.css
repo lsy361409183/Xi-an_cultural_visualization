@@ -1,0 +1,86 @@
+#select-conditions .input-group{
+    margin-top: 1.25rem;
+}
+#select-conditions .select-row{
+    margin-bottom: 1.875rem;
+}
+#select-conditions .areas-select{
+    margin-top: 1rem;
+    font-size: 1.875rem;
+}
+#select-conditions .areas-select hr{
+    margin-top: .5rem;
+    height: 0.25rem;
+    border: none;
+    background-color: #1E90FF;
+}
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"]{
+    position: absolute;
+    margin-left: -20px;
+    margin-top: 0;
+}
+#select-conditions .checkbox-inline,
+#select-conditions .category-radio li .radio-inline{
+    font-size: 1.25rem;
+}
+#select-conditions .checkbox-inline input,
+#select-conditions .category-radio li .radio-inline input{
+    height: 100%;
+}
+
+#select-conditions .category-radio{
+    width: 100%;
+    list-style: none;
+}
+#select-conditions .category-radio li{
+    float: left;
+    width: 50%;
+}
+
+/* 信息窗体样式 */
+.pop-text{
+    width: 400px;
+}
+
+.ol-popup {
+    position: absolute;
+    background-color: white;
+    -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    bottom: 12px;
+    left: -50px;
+    min-width: 280px;
+}
+.ol-popup:after, .ol-popup:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+.ol-popup:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+}
+.ol-popup:before {
+    border-top-color: #cccccc;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+}
+.ol-popup-closer {
+    text-decoration: none;
+    position: absolute;
+    top: 2px;
+    right: 8px;
+}
+.ol-popup-closer:after {
+    content: "✖";
+}

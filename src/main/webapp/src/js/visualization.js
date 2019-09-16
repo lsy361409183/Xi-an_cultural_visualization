@@ -366,15 +366,24 @@ define(function(require, exports, module){
     })
 
     // 添加新系窗体
-    var popElement = document.getElementById('popup');
+    var container = document.getElementById('popup');
+    var content = document.getElementById('popup-content');
+    var closer = document.getElementById('popup-closer');
 
-    var popup = new ol.Overlay({
-        element: popElement,
-        positioning: 'bottom-center',
-        stopEvent: false,
-        offset: [0, 0]
+    var overlay = new ol.Overlay({
+        element: container,
+        autoPan: true,
+        autoPanAnimation: {
+            duration: 250
+        }
     });
-    map.addOverlay(popup);
+
+    closer.onclick = function() {
+        overlay.setPosition(undefined);
+        closer.blur();
+        return false;
+    };
+    map.addOverlay(overlay);
 
     map.on('click', function(evt) {
         console.log('evt',evt)
@@ -382,20 +391,19 @@ define(function(require, exports, module){
             function(feature) {
                 console.log('feature============',feature)
                 return feature;
-        });
-        var popContent = "<p>文地名称："+feature.get('baseName')+"</p><p>文地面积："+feature.get('baseArea')+"</p><p>文地区域："+feature.get('baseDistrict')+"</p><p>文地类型："+feature.get('baseClassfication')+"</p>"
+            });
+        var popContent = "<p class='pop-text'>文地名称："+feature.get('baseName') +
+            "</p><p class='pop-text'>文地面积："+feature.get('baseArea') + "公顷" +
+            "</p><p class='pop-text'>文地区域："+feature.get('baseDistrict') +
+            "</p><p class='pop-text'>文地类型："+feature.get('baseClassfication') + "</p>"
         if (feature) {
             console.log('feature', feature)
             var coordinates = feature.getGeometry().getCoordinates();
-            popup.setPosition(coordinates);
-            $(popElement).popover({
-                placement: 'top',
-                html: true,
-                content: popContent
-            });
-            $(popElement).popover('show');
+            content.innerHTML = popContent;
+            overlay.setPosition(coordinates);
+
         } else {
-            $(popElement).popover('destroy');
+
         }
     });
 
