@@ -49,7 +49,7 @@ define(function(require, exports, module) {
     var total = 0;
     //渲染，把数据加载进表，需要通过分页插件获取鼠标点击选取的页码
     // cur是插件函数传过来的当前页码
-        function render(area,type,page){
+        function render(area,type,page,poiText){
             $.ajax({
                 url: '/region',
                 type: 'get',
@@ -57,8 +57,12 @@ define(function(require, exports, module) {
                 dataType: 'json',
                 data: {
                     page: page,
+                    //区域传数
                     baseDistrict:"\'" + area + "\'",
+                    //类别传数
                     baseClassification: "\'" + type + "\'",
+                    fuzzyName:poiText,
+
                 },
                 success: function (res) {
                     //加载表格数据
@@ -86,46 +90,68 @@ define(function(require, exports, module) {
             })
         }
 //第一次渲染时的当前页码
-    render("全部", "全部",'1')
+    render("全部", "全部",'1', '')
 //bootstrap的分页插件，单独取鼠标选取的页码，传给render()
         $('#pageUl').bootstrapPaginator({//将id为pageLimit的ul元素设置为分页插件
             onPageClicked: function (event, originalEvent, type, page) {//为操作按钮绑定click事件。
                 page:page;
                 var a=$('.select1 option:selected').val();
               var b=$('.select2 option:selected').val();
-                    render(a,b,page)
+                var c= $('#poiText').val()
+                    render(a,b,page,c)
             }
         });
-    $('.buzhidao').change(function () {
+    //取区域类别
+    $('.singleBox').change(function () {
         var area=$('.select1 option:selected').val();
         var type=$('.select2 option:selected').val();
-        var page=1
-        // console.log(area)
-        // console.log(type)
-        render(area,type,page)
+        var page=1;
+        var poiText= $('#poiText').val()
+        render(area,type,page,poiText)
     })
-    //查询的时候可以一起取搜索框里的内容;
-    function poiRender(){
+    //模糊查询
+    $('#poiSelect').on('click',function () {
+        var poiText= $('#poiText').val();
+        var page=1;
+        var area= $('.select1 option:selected').val();
+        var type=$('.select2 option:selected').val();
+        console.log(poiText)
+        if (!(poiText == null||poiText == ""||poiText == undefined))
+        //模糊查询框不是空
+        {
+            // $('#areas-select-title').attr("color",'22ee00');
+            $('.area-districts').prop("disabled",true);
+            $('.areas-types').prop("disabled",true);
+            area= "全部";
+            type="全部";
+            console.log(area)
+        }
+        else
+        {
+            $('.area-districts').prop("disabled",false);
+            $('.areas-types').prop("disabled",false);
 
-    }
-    $('#poiSelect').click(function () {
-    var poiText= $('#poiText').val()
+        }
+        render(area,type,page,poiText)
+    })
+//    切换图片和高德地图标记
+    $("#table td").on('click',function (){
+        var x = $(this).parent().find("td").eq(3).text()
+        console.log(x)
         $.ajax({
-            url:'/fuzzy',
-            type: 'get',
-            async: false,
+            url:'',
+            type:'get',
+            async:false,
             dataType: 'json',
-            data: {
-                page: 1,
-                fuzzyname:poiText,
+            data:{
+                baseName:x
             },
-            success: function (res) {
-                //加载表格数据
-                hot.loadData(res.list)
-                total = res.pages;
+            success:function () {
+            //    更换图片和坐标点
+
             }
         })
-    })
 
+    })
 
 })
