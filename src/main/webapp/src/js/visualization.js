@@ -154,7 +154,8 @@ define(function(require, exports, module){
 
     // 渲染文地点
     function renderPoint (data) {
-        map.removeLayer(cultural_point)
+        map.removeLayer(cultural_point);
+        // featureOverlay.getSource().removeFeature(highlight);
         // 创建点
         tempPointArr = data.filter(function (item) {
             return item.basePoint !== null;
@@ -175,7 +176,7 @@ define(function(require, exports, module){
 
         cultural_point = new ol.layer.Vector({
             source: pointSource,
-            zIndex: 1,
+            zIndex: 2,
             style: new ol.style.Style({
                 image: new ol.style.Circle({
                     radius: 5,
@@ -248,6 +249,7 @@ define(function(require, exports, module){
             source: new ol.source.Vector({
                 features: (new ol.format.GeoJSON()).readFeatures(cultural_mapData)
             }),
+            zIndex: 1,
             style: new ol.style.Style({
                 fill: new ol.style.Fill({
                     color: "rgba(0, 153, 51, 0.5)"
@@ -437,6 +439,8 @@ define(function(require, exports, module){
     closer.onclick = function() {
         overlay.setPosition(undefined);
         closer.blur();
+        featureOverlay.getSource().removeFeature(highlight);
+        highlight = null;
         return false;
     };
     map.addOverlay(overlay);
@@ -467,23 +471,41 @@ define(function(require, exports, module){
                 console.log('feature============',feature)
                 return feature;
             });
+        var isShowInfo = true,
+            hasName = feature.get('baseName');
+        hasName === undefined ? isShowInfo = false : isShowInfo = true;
+
+
         var popContent = "<p class='pop-text'><b>文地名称：</b>"+feature.get('baseName') +
             "</p><p class='pop-text'><b>文地面积：</b>"+feature.get('baseArea') + "公顷" +
             "</p><p class='pop-text'><b>文地区域：</b>"+feature.get('baseDistrict') +
             "</p><p class='pop-text'><b>文地类型：</b>"+feature.get('baseClassfication') + "</p>";
 
         if (feature !== highlight) {
-            if (highlight) {
-                featureOverlay.getSource().removeFeature(highlight);
+            if (isShowInfo){
+                if (highlight) {
+                    featureOverlay.getSource().removeFeature(highlight);
+                }
+                if (feature) {
+                    featureOverlay.getSource().addFeature(feature);
+                    // console.log('feature', feature)
+                    var coordinates = feature.getGeometry().getCoordinates();
+                    content.innerHTML = popContent;
+                    overlay.setPosition(coordinates);
+
+                    highlight = feature;
+                }
+            } else {
+                if (highlight) {
+                    featureOverlay.getSource().removeFeature(highlight);
+                    overlay.setPosition(undefined);
+                    closer.blur();
+                    highlight = null;
+                }
+                return false
             }
-            if (feature) {
-                featureOverlay.getSource().addFeature(feature);
-                // console.log('feature', feature)
-                var coordinates = feature.getGeometry().getCoordinates();
-                content.innerHTML = popContent;
-                overlay.setPosition(coordinates);
-            }
-            highlight = feature;
+
+
         }
     });
 
