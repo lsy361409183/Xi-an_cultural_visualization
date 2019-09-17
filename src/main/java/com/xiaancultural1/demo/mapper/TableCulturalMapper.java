@@ -24,7 +24,8 @@ public interface TableCulturalMapper {
     //类别筛选
     List<tableBase> selectTableByClassification(@Param("baseClassification")String baseClassification);
 
-    List<tableBase> selectTableFuzzySearch(@Param("fuzzyName") String fuzzyName);
+    List<tableBase> selectTableFuzzySearch(@Param("fuzzyName") String fuzzyName,@Param("baseDistrict") String baseDistrict,
+                                           @Param("baseClassification") String baseClassification);
 
 
 }

@@ -13,6 +13,54 @@ public class tableBase {
     private String baseBasis;
     private String baseUnit;
     private String baseRemarks;
+    private double baseLatitude;
+    private double baseLongitude;
+    private double baseLatandlon;
+    private String basePicture;
+
+    @Override
+    public String toString() {
+        return "tableBase{" +
+                "baseDistrict='" + baseDistrict + '\'' +
+                ", baseDistrictId='" + baseDistrictId + '\'' +
+                ", baseId=" + baseId +
+                ", baseName='" + baseName + '\'' +
+                ", baseRegion='" + baseRegion + '\'' +
+                ", baseArea='" + baseArea + '\'' +
+                ", baseDate='" + baseDate + '\'' +
+                ", basePlaneform='" + basePlaneform + '\'' +
+                ", baseClassification='" + baseClassification + '\'' +
+                ", baseBasis='" + baseBasis + '\'' +
+                ", baseUnit='" + baseUnit + '\'' +
+                ", baseRemarks='" + baseRemarks + '\'' +
+                ", baseLatitude=" + baseLatitude +
+                ", baseLongitude=" + baseLongitude +
+                ", baseLatandlon=" + baseLatandlon +
+                ", basePicture='" + basePicture + '\'' +
+                '}';
+    }
+
+    public tableBase() {
+    }
+
+    public tableBase(String baseDistrict, String baseDistrictId, int baseId, String baseName, String baseRegion, String baseArea, String baseDate, String basePlaneform, String baseClassification, String baseBasis, String baseUnit, String baseRemarks, double baseLatitude, double baseLongitude, double baseLatandlon, String basePicture) {
+        this.baseDistrict = baseDistrict;
+        this.baseDistrictId = baseDistrictId;
+        this.baseId = baseId;
+        this.baseName = baseName;
+        this.baseRegion = baseRegion;
+        this.baseArea = baseArea;
+        this.baseDate = baseDate;
+        this.basePlaneform = basePlaneform;
+        this.baseClassification = baseClassification;
+        this.baseBasis = baseBasis;
+        this.baseUnit = baseUnit;
+        this.baseRemarks = baseRemarks;
+        this.baseLatitude = baseLatitude;
+        this.baseLongitude = baseLongitude;
+        this.baseLatandlon = baseLatandlon;
+        this.basePicture = basePicture;
+    }
 
     public String getBaseDistrict() {
         return baseDistrict;
@@ -110,39 +158,35 @@ public class tableBase {
         this.baseRemarks = baseRemarks;
     }
 
-    public tableBase(String baseDistrict, String baseDistrictId, int baseId, String baseName, String baseRegion, String baseArea, String baseDate, String basePlaneform, String baseClassification, String baseBasis, String baseUnit, String baseRemarks) {
-        this.baseDistrict = baseDistrict;
-        this.baseDistrictId = baseDistrictId;
-        this.baseId = baseId;
-        this.baseName = baseName;
-        this.baseRegion = baseRegion;
-        this.baseArea = baseArea;
-        this.baseDate = baseDate;
-        this.basePlaneform = basePlaneform;
-        this.baseClassification = baseClassification;
-        this.baseBasis = baseBasis;
-        this.baseUnit = baseUnit;
-        this.baseRemarks = baseRemarks;
+    public double getBaseLatitude() {
+        return baseLatitude;
     }
 
-    public tableBase() {
+    public void setBaseLatitude(double baseLatitude) {
+        this.baseLatitude = baseLatitude;
     }
 
-    @Override
-    public String toString() {
-        return "tableBase{" +
-                "baseDistrict='" + baseDistrict + '\'' +
-                ", baseDistrictId='" + baseDistrictId + '\'' +
-                ", baseId=" + baseId +
-                ", baseName='" + baseName + '\'' +
-                ", baseRegion='" + baseRegion + '\'' +
-                ", baseArea='" + baseArea + '\'' +
-                ", baseDate='" + baseDate + '\'' +
-                ", basePlaneform='" + basePlaneform + '\'' +
-                ", baseClassification='" + baseClassification + '\'' +
-                ", baseBasis='" + baseBasis + '\'' +
-                ", baseUnit='" + baseUnit + '\'' +
-                ", baseRemarks='" + baseRemarks + '\'' +
-                '}';
+    public double getBaseLongitude() {
+        return baseLongitude;
+    }
+
+    public void setBaseLongitude(double baseLongitude) {
+        this.baseLongitude = baseLongitude;
+    }
+
+    public double getBaseLatandlon() {
+        return baseLatandlon;
+    }
+
+    public void setBaseLatandlon(double baseLatandlon) {
+        this.baseLatandlon = baseLatandlon;
+    }
+
+    public String getBasePicture() {
+        return basePicture;
+    }
+
+    public void setBasePicture(String basePicture) {
+        this.basePicture = basePicture;
     }
 }

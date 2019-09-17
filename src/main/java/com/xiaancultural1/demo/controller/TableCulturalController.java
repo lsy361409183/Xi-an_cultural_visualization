@@ -41,7 +41,10 @@ public class TableCulturalController {
         PageHelper.clearPage();
         PageHelper.startPage(page, 20);
         if (fuzzyName != null) {
-            return new PageInfo<tableBase>(tableCulturalService.selectTableFuzzySearch(fuzzyName));
+            System.out.println(baseDistrict+"controller1");
+            System.out.println(baseClassification);
+            System.out.println(fuzzyName);
+            return new PageInfo<tableBase>(tableCulturalService.selectTableFuzzySearch(baseDistrict,baseClassification,fuzzyName));
         } else {
             if (baseDistrict.equals("'全部'") && baseClassification.equals("'全部'")) {
                 return new PageInfo<tableBase>(tableCulturalService.selectAllTableWithPage(baseDistrict, baseClassification));
@@ -56,11 +59,12 @@ public class TableCulturalController {
     }
     @RequestMapping("/fuzzy")
     @ResponseBody
-    public PageInfo<tableBase> fuzzyLists(@RequestParam(value = "page")int page,
+    public PageInfo<tableBase> fuzzyLists(@RequestParam(value = "page")int page,@RequestParam(value = "baseDistrict",required = false)String baseDistrict,
+                                          @RequestParam(value = "baseClassification",required = false)String baseClassification,
                                           @RequestParam(value = "fuzzyname")String fuzzyName){
         PageHelper.clearPage();
         PageHelper.startPage(page,20);
-        PageInfo<tableBase> pageInfo=new PageInfo<>(tableCulturalService.selectTableFuzzySearch(fuzzyName));
+        PageInfo<tableBase> pageInfo=new PageInfo<>(tableCulturalService.selectTableFuzzySearch(baseDistrict,baseClassification,fuzzyName));
         return pageInfo;
     }
 

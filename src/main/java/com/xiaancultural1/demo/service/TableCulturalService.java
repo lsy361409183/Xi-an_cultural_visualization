@@ -28,8 +28,12 @@ public class TableCulturalService {
     public Page<tableBase> selectTableByClassification(String baseClassification){
         return (Page<tableBase>) tableCulturalMapper.selectTableByClassification(baseClassification);
     }
-    public Page<tableBase> selectTableFuzzySearch(String fuzzyName){
-        return (Page<tableBase>) tableCulturalMapper.selectTableFuzzySearch(fuzzyName);
+    public Page<tableBase> selectTableFuzzySearch(String baseDistrict,String baseClassification,String fuzzyName){
+        System.out.println(baseDistrict+"service1");
+        System.out.println(baseClassification);
+        System.out.println(fuzzyName);
+//        System.out.println(tableCulturalMapper.selectTableFuzzySearch(baseDistrict,baseClassification,fuzzyName));
+        return (Page<tableBase>) tableCulturalMapper.selectTableFuzzySearch(baseDistrict,baseClassification,fuzzyName);
     }
 
 
