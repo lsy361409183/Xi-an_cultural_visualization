@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 @Mapper
-//@Repository
+@Repository
 public interface TableCulturalMapper {
 //
 //
@@ -26,6 +26,14 @@ public interface TableCulturalMapper {
 
     List<tableBase> selectTableFuzzySearch(@Param("fuzzyName") String fuzzyName,@Param("baseDistrict") String baseDistrict,
                                            @Param("baseClassification") String baseClassification);
+    List<tableBase> selectTableFuzzySearchAll(@Param("fuzzyName")String fuzzyName,@Param("baseDistrict") String baseDistrict,
+                                              @Param("baseClassification") String baseClassification);
+
+    List<tableBase> selectTableFuzzySearchRegion(@Param("fuzzyName")String fuzzyName,@Param("baseDistrict") String baseDistrict,
+                                                 @Param("baseClassification") String baseClassification);
+
+    List<tableBase> selectTableFuzzySearchClassification(@Param("fuzzyName")String fuzzyName,@Param("baseDistrict") String baseDistrict,
+                                                 @Param("baseClassification") String baseClassification);
 
 
 }

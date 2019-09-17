@@ -41,10 +41,16 @@ public class TableCulturalController {
         PageHelper.clearPage();
         PageHelper.startPage(page, 20);
         if (fuzzyName != null) {
-            System.out.println(baseDistrict+"controller1");
-            System.out.println(baseClassification);
-            System.out.println(fuzzyName);
-            return new PageInfo<tableBase>(tableCulturalService.selectTableFuzzySearch(fuzzyName,baseDistrict,baseClassification));
+            if(baseDistrict.equals("'全部'")&&baseClassification.equals("'全部'"))
+            {
+                return new PageInfo<>(tableCulturalService.selectAllTableWithPageAll(fuzzyName,baseDistrict,baseClassification));
+            } else if(baseClassification.equals("'全部'")){
+                return new PageInfo<>(tableCulturalService.selectTableWithRegionFuzzy(fuzzyName,baseDistrict,baseClassification));
+            } else if(baseDistrict.equals("'全部'")){
+                return new PageInfo<>(tableCulturalService.selectTableWithClassificationFuzzy(fuzzyName,baseDistrict,baseClassification));
+            }else {
+                return new PageInfo<tableBase>(tableCulturalService.selectTableFuzzySearch(fuzzyName, baseDistrict, baseClassification));
+            }
         } else {
             if (baseDistrict.equals("'全部'") && baseClassification.equals("'全部'")) {
                 return new PageInfo<tableBase>(tableCulturalService.selectAllTableWithPage(baseDistrict, baseClassification));
