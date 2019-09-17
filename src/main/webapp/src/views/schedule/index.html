@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Title</title>
     <link rel="stylesheet" href="../../css/reset.css" />
-
     <script type="text/javascript" src="../../libs/jquery.js"></script>
     <script type="text/javascript" src="../../libs/sea.js" id="seajsnode"></script>
     <script type="text/javascript" src="../../libs/seajs-text.js"></script>
@@ -47,6 +47,24 @@
         }
         #poiSelect{
             height: 25px;width:60px;display: inline-block;margin-left:-4px
+        }
+        img {
+            position: relative;
+        }
+        img::after {
+            content: "";
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: url(../schedule/png/bingmayong.jpg ) no-repeat center;
+        }
+        #container {
+            margin: 0;
+            padding: 0;
+            height:250px;
+            width:350px;
         }
     </style>
 </head>
@@ -115,21 +133,46 @@
             <div class="xpanel-wrapper xpanel-wrapper-1">
                 <div class="xpanel">
                     <div class="pic" id="photo-pic" >
-                        <img src="../../views/schedule/png/bingmayong.jpg" style="height: 250px;width:350px">
-                    </div>
+                        <img src="#" id="imgID" style="height: 250px;width:350px">
+                      </div>
                 </div>
             </div>
             <div class="xpanel-wrapper xpanel-wrapper-2">
-                <div class="xpanel">
-                    <div class="pic" id="map-pic"></div>
-                    <img src="../../views/schedule/png/map-pic.jpg" style="height:250px;width:350px">
-
+                <div class="xpanel" >
+                    <div class="pic" id="container"></div>
+<!--                    <img src="../../views/schedule/png/map-pic.jpg" >-->
                 </div>
             </div>
         </div>
     </div>
 </div>
 </body>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=4c4050aecc55468f218b12408fecc9cb"></script>
+<script type="text/javascript">
+    var map = new AMap.Map('container', {
+        resizeEnable: true,
+        center: [108.797253, 34.388205],
+        zoom: 10
+    });
+    // 创建一个 Marker 实例：
+    var marker = new AMap.Marker({
+        position: new AMap.LngLat(108.79, 34.38),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+        title: '西安'
+    });
+    // 将创建的点标记添加到已有的地图实例：
+    map.add(marker);
+    // 移除已创建的 marker
+    map.remove(marker);
+    marker.setMap(map);
+    // function addMarker() {
+    //     marker = new AMap.Marker({
+    //         icon: "//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png",
+    //         position: [116.406315,39.908775],
+    //         offset: new AMap.Pixel(-13, -30)
+    //     });
+    //     marker.setMap(map);
+    // }
+</script>
 <script type="text/javascript">
     seajs.use('../../js/schedule.js')
 </script>
