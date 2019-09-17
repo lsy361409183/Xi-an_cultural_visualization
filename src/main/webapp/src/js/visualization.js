@@ -336,7 +336,7 @@ define(function(require, exports, module){
 
             console.log('点击区域全选-类型传参==============', typeCheckedVal)
             getPointData("'全部'", typeCheckedVal, renderPoint);
-            getAreaData(valChange('area-districts'),typeCheckedVal);
+            getAreaData(valChange('area-districts'),valChange('area-types'));
         }
         else {
             // if($('#area-all').prop('checked',true)){
@@ -359,7 +359,7 @@ define(function(require, exports, module){
 
         console.log('点击类型全选-区域传参==============',areaCheckedVal)
         getPointData(areaCheckedVal, "'全部'", renderPoint);
-        getAreaData(areaCheckedVal,valChange('area-types'));
+        getAreaData(valChange('area-districts'),valChange('area-types'));
 
     });
 
@@ -500,7 +500,7 @@ define(function(require, exports, module){
     // 请求不同类别不同区域面积数据
     function getAreaData(areas, types) {
         var params = {
-            baseDistrict: areas === '全部' || areas.length===0? "'未央区','灞桥区','明城区','新城区','碑林区','莲湖区'" : areas.map(function (item) {
+            baseDistrict: areas === "'全部'" || areas.length===0? "'未央区','灞桥区','明城区','新城区','碑林区','莲湖区'" : areas.map(function (item) {
                 return "\'" + item + "\'"
             }).join(','),
             baseClassification: types === "'全部'" || types.length===0 ? "'visual_first','visual_second','visual_third','visual_fourth','visual_fifth','visual_sixth'": types.map(function (item) {
@@ -521,6 +521,13 @@ define(function(require, exports, module){
                 console.log('地区的值==================================',area)
                 console.log('类别的值==================================',types)
 
+                var id_array=new Array();
+                $('.area-types').each(function(){
+                    id_array.push($(this).val());//向数组中添加元素
+                });
+                console.log('1111111111111111111111111',  id_array.map(function (item) {
+                    return "\'" +item+"\'"
+                }).join(','));
                 // function refreshData(data){
                 //     //刷新数据
                 //     var option = myChart.getOption();
@@ -542,8 +549,7 @@ define(function(require, exports, module){
                     legend: {
                         x:'left',
                         selectedMode:false,
-                        data: types === "'全部'"?"'一类文地','二类文地','三类文地','四类文地','五类文地','六类文地'":types
-
+                        data: types
                     },
                     grid: {
                         left: '3%',
@@ -568,7 +574,7 @@ define(function(require, exports, module){
                     ],
 
                     series :
-                        types === ["一类文地", "二类文地", "三类文地", "四类文地", "五类文地", "六类文地"] ? "'visualFirst','visualSecond','visualThird','visualFourth','visualFifth','visualSixth'" : types.map(function (item) {
+                        types.map(function (item) {
                             return item === '一类文地' ? 'visualFirst': item === '二类文地' ? 'visualSecond' : item === '三类文地' ? 'visualThird' :
                                 item === '四类文地' ? 'visualFourth' :item === '五类文地' ? 'visualFifth' :'visualSixth'
                         }).map(function (item) {
