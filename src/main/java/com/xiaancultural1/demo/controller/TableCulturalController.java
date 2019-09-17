@@ -44,7 +44,7 @@ public class TableCulturalController {
             System.out.println(baseDistrict+"controller1");
             System.out.println(baseClassification);
             System.out.println(fuzzyName);
-            return new PageInfo<tableBase>(tableCulturalService.selectTableFuzzySearch(baseDistrict,baseClassification,fuzzyName));
+            return new PageInfo<tableBase>(tableCulturalService.selectTableFuzzySearch(fuzzyName,baseDistrict,baseClassification));
         } else {
             if (baseDistrict.equals("'全部'") && baseClassification.equals("'全部'")) {
                 return new PageInfo<tableBase>(tableCulturalService.selectAllTableWithPage(baseDistrict, baseClassification));
