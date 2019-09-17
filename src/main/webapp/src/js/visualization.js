@@ -309,6 +309,7 @@ define(function(require, exports, module){
         console.log('点击类型全选-区域传参==============',areaCheckedVal)
         getPointData(areaCheckedVal, "'全部'", renderPoint);
         getAreaData(areaCheckedVal,valChange('area-types'));
+
     });
 
     // 初次加载默认全选
@@ -420,10 +421,10 @@ define(function(require, exports, module){
     // 请求不同类别不同区域面积数据
     function getAreaData(areas, types) {
         var params = {
-            baseDistrict: areas === "'全部'"&& areas.length===0? "'未央区','灞桥区','明城区','新城区','碑林区','莲湖区'" : areas.map(function (item) {
+            baseDistrict: areas === '全部' || areas.length===0? "'未央区','灞桥区','明城区','新城区','碑林区','莲湖区'" : areas.map(function (item) {
                 return "\'" + item + "\'"
             }).join(','),
-            baseClassification: types === "'全部'" && types.length===0? "visual_first,visual_second,visual_third,visual_fourth,visual_fifth,visual_sixth" : types.map(function (item) {
+            baseClassification: types === "'全部'" || types.length===0 ? "'visual_first','visual_second','visual_third','visual_fourth','visual_fifth','visual_sixth'": types.map(function (item) {
                 return item === '一类文地' ? 'visual_first': item === '二类文地' ? 'visual_second' : item === '三类文地' ? 'visual_third' :
                     item === '四类文地' ? 'visual_fourth' :item === '五类文地' ? 'visual_fifth' :'visual_sixth'
             }).join(',')
@@ -508,6 +509,7 @@ define(function(require, exports, module){
                                     console.log('item+++++++++++++++++',item)
                                     console.log('child[item]+++++++++++++++++',child[item])
                                     return child[item]
+
                                 })
                             }
                         })
