@@ -188,6 +188,57 @@ define(function(require, exports, module){
                 })
             })
         });
+
+        // 地图根据文地点范围显示
+        // 计算经度最大值
+        var mLngPoint =tempPointArr.sort(function (a, b) {
+            var tempLngA = Number(a.basePoint && a.basePoint.split(',')[0]),
+                tempLatB = Number(b.basePoint && b.basePoint.split(',')[0]);
+            return tempLatB - tempLngA
+        });
+        var maxLng = mLngPoint[0].basePoint.split(',')[0],
+            minLng = mLngPoint[mLngPoint.length - 1].basePoint.split(',')[0]
+        // 计算纬度最大值
+        var mLatPoint =tempPointArr.sort(function (a, b) {
+            var tempLatA = Number(a.basePoint && a.basePoint.split(',')[1]),
+                tempLatB = Number(b.basePoint && b.basePoint.split(',')[1]);
+            return tempLatB - tempLatA
+        });
+        var maxLat = mLatPoint[0].basePoint.split(',')[1],
+            minLat = mLatPoint[mLatPoint.length - 1].basePoint.split(',')[1]
+
+        // 拼装一个矩形框
+        var topLeft = [minLng, maxLat],
+            topRight = [maxLng, maxLat],
+            bottomLeft = [minLng, minLat],
+            bottomRight = [maxLng, minLat];
+
+        var coorMaxBox = [topLeft, topRight, bottomRight, bottomLeft];
+        var coorMaxBoxFeature = new ol.Feature({
+            geometry: new ol.geom.Polygon([coorMaxBox])
+        });
+
+        // 添加一个透明图层
+        var coorMaxBoxLayer = new ol.layer.Vector({
+            source: new ol.source.Vector(),
+            style: new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                    color: 'rgba(0,0,0,0)',
+                    width: 1
+                }),
+                fill: new ol.style.Fill({
+                    color: 'rgba(0,0,0,0)'
+                })
+            })
+        });
+
+        // 缩放到文地点的范围
+        coorMaxBoxLayer.getSource().addFeature(coorMaxBoxFeature);
+        var feature = coorMaxBoxLayer.getSource().getFeatures()[0];
+        var polygon = (feature.getGeometry());
+        var size = (map.getSize());
+        view.fit(polygon,size,{padding:[300,300,300,150],constrainResolution: false});
+
         map.addLayer(cultural_point)
     }
 
@@ -366,7 +417,10 @@ define(function(require, exports, module){
         }
     })
 
-    // 添加新系窗体
+    /**
+     * 添加信息窗体
+     *
+     * */
     var container = document.getElementById('popup');
     var content = document.getElementById('popup-content');
     var closer = document.getElementById('popup-closer');
@@ -379,6 +433,7 @@ define(function(require, exports, module){
         }
     });
 
+    // 关闭按钮事件
     closer.onclick = function() {
         overlay.setPosition(undefined);
         closer.blur();
@@ -386,6 +441,25 @@ define(function(require, exports, module){
     };
     map.addOverlay(overlay);
 
+    // 高亮样式
+    var highlight;
+    var highlightStyle = new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 8,
+            stroke: new ol.style.Stroke({
+                color: 'rgb(0,255,255)'
+            }),
+            fill: new ol.style.Fill({
+                color: 'rgb(0,255,255)'
+            })
+        })
+    });
+
+    var featureOverlay = new ol.layer.Vector({
+        source: new ol.source.Vector(),
+        map: map,
+        style: highlightStyle
+    });
     map.on('click', function(evt) {
         console.log('evt',evt)
         var feature = map.forEachFeatureAtPixel(evt.pixel,
@@ -393,18 +467,23 @@ define(function(require, exports, module){
                 console.log('feature============',feature)
                 return feature;
             });
-        var popContent = "<p class='pop-text'>文地名称："+feature.get('baseName') +
-            "</p><p class='pop-text'>文地面积："+feature.get('baseArea') + "公顷" +
-            "</p><p class='pop-text'>文地区域："+feature.get('baseDistrict') +
-            "</p><p class='pop-text'>文地类型："+feature.get('baseClassfication') + "</p>"
-        if (feature) {
-            console.log('feature', feature)
-            var coordinates = feature.getGeometry().getCoordinates();
-            content.innerHTML = popContent;
-            overlay.setPosition(coordinates);
+        var popContent = "<p class='pop-text'><b>文地名称：</b>"+feature.get('baseName') +
+            "</p><p class='pop-text'><b>文地面积：</b>"+feature.get('baseArea') + "公顷" +
+            "</p><p class='pop-text'><b>文地区域：</b>"+feature.get('baseDistrict') +
+            "</p><p class='pop-text'><b>文地类型：</b>"+feature.get('baseClassfication') + "</p>";
 
-        } else {
-
+        if (feature !== highlight) {
+            if (highlight) {
+                featureOverlay.getSource().removeFeature(highlight);
+            }
+            if (feature) {
+                featureOverlay.getSource().addFeature(feature);
+                // console.log('feature', feature)
+                var coordinates = feature.getGeometry().getCoordinates();
+                content.innerHTML = popContent;
+                overlay.setPosition(coordinates);
+            }
+            highlight = feature;
         }
     });
 
