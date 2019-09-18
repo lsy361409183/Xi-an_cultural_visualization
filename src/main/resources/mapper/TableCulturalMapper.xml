@@ -21,6 +21,7 @@
         <result column="base_longitude" property="baseLongitude"/>
         <result column="base_latitude" property="baseLatitude"/>
         <result column="base_point" property="baseLatandlon"/>
+        <result column="base_id" property="baseId"/>
         <result column="base_name" property="baseName"/>
         <result column="base_area" property="baseArea"/>
         <result column="base_classification" property="baseClassification"/>
@@ -47,13 +48,11 @@
     <select id="selectTableFuzzySearch" resultMap="Base">
         select base_district,base_district_id,base_id,base_name,base_region,base_area,base_date,base_planeform,base_classification,
             base_basis,base_unit,base_remarks
-        from  public."tb_base_data" where base_name like CONCAT('%',${fuzzyName},'%')
-        and base_district =${baseDistrict} and base_classification = ${baseClassification}
+        from  public."tb_base_data" where base_name like CONCAT('%',${fuzzyName},'%')and base_district =${baseDistrict} and base_classification = ${baseClassification}
  </select>
     <!--全部状况模糊查询文地信息-->
     <select id="selectTableFuzzySearchAll" resultMap="Base">
-        select base_district,base_district_id,base_id,base_name,base_region,base_area,base_date,base_planeform,base_classification,
-            base_basis,base_unit,base_remarks
+        select base_district,base_district_id,base_id,base_name,base_region,base_area,base_date,base_planeform,base_classification,base_basis,base_unit,base_remarks
         from  public."tb_base_data" where base_name like CONCAT('%',${fuzzyName},'%')
      </select>
 
@@ -69,10 +68,10 @@
             base_basis,base_unit,base_remarks from public."tb_base_data" where base_name like CONCAT('%',${fuzzyName},'%') and base_classification=${baseClassification}
     </select>
 
-
-    <select id="selectTableByName" resultMap="BaseMap">
+<!--根据ID进行图片等信息的查询-->
+    <select id="selectTableByIdClick" resultMap="BaseMap">
         select * from public."tb_base_data"
-        where base_name = baseName
+        where base_id = ${baseId}
     </select>
 
 </mapper>

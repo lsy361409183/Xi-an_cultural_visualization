@@ -24,6 +24,7 @@ public interface TableCulturalMapper {
     //类别筛选
     List<tableBase> selectTableByClassification(@Param("baseClassification")String baseClassification);
 
+    //四个模糊查询接口
     List<tableBase> selectTableFuzzySearch(@Param("fuzzyName") String fuzzyName,@Param("baseDistrict") String baseDistrict,
                                            @Param("baseClassification") String baseClassification);
     List<tableBase> selectTableFuzzySearchAll(@Param("fuzzyName")String fuzzyName,@Param("baseDistrict") String baseDistrict,
@@ -34,6 +35,9 @@ public interface TableCulturalMapper {
 
     List<tableBase> selectTableFuzzySearchClassification(@Param("fuzzyName")String fuzzyName,@Param("baseDistrict") String baseDistrict,
                                                  @Param("baseClassification") String baseClassification);
+
+    //查图片及地图高亮的接口
+    List<tableBase> selectTableByIdClick(@Param("baseId")int baseId);
 
 
 }

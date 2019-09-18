@@ -40,7 +40,7 @@ public class TableCulturalController {
                                            @RequestParam(value = "fuzzyName",required = false)String fuzzyName) {
         PageHelper.clearPage();
         PageHelper.startPage(page, 20);
-        if (fuzzyName != null) {
+        if (fuzzyName != "''") {
             if(baseDistrict.equals("'全部'")&&baseClassification.equals("'全部'"))
             {
                 return new PageInfo<>(tableCulturalService.selectAllTableWithPageAll(fuzzyName,baseDistrict,baseClassification));
@@ -71,6 +71,15 @@ public class TableCulturalController {
         PageHelper.clearPage();
         PageHelper.startPage(page,20);
         PageInfo<tableBase> pageInfo=new PageInfo<>(tableCulturalService.selectTableFuzzySearch(baseDistrict,baseClassification,fuzzyName));
+        return pageInfo;
+    }
+
+    @RequestMapping("/click")
+    @ResponseBody
+    public PageInfo<tableBase> clickLists(@RequestParam(value = "page")int page,@RequestParam(value = "baseId",required = false)int baseId){
+        PageHelper.clearPage();
+        PageHelper.startPage(page,20);
+        PageInfo<tableBase> pageInfo=new PageInfo<>(tableCulturalService.selectIdClick(baseId));
         return pageInfo;
     }
 
