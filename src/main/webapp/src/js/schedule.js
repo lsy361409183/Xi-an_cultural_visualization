@@ -115,26 +115,27 @@ define(function(require, exports, module) {
         var page=1;
         var area= $('.select1 option:selected').val();
         var type=$('.select2 option:selected').val();
-        console.log(poiText)
-        // if (!(poiText == null||poiText == ""||poiText == undefined))
-        // //模糊查询框不是空
-        // {
-        //     // $('#areas-select-title').attr("color",'22ee00');
-        //     $('.area-districts').prop("disabled",true);
-        //     $('.areas-types').prop("disabled",true);
-        //     area= "全部";
-        //     type="全部";
-        //     console.log(area)
-        // }
-        // else
-        // {
-        //     $('.area-districts').prop("disabled",false);
-        //     $('.areas-types').prop("disabled",false);
-        //
-        // }
         render(area,type,page,poiText)
     })
 //    切换图片和高德地图标记
+    //地图
+    var map = new AMap.Map('gaodemap', {
+        resizeEnable: true,
+        center: [108.797253, 34.388205],//西安坐标
+        zoom: 10
+    });
+    // 创建一个 Marker 实例：
+    var marker = new AMap.Marker({
+        position: Latandlon,   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+        title: '西安'
+    });
+    // 将创建的点标记添加到已有的地图实例：
+    map.add(marker);
+    // 移除已创建的 marker
+    map.remove(marker);
+    marker.setMap(map);
+
+
     $("#table td").on('click',function (){
         //取点击行的名称
         var x = $(this).parent().find("td").eq(2).text()
@@ -142,16 +143,17 @@ define(function(require, exports, module) {
         $("#imgID").attr('src','');
 
         // $.ajax({
-        //     url:'',
+        //     url:'/click',
         //     type:'get',
         //     async:false,
         //     dataType: 'json',
         //     data:{
-        //         baseName:x
+        //         baseId:x
         //     },
         //     success:function (data) {
         //     //    更换图片和坐标点
-        //       $("#imgID").attr('src','data.path')
+        //         var Latandlon=data.baseLatandlon
+        //       $("#imgID").attr('src','data.basePicture')
         //
         //
         //

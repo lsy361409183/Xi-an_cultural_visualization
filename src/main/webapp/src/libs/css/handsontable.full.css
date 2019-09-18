@@ -1506,8 +1506,8 @@ textarea#HandsontableCopyPaste {
 .handsontable.ht__manualRowMove.on-moving--rows,
 .handsontable.ht__manualRowMove.on-moving--rows tbody th.ht__highlight {
   cursor: move;
-  cursor: -moz-grabbing;
-  cursor: -webkit-grabbing;
+  /*cursor: -moz-grabbing;*/
+  /*cursor: -webkit-grabbing;*/
   cursor: grabbing;
 }
 .handsontable.ht__manualRowMove.on-moving--rows .manualRowResizer {

@@ -58,7 +58,7 @@
             position: absolute;
             left: 0;
             top: 0;
-            background: url(../schedule/png/bingmayong.jpg ) no-repeat center;
+            background: url(../../static/icons/bingmayong.jpg ) no-repeat center;
         }
         #gaodemap {
             margin: 0;
@@ -148,24 +148,6 @@
 </div>
 </body>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=4c4050aecc55468f218b12408fecc9cb"></script>
-<script type="text/javascript">
-    var map = new AMap.Map('gaodemap', {
-        resizeEnable: true,
-        center: [108.797253, 34.388205],
-        zoom: 10
-    });
-    // 创建一个 Marker 实例：
-    var marker = new AMap.Marker({
-        position: [108.79, 34.38],   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
-        title: '西安'
-    });
-    // 将创建的点标记添加到已有的地图实例：
-    map.add(marker);
-    // 移除已创建的 marker
-    map.remove(marker);
-    marker.setMap(map);
-
-</script>
 <script type="text/javascript">
     seajs.use('../../js/schedule.js')
 </script>
