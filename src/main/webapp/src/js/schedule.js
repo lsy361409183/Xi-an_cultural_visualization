@@ -90,7 +90,7 @@ define(function(require, exports, module) {
             })
         }
 //第一次渲染时的当前页码
-    render("全部", "全部",'1', " ")
+    render("全部", "全部",'1', "")
 //bootstrap的分页插件，单独取鼠标选取的页码，传给render()
         $('#pageUl').bootstrapPaginator({//将id为pageLimit的ul元素设置为分页插件
             onPageClicked: function (event, originalEvent, type, page) {//为操作按钮绑定click事件。
@@ -116,28 +116,28 @@ define(function(require, exports, module) {
         var area= $('.select1 option:selected').val();
         var type=$('.select2 option:selected').val();
         console.log(poiText)
-        if (!(poiText == null||poiText == ""||poiText == undefined))
-        //模糊查询框不是空
-        {
-            // $('#areas-select-title').attr("color",'22ee00');
-            $('.area-districts').prop("disabled",true);
-            $('.areas-types').prop("disabled",true);
-            area= "全部";
-            type="全部";
-            console.log(area)
-        }
-        else
-        {
-            $('.area-districts').prop("disabled",false);
-            $('.areas-types').prop("disabled",false);
-
-        }
+        // if (!(poiText == null||poiText == ""||poiText == undefined))
+        // //模糊查询框不是空
+        // {
+        //     // $('#areas-select-title').attr("color",'22ee00');
+        //     $('.area-districts').prop("disabled",true);
+        //     $('.areas-types').prop("disabled",true);
+        //     area= "全部";
+        //     type="全部";
+        //     console.log(area)
+        // }
+        // else
+        // {
+        //     $('.area-districts').prop("disabled",false);
+        //     $('.areas-types').prop("disabled",false);
+        //
+        // }
         render(area,type,page,poiText)
     })
 //    切换图片和高德地图标记
     $("#table td").on('click',function (){
         //取点击行的名称
-        var x = $(this).parent().find("td").eq(3).text()
+        var x = $(this).parent().find("td").eq(2).text()
         console.log(x)
         $("#imgID").attr('src','');
 

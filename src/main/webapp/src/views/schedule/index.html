@@ -60,7 +60,7 @@
             top: 0;
             background: url(../schedule/png/bingmayong.jpg ) no-repeat center;
         }
-        #container {
+        #gaodemap {
             margin: 0;
             padding: 0;
             height:250px;
@@ -71,7 +71,7 @@
 <body style="overflow-x:hidden">
 <!--导航栏-->
 <div id="nav-tpl"></div>
-<div id="menubutton">
+<div>
     <table style="margin-left:70px">
         <tr  style="padding: 5px 20px">
             <td>
@@ -139,7 +139,7 @@
             </div>
             <div class="xpanel-wrapper xpanel-wrapper-2">
                 <div class="xpanel" >
-                    <div class="pic" id="container"></div>
+                    <div class="pic" id="gaodemap"></div>
 <!--                    <img src="../../views/schedule/png/map-pic.jpg" >-->
                 </div>
             </div>
@@ -149,7 +149,7 @@
 </body>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=4c4050aecc55468f218b12408fecc9cb"></script>
 <script type="text/javascript">
-    var map = new AMap.Map('container', {
+    var map = new AMap.Map('gaodemap', {
         resizeEnable: true,
         center: [108.797253, 34.388205],
         zoom: 10
