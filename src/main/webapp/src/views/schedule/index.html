@@ -156,7 +156,7 @@
     });
     // 创建一个 Marker 实例：
     var marker = new AMap.Marker({
-        position: new AMap.LngLat(108.79, 34.38),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+        position: [108.79, 34.38],   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
         title: '西安'
     });
     // 将创建的点标记添加到已有的地图实例：
@@ -164,14 +164,7 @@
     // 移除已创建的 marker
     map.remove(marker);
     marker.setMap(map);
-    // function addMarker() {
-    //     marker = new AMap.Marker({
-    //         icon: "//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png",
-    //         position: [116.406315,39.908775],
-    //         offset: new AMap.Pixel(-13, -30)
-    //     });
-    //     marker.setMap(map);
-    // }
+
 </script>
 <script type="text/javascript">
     seajs.use('../../js/schedule.js')
