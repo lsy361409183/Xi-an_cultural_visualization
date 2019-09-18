@@ -50,8 +50,8 @@ public class TableCulturalService {
     }
 
 
-    public Page<tableBase> selectIdClick(int baseId){
-        return (Page<tableBase>) tableCulturalMapper.selectTableByIdClick(baseId);
+    public  List<tableBase> selectIdClick(Integer baseId){
+        return  tableCulturalMapper.selectTableByIdClick(baseId);
     }
 
 

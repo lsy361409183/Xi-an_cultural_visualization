@@ -18,8 +18,6 @@
     </resultMap>
 
     <resultMap id="BaseMap" type="com.xiaancultural1.demo.pojo.tableBase">
-        <result column="base_longitude" property="baseLongitude"/>
-        <result column="base_latitude" property="baseLatitude"/>
         <result column="base_point" property="baseLatandlon"/>
         <result column="base_id" property="baseId"/>
         <result column="base_name" property="baseName"/>
@@ -70,7 +68,7 @@
 
 <!--根据ID进行图片等信息的查询-->
     <select id="selectTableByIdClick" resultMap="BaseMap">
-        select * from public."tb_base_data"
+        select base_point,base_id,base_name,base_classification,base_area,base_picture,base_unit from public."tb_base_data"
         where base_id = ${baseId}
     </select>
 

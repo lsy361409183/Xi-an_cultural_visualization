@@ -37,7 +37,7 @@ public interface TableCulturalMapper {
                                                  @Param("baseClassification") String baseClassification);
 
     //查图片及地图高亮的接口
-    List<tableBase> selectTableByIdClick(@Param("baseId")int baseId);
+    List<tableBase> selectTableByIdClick(@Param("baseId")Integer baseId);
 
 
 }

@@ -40,24 +40,24 @@ public class TableCulturalController {
                                            @RequestParam(value = "fuzzyName",required = false)String fuzzyName) {
         PageHelper.clearPage();
         PageHelper.startPage(page, 20);
+        System.out.println(fuzzyName);
         if (fuzzyName != "''") {
-            if(baseDistrict.equals("'全部'")&&baseClassification.equals("'全部'"))
-            {
+            if(baseDistrict.equals("'全部'")&&baseClassification.equals("'全部'")) {
                 return new PageInfo<>(tableCulturalService.selectAllTableWithPageAll(fuzzyName,baseDistrict,baseClassification));
             } else if(baseClassification.equals("'全部'")){
                 return new PageInfo<>(tableCulturalService.selectTableWithRegionFuzzy(fuzzyName,baseDistrict,baseClassification));
             } else if(baseDistrict.equals("'全部'")){
                 return new PageInfo<>(tableCulturalService.selectTableWithClassificationFuzzy(fuzzyName,baseDistrict,baseClassification));
             }else {
-                return new PageInfo<tableBase>(tableCulturalService.selectTableFuzzySearch(fuzzyName, baseDistrict, baseClassification));
+                return new PageInfo<>(tableCulturalService.selectTableFuzzySearch(fuzzyName, baseDistrict, baseClassification));
             }
         } else {
             if (baseDistrict.equals("'全部'") && baseClassification.equals("'全部'")) {
-                return new PageInfo<tableBase>(tableCulturalService.selectAllTableWithPage(baseDistrict, baseClassification));
+                return new PageInfo<>(tableCulturalService.selectAllTableWithPage(baseDistrict, baseClassification));
             } else if (baseDistrict.equals("'全部'")) {
-                return new PageInfo<tableBase>(tableCulturalService.selectTableByClassification(baseClassification));
+                return new PageInfo<>(tableCulturalService.selectTableByClassification(baseClassification));
             } else if (baseClassification.equals("'全部'")) {
-                return new PageInfo<tableBase>(tableCulturalService.selectTableByRegion(baseDistrict));
+                return new PageInfo<>(tableCulturalService.selectTableByRegion(baseDistrict));
             } else {
                 return new PageInfo<>(tableCulturalService.selectTableWithRegionAndClassificationWithPage(baseDistrict, baseClassification));
             }
@@ -76,11 +76,12 @@ public class TableCulturalController {
 
     @RequestMapping("/click")
     @ResponseBody
-    public PageInfo<tableBase> clickLists(@RequestParam(value = "page")int page,@RequestParam(value = "baseId",required = false)int baseId){
-        PageHelper.clearPage();
-        PageHelper.startPage(page,20);
-        PageInfo<tableBase> pageInfo=new PageInfo<>(tableCulturalService.selectIdClick(baseId));
-        return pageInfo;
+    public List<tableBase> clickLists(@RequestParam(value = "page")int page,@RequestParam(value = "baseId",required = false)Integer baseId){
+        System.out.println(tableCulturalService.selectIdClick(baseId).get(0).getBaseLatandlon());
+        List<tableBase> u1= tableCulturalService.selectIdClick(baseId);
+        u1.get(0).setBaseLatandlon('['+tableCulturalService.selectIdClick(baseId).get(0).getBaseLatandlon()+']');
+        System.out.println(u1.get(0).getBaseLatandlon());
+        return u1;
     }
 
 

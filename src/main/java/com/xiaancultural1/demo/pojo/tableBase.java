@@ -15,7 +15,7 @@ public class tableBase {
     private String baseRemarks;
     private double baseLatitude;
     private double baseLongitude;
-    private double baseLatandlon;
+    private String baseLatandlon;
     private String basePicture;
 
     @Override
@@ -43,7 +43,7 @@ public class tableBase {
     public tableBase() {
     }
 
-    public tableBase(String baseDistrict, String baseDistrictId, int baseId, String baseName, String baseRegion, String baseArea, String baseDate, String basePlaneform, String baseClassification, String baseBasis, String baseUnit, String baseRemarks, double baseLatitude, double baseLongitude, double baseLatandlon, String basePicture) {
+    public tableBase(String baseDistrict, String baseDistrictId, int baseId, String baseName, String baseRegion, String baseArea, String baseDate, String basePlaneform, String baseClassification, String baseBasis, String baseUnit, String baseRemarks, double baseLatitude, double baseLongitude, String baseLatandlon, String basePicture) {
         this.baseDistrict = baseDistrict;
         this.baseDistrictId = baseDistrictId;
         this.baseId = baseId;
@@ -174,11 +174,11 @@ public class tableBase {
         this.baseLongitude = baseLongitude;
     }
 
-    public double getBaseLatandlon() {
+    public  String getBaseLatandlon() {
         return baseLatandlon;
     }
 
-    public void setBaseLatandlon(double baseLatandlon) {
+    public void setBaseLatandlon(String baseLatandlon) {
         this.baseLatandlon = baseLatandlon;
     }
 
