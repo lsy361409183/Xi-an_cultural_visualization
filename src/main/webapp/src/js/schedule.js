@@ -122,44 +122,66 @@ define(function(require, exports, module) {
     var map = new AMap.Map('gaodemap', {
         resizeEnable: true,
         center: [108.797253, 34.388205],//西安坐标
-        zoom: 10
+        zoom: 11
     });
-    // 创建一个 Marker 实例：
-    var marker = new AMap.Marker({
-        position: Latandlon,   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
-        title: '西安'
-    });
-    // 将创建的点标记添加到已有的地图实例：
-    map.add(marker);
-    // 移除已创建的 marker
-    map.remove(marker);
-    marker.setMap(map);
-
 
     $("#table td").on('click',function (){
         //取点击行的名称
         var x = $(this).parent().find("td").eq(2).text()
         console.log(x)
-        $("#imgID").attr('src','');
+        $.ajax({
+            url:'/click',
+            type:'get',
+            async:false,
+            dataType: 'json',
+            data:{
+                baseId:5
+            },
+            success:function (e) {
+            //    更换图片和坐标点
+                console.log(e);
+                var path=e[0].basePicture;
+              $("#imgID").attr('src',path)
+                map.clearMap();
+                var markers = [];
+                var infoWindow;
+                var marker;
+                var position=e[0].baseLatandlon;
+                    marker = new AMap.Marker({
+                        position: '',
+                        zIndex: 101,
+                        map:map
+                    });
+                var baseName;
+                var baseClassification;
+                var baseArea;
+                map.add(marker);
+                marker.setMap(map);
 
-        // $.ajax({
-        //     url:'/click',
-        //     type:'get',
-        //     async:false,
-        //     dataType: 'json',
-        //     data:{
-        //         baseId:x
-        //     },
-        //     success:function (data) {
-        //     //    更换图片和坐标点
-        //         var Latandlon=data.baseLatandlon
-        //       $("#imgID").attr('src','data.basePicture')
-        //
-        //
-        //
-        //     }
-        // })
-
+                marker.baseName=e[0].baseName;
+                marker.baseClassification=e[0].baseClassification;
+                marker.baseArea=e[0].baseArea;
+                marker.on('click', function(e){
+                        infoWindow.setContent(
+                            "</br>"+"<div id='info-content' " +
+                            "style='background-color: #F9F9F9;border: 1px solid #CCC;  border-bottom: 1px solid #CCC;\n" +
+                            "  border-radius: 5px 5px 5px 5px;'>" + "<ul class='main'>" +
+                            "<li > 文地名称:<span style='color:#222222'>"+e.target.baseName+"</span></li>"
+                            + "<li>  文地类别: <span style='color:#222222'>"+e.target.baseClassification+"  </span></li>"
+                            + "<li>  文地面积: <span style='color:#222222'>"+e.target.baseArea+" </span></li>"
+                            + "</ul></div>");
+                        infoWindow.open(map, e.lnglat);
+                    });
+                    // for-end
+                infoWindow = new AMap.InfoWindow({
+                    anchor: 'center',
+                    isCustom:	true,
+                    closeWhenClickMap:true,
+                    draggable: true,  //是否可拖动
+                    offset: new AMap.Pixel(0, -31),
+                    content:""
+                });
+            }
     })
-
+    })
 })
