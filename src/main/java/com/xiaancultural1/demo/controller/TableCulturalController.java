@@ -76,7 +76,7 @@ public class TableCulturalController {
 
     @RequestMapping("/click")
     @ResponseBody
-    public List<tableBase> clickLists(@RequestParam(value = "page")int page,@RequestParam(value = "baseId",required = false)Integer baseId){
+    public List<tableBase> clickLists(@RequestParam(value = "baseId",required = false)Integer baseId){
         System.out.println(tableCulturalService.selectIdClick(baseId).get(0).getBaseLatandlon());
         List<tableBase> u1= tableCulturalService.selectIdClick(baseId);
         u1.get(0).setBaseLatandlon('['+tableCulturalService.selectIdClick(baseId).get(0).getBaseLatandlon()+']');
