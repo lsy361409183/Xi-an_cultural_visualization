@@ -740,6 +740,35 @@ define(function(require, exports, module){
                 maxPoints: maxPoints                            //最大点数
             });
             map.addInteraction(draw);
+
+            //判断点是否在多边形上
+
+            //获取多边形的坐标
+            draw.on('drawend',function (evt) {
+                var feature =evt.feature;
+                var coordinate = feature.getGeometry().getCoordinates();
+                // var coordinate =coordinate1.split(',')
+                console.log('多边形的坐标是:', coordinate);
+
+                //获取点图层的坐标
+                pointArr1 = tempPointArr.map(function (item) {
+                    console.log('item-----------------------------',item)
+                    var pointCoordArr = item.basePoint.split(',');
+                    return [
+                        Number(pointCoordArr[0]),
+                        Number(pointCoordArr[1])
+                    ]
+                });
+                console.log('点点-----------------------------'+pointArr1)
+                // 判断相交
+                var ss =  pointArr1.map(function (value) {
+                    var dd = turf.booleanPointInPolygon(value,coordinate)
+                    return dd
+                })
+                console.log('是否相交-----------------------------',ss)
+            })
+
+
         }else{
             //清空绘制的图形
             drawSource.clear();
