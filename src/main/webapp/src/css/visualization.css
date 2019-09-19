@@ -80,3 +80,43 @@
 .ol-popup-closer:after {
     content: "✖";
 }
+
+
+/* 圈一圈 */
+#draw-button{
+    position: absolute;
+    top: 80px;
+    left: .5rem;
+}
+#draw-button #draw-button-toggle{
+    background-image: url('../static/icons/select.png');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 2px 3px;
+}
+#draw-button-box{
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    list-style: none;
+    width: 2rem;
+    height: 12rem;
+    display: none;
+}
+#draw-button-box li{
+    display: inline-block;
+    /*float: left;*/
+    position: relative;
+}
+#draw-button-box li:first-child button{
+    background-image: url("../static/icons/rectangle.png");
+    background-size: 25px;
+}
+#draw-button-box li:nth-child(2) button{
+    background-image: url("../static/icons/polygon.png");
+    background-size: 25px;
+}
+#draw-button-box li:last-child button{
+    background-image: url("../static/icons/clear.png");
+    background-size: 23px;
+}

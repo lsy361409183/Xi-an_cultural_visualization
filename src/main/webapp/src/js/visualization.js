@@ -147,8 +147,6 @@ define(function(require, exports, module){
             }),
             zIndex: 0
         });
-       var test =  map.getLayerGroup();
-       console.log('test', test)
         map.addLayer(vectorLayer);
     }
 
@@ -168,6 +166,7 @@ define(function(require, exports, module){
         });
         pointArr = tempPointArr.map(function (item) {
             var pointCoordArr = item.basePoint.split(',');
+            // console.log('pointCoordArr=========',pointCoordArr)
             return new ol.Feature({
                 geometry:  new ol.geom.Point([Number(pointCoordArr[0]),Number(pointCoordArr[1])]),
                 baseName: item.baseName,
@@ -243,8 +242,8 @@ define(function(require, exports, module){
         coorMaxBoxLayer.getSource().addFeature(coorMaxBoxFeature);
         var feature = coorMaxBoxLayer.getSource().getFeatures()[0];
         var polygon = (feature.getGeometry());
-        var size = (map.getSize());
-        view.fit(polygon,size,{padding:[300,300,300,150],constrainResolution: false});
+        var size = map.getSize();
+        view.fit(polygon,size,{padding:[300,300,300,150],constrainResolution: false})
 
         map.addLayer(cultural_point)
     }
@@ -290,9 +289,6 @@ define(function(require, exports, module){
             getAreaData(areaCheckedVal,typeCheckedVal)
             console.log('点击区域复选参数===========================',areaCheckedVal,typeCheckedVal);
 
-            // var temp = JSON.stringify(areaCheckedVal);
-            // console.log('temp',temp)
-            // console.log('parse', JSON.parse(temp))
             var types = typeCheckedVal.length === 6 || typeCheckedVal==0? "'全部'" : typeCheckedVal
             if (areaCheckedVal.length === 7) {
                 $('#area-all').prop('checked', true);
@@ -377,19 +373,16 @@ define(function(require, exports, module){
         $('.area-types').prop('checked', true);
         $('#area-all').prop('checked', true);
         $('#type-all').prop('checked', true);
-    })()
+    })();
 
     //POI搜索
     // 请求POI拿到文地数据
     function POISelect(render) {
         var poi=$('#POI').val();
-        console.log('poi',poi)
 
         var areaCheckedVal = valChange('area-districts');
-            console.log('区域是',areaCheckedVal)
         var area=areaCheckedVal.map(function (item) {
             return "\'" + item + "\'"}).join(',')
-        console.log('转变后的区域是',area)
         var params = {
             baseDistrict: area,
             baseName: poi
@@ -412,7 +405,6 @@ define(function(require, exports, module){
     //改变焦点 类别变暗
     $("#POI").on('input propertychange',function(){
         var poi=$('#POI').val();
-        console.log(poi)
         if(!(poi == null||poi == ""||poi == undefined))
         {
             $('.area-types').prop("disabled",true);
@@ -626,8 +618,8 @@ define(function(require, exports, module){
                                 stack: '类别',
                                 data: data.map(function (child) {
 
-                                    console.log('item+++++++++++++++++',item)
-                                    console.log('child[item]+++++++++++++++++',child[item])
+                                    // console.log('item+++++++++++++++++',item)
+                                    // console.log('child[item]+++++++++++++++++',child[item])
                                     return child[item]
 
                                 })
@@ -641,6 +633,117 @@ define(function(require, exports, module){
         })
     }
 
+    /**
+     * 鼠标框选事件
+     *
+     *
+     * */
+    var viewport = map.getViewport();
 
+    var controlContent = "<div id='draw-button' class='ol-control'><button id='draw-button-toggle' type='button'></button>" +
+        "<ul id='draw-button-box'><li class='ol-control'><button type='button' name='Box'></button></li><li class='ol-control'><button type='button' name='Polygon'></button></li>" +
+        "<li class='ol-control'><button type='button' name='None'></button></li></ul></div>"
+    $(viewport).append(controlContent)
+
+    $('#draw-button-toggle').bind('click', function (e) {
+        e.preventDefault();
+        map.removeLayer(cultural_point);
+        $("#draw-button-box").slideToggle(1000,function () {
+            var btnDisplay = $('#draw-button-box').css('display');
+
+            console.log('btnDisplay==========',btnDisplay);
+            if (btnDisplay === 'block') {
+                $('.area-districts').prop('disabled', true);
+                $('.area-types').prop('disabled', true);
+                $('#area-all').prop('disabled', true);
+                $('#type-all').prop('disabled', true);
+            } else {
+                getPointData("'全部'", "'全部'", renderPoint);
+                $('.area-districts').prop('disabled', false);
+                $('.area-types').prop('disabled', false);
+                $('#area-all').prop('disabled', false);
+                $('#type-all').prop('disabled', false);
+
+            }
+        });
+    });
+
+    $('#draw-button-box li button').bind('click',function () {
+        $this = $(this);
+        console.log('$this++++++++++++',$this[0].name);
+
+        map.removeInteraction(draw);
+        drawSource.clear();
+        addInteraction($this[0].name)
+    });
+
+    var draw;                          //ol.Interaction.Draw类的对象
+    var drawSource = new ol.source.Vector();
+    var drawVectorLayer = new ol.layer.Vector({
+        source: drawSource,
+        zIndex:4,
+        style: new ol.style.Style({
+            fill: new ol.style.Fill({               //填充样式
+                color: 'rgba(255, 255, 255, 0.2)'
+            }),
+            stroke: new ol.style.Stroke({           //线样式
+                color: 'rgba(0, 0, 153)',
+                width: 2
+            }),
+            image: new ol.style.Circle({            //点样式
+                radius: 7,
+                fill: new ol.style.Fill({
+                    color: '#ffcc33'
+                })
+            })
+        })
+    });
+    //将绘制层添加到地图容器中
+    map.addLayer(drawVectorLayer);
+
+    function addInteraction(typeName){
+        var type = typeName;
+        if(type !== 'None'){
+            var geometryFunction, maxPoints;
+            if(type === 'Square'){                 //正方形
+                type = 'Circle';                   //设置绘制类型为Circle
+                //设置几何信息变更函数，即创建正方形
+                geometryFunction = ol.interaction.Draw.createRegularPolygon(4);
+            }else if(type === 'Box'){              //长方形
+                type = 'Circle';           //设置绘制类型为LineString
+                maxPoints = 2;                      //设置最大点数为2
+                //设置几何信息变更函数，即设置长方形的坐标点
+                geometryFunction = function(coordinates, geometry){
+                    console.log('矩形================',coordinates,geometry)
+                    if(!geometry){
+                        geometry = new ol.geom.Polygon('Box');
+                    }
+                    var start = coordinates[0];
+                    var end = coordinates[1];
+                    geometry.setCoordinates([
+                        [
+                            start,
+                            [start[0], end[1]],
+                            end,
+                            [end[0], start[1]],
+                            start
+                        ]
+                    ]);
+                    return geometry;    //多边形
+                };
+            }
+            //实例化图形绘制控件对象并添加到地图容器中
+            draw = new ol.interaction.Draw({
+                source: drawSource,
+                type: type,                                //几何图形类型
+                geometryFunction: geometryFunction,             //几何信息变更时的回调函数
+                maxPoints: maxPoints                            //最大点数
+            });
+            map.addInteraction(draw);
+        }else{
+            //清空绘制的图形
+            drawSource.clear();
+        }
+    }
 
 });
