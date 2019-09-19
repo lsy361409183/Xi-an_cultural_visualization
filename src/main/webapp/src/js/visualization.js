@@ -34,6 +34,7 @@ define(function(require, exports, module){
 
     var mapData = {},
         pointData = [],
+        allPointData = [],
         cultural_mapData = {};
 
     // 设置底图投影
@@ -134,6 +135,7 @@ define(function(require, exports, module){
             success: function (res) {
                 console.log('文地点res==============',res)
                 pointData = res;
+                allPointData = res;
                 render(res)
             }
         })
@@ -552,9 +554,9 @@ define(function(require, exports, module){
                 $('.area-types').each(function(){
                     id_array.push($(this).val());//向数组中添加元素
                 });
-                console.log('1111111111111111111111111',  id_array.map(function (item) {
-                    return "\'" +item+"\'"
-                }).join(','));
+                // console.log('1111111111111111111111111',  id_array.map(function (item) {
+                //     return "\'" +item+"\'"
+                // }).join(','));
                 // function refreshData(data){
                 //     //刷新数据
                 //     var option = myChart.getOption();
@@ -651,7 +653,6 @@ define(function(require, exports, module){
         $("#draw-button-box").slideToggle(1000,function () {
             var btnDisplay = $('#draw-button-box').css('display');
 
-            console.log('btnDisplay==========',btnDisplay);
             if (btnDisplay === 'block') {
                 $('.area-districts').prop('disabled', true);
                 $('.area-types').prop('disabled', true);
@@ -659,6 +660,7 @@ define(function(require, exports, module){
                 $('#type-all').prop('disabled', true);
             } else {
                 getPointData("'全部'", "'全部'", renderPoint);
+                drawSource.clear();
                 $('.area-districts').prop('disabled', false);
                 $('.area-types').prop('disabled', false);
                 $('#area-all').prop('disabled', false);
@@ -670,7 +672,6 @@ define(function(require, exports, module){
 
     $('#draw-button-box li button').bind('click',function () {
         $this = $(this);
-        console.log('$this++++++++++++',$this[0].name);
 
         map.removeInteraction(draw);
         drawSource.clear();
@@ -742,30 +743,60 @@ define(function(require, exports, module){
             map.addInteraction(draw);
 
             //判断点是否在多边形上
-
+            console.log('draw=======',draw)
             //获取多边形的坐标
             draw.on('drawend',function (evt) {
+                console.log('drawend=======',draw)
                 var feature =evt.feature;
                 var coordinate = feature.getGeometry().getCoordinates();
                 // var coordinate =coordinate1.split(',')
                 console.log('多边形的坐标是:', coordinate);
 
-                //获取点图层的坐标
-                pointArr1 = tempPointArr.map(function (item) {
-                    console.log('item-----------------------------',item)
-                    var pointCoordArr = item.basePoint.split(',');
-                    return [
-                        Number(pointCoordArr[0]),
-                        Number(pointCoordArr[1])
-                    ]
+                // 创建点
+                var tempPointArr = allPointData.filter(function (item) {
+                    return item.basePoint !== null;
                 });
-                console.log('点点-----------------------------'+pointArr1)
+                var pointArr = tempPointArr.map(function (item) {
+                    var pointCoordArr = item.basePoint.split(',');
+                    return [Number(pointCoordArr[0]),Number(pointCoordArr[1])]
+
+                });
+                console.log('这是文地点============', pointArr)
+
+                var turfResult = pointArr.map(function (item) {
+                    return turf.booleanPointInPolygon(turf.point(item), turf.polygon([coordinate[0]]))
+                });
+
+                        console.log('result============',turfResult)
+                // if (draw.type_ === 'Polygon') {
+                //
+                //     var tempPolygon = temp.push(temp[0]);
+                //
+                //     var turfResult = pointArr.map(function (item) {
+                //         return turf.booleanPointInPolygon(turf.point(item), turf.polygon([tempPolygon]))
+                //     });
+                //     console.log('coodododododo',draw.sketchLineCoords_)
+                //     console.log('result============',turfResult)
+                // }
+                // if (draw.type_ === 'Circle') {
+                //     console.log('circle',draw.sketchCoords_)
+                // }
+                //获取点图层的坐标
+                // pointArr1 = tempPointArr.map(function (item) {
+                //     // console.log('item-----------------------------',item)
+                //     var pointCoordArr = item.basePoint.split(',');
+                //     return [
+                //         Number(pointCoordArr[0]),
+                //         Number(pointCoordArr[1])
+                //     ]
+                // });
+
                 // 判断相交
-                var ss =  pointArr1.map(function (value) {
-                    var dd = turf.booleanPointInPolygon(value,coordinate)
-                    return dd
-                })
-                console.log('是否相交-----------------------------',ss)
+                // var ss =  pointArr1.map(function (value) {
+                //     var dd = turf.booleanPointInPolygon(value,coordinate)
+                //     return dd
+                // })
+                // console.log('是否相交-----------------------------',ss)
             })
 
 
