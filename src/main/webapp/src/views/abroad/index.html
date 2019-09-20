@@ -228,7 +228,7 @@
 
     //地图渲染
     var map = new AMap.Map('container', {
-        mapStyle: 'amap://styles/normal',
+        mapStyle: 'amap://styles/dark',
         viewMode: '3D',
         features: ['bg', 'road'],
         zoom: 5,
@@ -494,7 +494,7 @@
                     //返回一个新的Marker
                     return new SimpleMarker({
                         iconLabel:"<a style='text-decoration:none;color:#fff;' href='"+context.data.src+"'>"+context.id+"</a>",
-                        iconStyle: "green"
+                        iconStyle: "orange"
                     });
                 }
                 //返回数据项对应的列表节点
@@ -662,7 +662,7 @@ function btn() {
             type: 'value'
         },
         series: [{
-            color : 'yellow',
+            color :'#e2e8f6',
             data: [selectCity01, selectCity02],
             type: 'bar'
         }]

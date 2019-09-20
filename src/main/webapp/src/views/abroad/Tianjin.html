@@ -19,13 +19,39 @@
 
     <title>Tianjin</title>
     <style>
+        #button_back{
+            top: 18%;
+            left: 87%;
+            position: fixed;
+        }
+        #textShow{
+            z-index: 999;
+            position: fixed;
+            left: 82%;
+            top: 10%;
+            /*background: #0f9d58;*/
+        }
+        #textShow02{
+            background: #b2d7d0;
 
+        }
+        textarea{
+            resize: none;
+        }
     </style>
 </head>
 <body>
 <div id="nav-tpl"></div>
 <div id="map1">
+
+
 </div>
 
+<div id="textShow"><textarea id="textShow02" style="width:250px;height:110px;" readonly> 城市名：天津&#xd 文地率：1.87&#xd 文地面积：527500000.00</textarea><button type="button" id="button_back" onclick="javascript:history.go(-1)"> 返回 </button></div>
+<script>
+    function backDomestic(){
+        window.location.href='index.html';
+    }
+</script>
 </body>
 </html>
