@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <!--<base href="https://webapi.amap.com/ui/1.0/ui/misc/MarkerList/examples/" />-->
+
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -21,6 +23,12 @@
 
     <title>国内外数据</title>
     <style>
+        .my-svg-marker .amap-simple-marker-label {
+            color: #fff;
+            top: 10px;
+            font-size: 20px;
+        }
+
         html,
         body,
         #container {
@@ -192,13 +200,14 @@
 <script src="//webapi.amap.com/maps?v=1.4.15&key=2f80880dccbc4291d4c02e7964c81ed5&"></script>
 <script src="//webapi.amap.com/loca?v=1.3.0&key=2f80880dccbc4291d4c02e7964c81ed5"></script>
 <script type="text/javascript" src="../../libs/jquery-3.3.1.min.js"></script>
+<script src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
 <script src="../../libs/mainIcon.js?v=1.0.11"></script>
-<script src="../../js/abroad.js"></script>
+<!--<script src="../../js/abroad.js"></script>-->
 
 <!--<script src="//a.amap.com/Loca/static/dist/jquery.min.js"></script>-->
 <script>
 
-
+    //前后台 数据接收
     function load_val2() {
         var result;
         $.ajax({
@@ -211,12 +220,15 @@
         });
         return result;
     }
+
     data = load_val2();
-    console.log(data);
+    console.log('aaa',data);
 
 
+
+    //地图渲染
     var map = new AMap.Map('container', {
-        mapStyle: 'amap://styles/dark',
+        mapStyle: 'amap://styles/normal',
         viewMode: '3D',
         features: ['bg', 'road'],
         zoom: 5,
@@ -224,184 +236,333 @@
 
     });
 
-    var infoWin;
+    // var infoWin;
+    //
+    // infoWin = new AMap.InfoWindow({
+    //     closeWhenClickMap: true
+    // });
+    //
+    // var vLayer = new Loca.DistrictLayer({
+    //     fitView: true,
+    //     eventSupport: true,
+    //     drillDown: false,
+    //     map: map
+    // });
+    //
+    // vLayer.on('click', function (ev) {
+    //     var originalEv = ev.originalEvent;
+    //
+    //     var lnglat = map.containerToLngLat(new AMap.Pixel(originalEv.clientX, originalEv.clientY));
+    //     var feature = ev.feature;
+    //     // var value = ev.value;
+    //     var property = feature.subFeature.properties;
+    //
+    //     infoWin.open(map, lnglat);
+    //     var content = [
+    //         '行政区：' + property.name,
+    //         '<br>'
+    //         // '面积：' + property.center,
+    //         // '<br>'
+    //     ];
+    //     infoWin.setContent(content.join(''));
+    // });
+    //
+    // function go2Adcode(event, code) {
+    //     event.stopPropagation();
+    //     infoWin.close();
+    //     vLayer.goto(code);
+    // }
+    // AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
+    //     console.log('SimpleMarker',SimpleMarker);
+    //     var beijing =  new SimpleMarker({
+    //         iconLabel: '北京市',
+    //         //自定义图标地址
+    //         iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+    //
+    //         //设置基点偏移
+    //         offset: new AMap.Pixel(-19, -60),
+    //
+    //         map: map,
+    //
+    //         showPositionPoint: true,
+    //         position: new AMap.LngLat(116.407394,39.904211),
+    //         zIndex: 100
+    //     });
+    //    var tianjin = new SimpleMarker({
+    //         iconLabel: '天津市',
+    //         //自定义图标地址
+    //         iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+    //
+    //         //设置基点偏移
+    //         offset: new AMap.Pixel(-19, -60),
+    //
+    //         map: map,
+    //
+    //         showPositionPoint: true,
+    //         position: new AMap.LngLat(117.200983,39.084158),
+    //         zIndex: 100
+    //     });
+    //    var hangzhou = new SimpleMarker({
+    //         iconLabel: '杭州',
+    //         //自定义图标地址
+    //         iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+    //
+    //         //设置基点偏移
+    //         offset: new AMap.Pixel(-19, -60),
+    //
+    //         map: map,
+    //
+    //         showPositionPoint: true,
+    //         position: new AMap.LngLat(120.210911,30.253831),
+    //         zIndex: 100
+    //     });
+    //    var guangzhou = new SimpleMarker({
+    //         iconLabel: '广州',
+    //         //自定义图标地址
+    //         iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+    //
+    //         //设置基点偏移
+    //         offset: new AMap.Pixel(-19, -60),
+    //
+    //         map: map,
+    //
+    //         showPositionPoint: true,
+    //         position: new AMap.LngLat(113.273154,23.138792),
+    //         zIndex: 100
+    //     });
+    //     var taiyuan = new SimpleMarker({
+    //         iconLabel: '太原',
+    //         //自定义图标地址
+    //         iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+    //
+    //         //设置基点偏移
+    //         offset: new AMap.Pixel(-19, -60),
+    //
+    //         map: map,
+    //
+    //         showPositionPoint: true,
+    //         position: new AMap.LngLat(112.555821,37.877218),
+    //         zIndex: 100
+    //     });
+    //     var shenyang = new SimpleMarker({
+    //         iconLabel: '沈阳',
+    //         //自定义图标地址
+    //         iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+    //
+    //         //设置基点偏移
+    //         offset: new AMap.Pixel(-19, -60),
+    //
+    //         map: map,
+    //
+    //         showPositionPoint: true,
+    //         position: new AMap.LngLat(123.463621,41.674994),
+    //         zIndex: 100
+    //     });
+    //    var zhengzhou = new SimpleMarker({
+    //         iconLabel: '郑州',
+    //         //自定义图标地址
+    //         iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+    //
+    //         //设置基点偏移
+    //         offset: new AMap.Pixel(-19, -60),
+    //
+    //         map: map,
+    //
+    //         showPositionPoint: true,
+    //         position: new AMap.LngLat(113.669935,34.753203),
+    //         zIndex: 100
+    //     });
+    //    var xian = new SimpleMarker({
+    //         iconLabel: '西安',
+    //         //自定义图标地址
+    //         iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+    //
+    //         //设置基点偏移
+    //         offset: new AMap.Pixel(-19, -60),
+    //
+    //         map: map,
+    //
+    //         showPositionPoint: true,
+    //         position: new AMap.LngLat(108.955664,34.354183),
+    //         zIndex: 100
+    //     });
+    //    var shenzhen = new SimpleMarker({
+    //         iconLabel: '深圳',
+    //         //自定义图标地址
+    //         iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+    //
+    //         //设置基点偏移
+    //         offset: new AMap.Pixel(-19, -60),
+    //
+    //         map: map,
+    //
+    //         showPositionPoint: true,
+    //         position: new AMap.LngLat(114.061103,22.55166),
+    //         zIndex: 100
+    //     });
+    //     var shanghai = new SimpleMarker({
+    //         iconLabel: '上海',
+    //         //自定义图标地址
+    //         iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+    //
+    //         //设置基点偏移
+    //         offset: new AMap.Pixel(-19, -60),
+    //
+    //         map: map,
+    //
+    //         showPositionPoint: true,
+    //         position: new AMap.LngLat(121.482265,31.237164),
+    //         zIndex: 100
+    //     });
+    //     beijing.on('click',showBeijing);
+    //     function showBeijing(){
+    //         window.location.href='Beijing.html';
+    //     }
+    //     tianjin.on('click',showTianjin);
+    //     function showTianjin(){
+    //         window.location.href='Tianjin.html';
+    //     }
+    //     hangzhou.on('click',showHangzhou);
+    //     function showHangzhou(){
+    //         console.log('ccc');
+    //     }
+    //     guangzhou.on('click',showGuangzhou);
+    //     function showGuangzhou(){
+    //         console.log('ddd');
+    //     }
+    //     taiyuan.on('click',showTaiyuan);
+    //     function showTaiyuan(){
+    //         console.log('eee');
+    //     }
+    //     shenyang.on('click',showShenyang);
+    //     function showShenyang(){
+    //         console.log('fff');
+    //     }
+    //     zhengzhou.on('click',showZhengzhou);
+    //     function showZhengzhou(){
+    //         console.log('ggg');
+    //     }
+    //     xian.on('click',showXian);
+    //     function showXian(){
+    //         window.location.href='Xian.html';
+    //     }
+    //     shenzhen.on('click',showShenzhen);
+    //     function showShenzhen(){
+    //         console.log('iii');
+    //     }
+    //     shanghai.on('click',showShanghai);
+    //     function showShanghai(){
+    //         getMapGeoJson(renderMap);
+    //     }
+    // });
 
-    infoWin = new AMap.InfoWindow({
-        closeWhenClickMap: true
-    });
 
-    var vLayer = new Loca.DistrictLayer({
-        fitView: true,
-        eventSupport: true,
-        drillDown: false,
-        map: map
-    });
 
-    vLayer.on('click', function (ev) {
-        var originalEv = ev.originalEvent;
 
-        var lnglat = map.containerToLngLat(new AMap.Pixel(originalEv.clientX, originalEv.clientY));
-        var feature = ev.feature;
-        // var value = ev.value;
-        var property = feature.subFeature.properties;
 
-        infoWin.open(map, lnglat);
-        var content = [
-            '行政区：' + property.name,
-            '<br>'
-            // '面积：' + property.center,
-            // '<br>'
-        ];
-        infoWin.setContent(content.join(''));
-    });
+    AMapUI.loadUI(['misc/MarkerList', 'overlay/SimpleMarker'],
+        function(MarkerList, SimpleMarker) {
 
-    function go2Adcode(event, code) {
-        event.stopPropagation();
-        infoWin.close();
-        vLayer.goto(code);
-    }
-    AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
-        new SimpleMarker({
-            iconLabel: '北京市',
-            //自定义图标地址
-            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
+            var markerList = new MarkerList({
+                //关联的map对象
+                map: map,
 
-            //设置基点偏移
-            offset: new AMap.Pixel(-19, -60),
+                //列表的dom容器的id
 
-            map: map,
+                //置空默认的选中行为，后续监听selectedChanged中处理
+                onSelected: null,
 
-            showPositionPoint: true,
-            position: new AMap.LngLat(116.407394,39.904211),
-            zIndex: 100
+                //返回数据项的Id
+                getDataId: function(dataItem, index) {
+                    //index表示该数据项在数组中的索引位置，从0开始，如果确实没有id，可以返回index代替
+                    return dataItem.id;
+                },
+                //返回数据项的位置信息，需要是AMap.LngLat实例，或者是经纬度数组，比如[116.789806, 39.904989]
+                getPosition: function(dataItem) {
+                    return dataItem.position;
+                },
+                //返回数据项对应的Marker
+                getMarker: function(dataItem, context, recycledMarker) {
+                    console.log("context",context)
+                    //存在可回收利用的marker
+                    if (recycledMarker) {
+                        //直接更新内容返回
+                        recycledMarker.setIconLabel(context.id);
+                        return recycledMarker;
+                    }
+
+                    //返回一个新的Marker
+                    return new SimpleMarker({
+                        iconLabel:"<a style='text-decoration:none;color:#fff;' href='"+context.data.src+"'>"+context.id+"</a>",
+                        iconStyle: "green"
+                    });
+                }
+                //返回数据项对应的列表节点
+            });
+
+
+
+
+            //构建一个数据项数组，数据项本身没有格式要求，但需要支持下述的getDataId和getPosition
+            var cityData = [{
+                id: '天津',
+                position: [117.200983,39.084158],
+                // desc: '数据_1',
+                src:'Tianjin.html'
+            }, {
+                id: '杭州',
+                position: [120.210911,30.253831],
+                // desc: '数据_2',
+                src:'Hangzhou.html'
+            }, {
+                id: '太原',
+                position: [112.555821,37.877218],
+                // desc: '数据_3',
+                src:'Taiyuan.html'
+            }, {
+                id: '北京',
+                position: [116.407394,39.904211],
+                // desc: '数据_2',
+                src:'Beijing.html'
+            }, {
+                id: '广州',
+                position: [113.273154,23.138792],
+                // desc: '数据_2',
+                src:'Guangzhou.html'
+            }, {
+                id: '上海',
+                position: [121.482265,31.237164],
+                // desc: '数据_2',
+                src:'Shanghai.html'
+            }, {
+                id: '西安',
+                position: [108.955664,34.354183],
+                // desc: '数据_2',
+                src:'Xian.html'
+            }, {
+                id: '沈阳',
+                position: [123.463621,41.674994],
+                // desc: '数据_2',
+                src:'Shenyang.html'
+            }, {
+                id: '郑州',
+                position: [113.669935,34.753203],
+                // desc: '数据_2',
+                src:'Zhengzhou.html'
+            }, {
+                id: '深圳',
+                position: [114.085947,22.547],
+                // desc: '数据_2',
+                src:'Shenzhen.html'
+            }];
+console.log(cityData);
+            //展示该数据
+            markerList.render(cityData);
         });
-        new SimpleMarker({
-            iconLabel: '天津市',
-            //自定义图标地址
-            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
 
-            //设置基点偏移
-            offset: new AMap.Pixel(-19, -60),
 
-            map: map,
 
-            showPositionPoint: true,
-            position: new AMap.LngLat(117.200983,39.084158),
-            zIndex: 100
-        });
-        new SimpleMarker({
-            iconLabel: '杭州',
-            //自定义图标地址
-            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
 
-            //设置基点偏移
-            offset: new AMap.Pixel(-19, -60),
-
-            map: map,
-
-            showPositionPoint: true,
-            position: new AMap.LngLat(120.210911,30.253831),
-            zIndex: 100
-        });
-        new SimpleMarker({
-            iconLabel: '广州',
-            //自定义图标地址
-            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
-
-            //设置基点偏移
-            offset: new AMap.Pixel(-19, -60),
-
-            map: map,
-
-            showPositionPoint: true,
-            position: new AMap.LngLat(113.273154,23.138792),
-            zIndex: 100
-        });
-        new SimpleMarker({
-            iconLabel: '太原',
-            //自定义图标地址
-            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
-
-            //设置基点偏移
-            offset: new AMap.Pixel(-19, -60),
-
-            map: map,
-
-            showPositionPoint: true,
-            position: new AMap.LngLat(112.555821,37.877218),
-            zIndex: 100
-        });
-        new SimpleMarker({
-            iconLabel: '沈阳',
-            //自定义图标地址
-            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
-
-            //设置基点偏移
-            offset: new AMap.Pixel(-19, -60),
-
-            map: map,
-
-            showPositionPoint: true,
-            position: new AMap.LngLat(123.463621,41.674994),
-            zIndex: 100
-        });
-        new SimpleMarker({
-            iconLabel: '郑州',
-            //自定义图标地址
-            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
-
-            //设置基点偏移
-            offset: new AMap.Pixel(-19, -60),
-
-            map: map,
-
-            showPositionPoint: true,
-            position: new AMap.LngLat(113.669935,34.753203),
-            zIndex: 100
-        });
-        new SimpleMarker({
-            iconLabel: '西安',
-            //自定义图标地址
-            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
-
-            //设置基点偏移
-            offset: new AMap.Pixel(-19, -60),
-
-            map: map,
-
-            showPositionPoint: true,
-            position: new AMap.LngLat(108.955664,34.354183),
-            zIndex: 100
-        });
-        new SimpleMarker({
-            iconLabel: '深圳',
-            //自定义图标地址
-            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
-
-            //设置基点偏移
-            offset: new AMap.Pixel(-19, -60),
-
-            map: map,
-
-            showPositionPoint: true,
-            position: new AMap.LngLat(114.061103,22.55166),
-            zIndex: 100
-        });
-        new SimpleMarker({
-            iconLabel: '上海',
-            //自定义图标地址
-            iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
-
-            //设置基点偏移
-            offset: new AMap.Pixel(-19, -60),
-
-            map: map,
-
-            showPositionPoint: true,
-            position: new AMap.LngLat(121.482265,31.237164),
-            zIndex: 100
-        });
-    });
 
     // var marker = new AMap.Marker({
     //     position: new AMap.LngLat(116.39, 39.9),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
@@ -412,24 +573,25 @@
 
 
 
-    vLayer.setData(data, {
-        type: 'json',
-        lnglat: 'city_capital',
-        value: 'city_cultural_rate'
-    });
+    // vLayer.setData(data, {
+    //     type: 'json',
+    //     lnglat: 'city_capital',
+    //     value: 'city_cultural_rate'
+    // });
+    //
+    // vLayer.setOptions({
+    //     mode: 'count',
+    //     style: {
+    //         color: ['#ffffcc']
+    //     },
+    //     opacity:0.5,
+    //     selectStyle: true
+    // });
+    //
+    // vLayer.render();
 
-    vLayer.setOptions({
-        mode: 'count',
-        style: {
-            color: ['#ffffcc']
-        },
-        opacity:0.5,
-        selectStyle: false
-    });
 
-    vLayer.render();
-
-
+    //select城市选择
     var selectchart01 = document.getElementById('info03');
     var selectchart02 = document.getElementById('info04');
     var selectCity01;
@@ -442,16 +604,16 @@
         console.log('当前选中的选项的text值:' + selectchart01.options[selectchart01.selectedIndex].innerText);
 
         for (var i = 0; i <data.length; i++) {
-            console.log(data[i].city_name == selectchart01.options[selectchart01.selectedIndex].innerText);
-            console.log(data[i].city_name);
-            console.log(data[i].city_cultural_rate);
-            if(data[i].city_name == selectchart02.options[selectchart02.selectedIndex].innerText){
-                selectCity02 = data[i].city_cultural_rate;
-                selectCityName02 = data[i].city_name;
+            // console.log(data[i].city_name == selectchart01.options[selectchart01.selectedIndex].innerText);
+            // console.log(data[i].city_name);
+            // console.log(data[i].city_cultural_rate);
+            if(data[i].city_name == selectchart01.options[selectchart01.selectedIndex].innerText){
+                selectCity01 = data[i].city_cultural_rate;
+                selectCityName01 = data[i].city_name;
             }
-            selectCityName01 = selectchart01.options[selectchart01.selectedIndex].value;
-            selectCity01 = data[i].city_cultural_rate;
+
         }
+        console.log('aaa',selectCity01);
 
     };
     selectchart02.onchange = function(){
@@ -459,10 +621,10 @@
         console.log('当前选中的选项的text值:' + selectchart02.options[selectchart02.selectedIndex].innerText);
 
         for (var i = 0; i <data.length; i++) {
-            console.log(data[i].city_name == selectchart02.options[selectchart02.selectedIndex].innerText);
-            console.log(data[i].city_name);
-            console.log('aaa',selectCity02);
-            console.log(data[i].city_cultural_rate);
+            // console.log(data[i].city_name == selectchart02.options[selectchart02.selectedIndex].innerText);
+            // console.log(data[i].city_name);
+            // console.log('aaa',selectCity02);
+            // console.log(data[i].city_cultural_rate);
             if(data[i].city_name == selectchart02.options[selectchart02.selectedIndex].innerText){
                 selectCity02 = data[i].city_cultural_rate;
                 selectCityName02 = data[i].city_name;
@@ -476,30 +638,17 @@
 
 
     //文地对比图表
-    var myChart = echarts.init(document.getElementById('main'));
 
 
 
-
-    // 使用刚指定的配置项和数据显示图表。
-    // myChart.setOption(option);
-
-
-
-
-
-    // console.log($("#selectInfo03").val());
-    // var onclickView = document.getElementById(onclickView);
+    //对比查看 onclick方法
     var info05 = document.getElementById("info05");
-    //
-    // onclickView.onclick = function(){
-    //     info05.style.display = "block";
-    //     console.log('hmc',info05.style.display);
-    // };
-
 function btn() {
     info05.style.display = "block";
     console.log('hmc',info05.style.display);
+    // 引用echarts图表
+
+    var myChart = echarts.init(document.getElementById('main'));
     var option = {
         title : {
             text: '文地率对比',
@@ -519,15 +668,19 @@ function btn() {
         }]
     };
     myChart.setOption(option);
-    console.log('eee',selectCity02);
+    console.log('eee',selectCity01,selectCity02);
 
 }
+    define(function(require, exports, module) {
+        // var $ = require('../libs/jquery-3.3.1.min');
 
-    // var onclickView = document.getElementById(onclickView);
-    // var chart = document.getElementById(chart);
-    // onclickView.onclick = function () {
-    //     chart.style.display = 'block';
-    // }
+        // 加载导航模板
+        var navTpl = require('../views/templates/navigation.tpl')
+        var nav_container = $('#nav-tpl');
+        nav_container.html(navTpl);
+    });
+
+
 </script>
 
 </body>

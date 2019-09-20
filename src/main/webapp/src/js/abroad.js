@@ -5,5 +5,23 @@ define(function(require, exports, module){
     var navTpl = require('../views/templates/navigation.tpl')
     var nav_container = $('#nav-tpl');
     nav_container.html(navTpl);
+
+    function setMapHeight() {
+        var clientHeight = $(window).height();
+
+        // 获取导航高度
+        var nav_height = $('#nav-tpl').height();
+
+        var map_container = $('#map');
+
+        map_container.css('height', (clientHeight - nav_height)+'px');
+    }
+    setMapHeight();
+    // 浏览器高度变化时
+    $(window).resize(function () {
+        setMapHeight();
+    });
+
+
 });
 

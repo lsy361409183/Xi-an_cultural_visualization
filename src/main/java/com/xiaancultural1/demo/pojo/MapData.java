@@ -2,6 +2,7 @@ package com.xiaancultural1.demo.pojo;
 
 public class MapData {
     private Integer mapId;
+    private String mapJson;
 
     public Integer getMapId() {
         return mapId;
@@ -19,6 +20,6 @@ public class MapData {
         this.mapJson = mapJson;
     }
 
-    private String mapJson;
+
 
 }
