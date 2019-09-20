@@ -72,7 +72,7 @@ define(function(require, exports, module){
 
     var cultural_point = new ol.layer.Vector({
         source: pointSource,
-        zIndex: 1,
+        zIndex: 4,
         style: new ol.style.Style({
             image: new ol.style.Circle({
                 radius: 5,
@@ -183,7 +183,7 @@ define(function(require, exports, module){
 
         cultural_point = new ol.layer.Vector({
             source: pointSource,
-            zIndex: 2,
+            zIndex: 3,
             style: new ol.style.Style({
                 image: new ol.style.Circle({
                     radius: 5,
@@ -675,14 +675,15 @@ define(function(require, exports, module){
 
         map.removeInteraction(draw);
         drawSource.clear();
-        addInteraction($this[0].name)
+        map.removeLayer(cultural_point);
+        addInteraction($this[0].name);
     });
 
     var draw;                          //ol.Interaction.Draw类的对象
     var drawSource = new ol.source.Vector();
     var drawVectorLayer = new ol.layer.Vector({
         source: drawSource,
-        zIndex:4,
+        zIndex: 2,
         style: new ol.style.Style({
             fill: new ol.style.Fill({               //填充样式
                 color: 'rgba(255, 255, 255, 0.2)'
@@ -758,45 +759,30 @@ define(function(require, exports, module){
                 });
                 var pointArr = tempPointArr.map(function (item) {
                     var pointCoordArr = item.basePoint.split(',');
-                    return [Number(pointCoordArr[0]),Number(pointCoordArr[1])]
+                    return {
+                        pointCoor: [Number(pointCoordArr[0]),Number(pointCoordArr[1])],
+                        basePoint: item.basePoint,
+                        baseName: item.baseName,
+                        baseArea: item.baseArea,
+                        baseDistrict: item.baseDistrict,
+                        baseClassfication: item.baseClassfication
+                    }
 
                 });
                 console.log('这是文地点============', pointArr)
 
                 var turfResult = pointArr.map(function (item) {
-                    return turf.booleanPointInPolygon(turf.point(item), turf.polygon([coordinate[0]]))
+                    var isShowPoint = turf.booleanPointInPolygon(turf.point(item.pointCoor), turf.polygon([coordinate[0]]));
+                    if (isShowPoint){
+                        return item;
+                    }
                 });
-
-                        console.log('result============',turfResult)
-                // if (draw.type_ === 'Polygon') {
-                //
-                //     var tempPolygon = temp.push(temp[0]);
-                //
-                //     var turfResult = pointArr.map(function (item) {
-                //         return turf.booleanPointInPolygon(turf.point(item), turf.polygon([tempPolygon]))
-                //     });
-                //     console.log('coodododododo',draw.sketchLineCoords_)
-                //     console.log('result============',turfResult)
-                // }
-                // if (draw.type_ === 'Circle') {
-                //     console.log('circle',draw.sketchCoords_)
-                // }
-                //获取点图层的坐标
-                // pointArr1 = tempPointArr.map(function (item) {
-                //     // console.log('item-----------------------------',item)
-                //     var pointCoordArr = item.basePoint.split(',');
-                //     return [
-                //         Number(pointCoordArr[0]),
-                //         Number(pointCoordArr[1])
-                //     ]
-                // });
-
-                // 判断相交
-                // var ss =  pointArr1.map(function (value) {
-                //     var dd = turf.booleanPointInPolygon(value,coordinate)
-                //     return dd
-                // })
-                // console.log('是否相交-----------------------------',ss)
+                var renderTurfResult = turfResult.filter(function (value) {
+                    return value !== undefined;
+                })
+                console.log('result============',renderTurfResult)
+                renderPoint(renderTurfResult);
+                map.removeInteraction(draw)
             })
 
 
