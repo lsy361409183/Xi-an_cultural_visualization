@@ -135,7 +135,7 @@ define(function(require, exports, module) {
             async:false,
             dataType: 'json',
             data:{
-                baseId:5
+                baseId:x
             },
             success:function (e) {
             //    更换图片和坐标点
