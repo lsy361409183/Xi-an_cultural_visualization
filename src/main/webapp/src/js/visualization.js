@@ -351,7 +351,7 @@ define(function(require, exports, module){
                     });
                     test5.setStyle(new ol.style.Style({
                         image: new ol.style.Icon({
-                            src: '../../static/icons/文化设施.png'
+                            src: '../../static/icons/文化设施用地.png'
                         })
                     }));
                     fivePoint = test5;
