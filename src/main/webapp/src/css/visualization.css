@@ -120,3 +120,18 @@
     background-image: url("../static/icons/clear.png");
     background-size: 23px;
 }
+
+/* 图形化标注 */
+#icon-control {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+}
+#icon-control button:first-child{
+    background-image: url("../static/icons/common_icon.png");
+    background-size: 23px;
+}
+#icon-control button:last-child{
+    background-image: url("../static/icons/fill_icon.png");
+    background-size: 23px;
+}

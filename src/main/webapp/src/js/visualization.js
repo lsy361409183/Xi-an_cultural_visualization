@@ -36,6 +36,9 @@ define(function(require, exports, module){
         pointData = [],
         allPointData = [],
         cultural_mapData = {};
+    var isShowImageIcon = false; // 是否显示图形化图标
+    var isBoxSelect = false; // 是否是框选
+    var boxSelectData = []; // 框选数据
 
     // 设置底图投影
     var projection = new ol.proj.Projection({
@@ -135,8 +138,27 @@ define(function(require, exports, module){
             success: function (res) {
                 console.log('文地点res==============',res)
                 pointData = res;
+                render(res, isShowImageIcon)
+            }
+        })
+    }
+    // 初次请求全部点数据
+    function getAllPointData(areas, types) {
+        var params = {
+            baseDistrict: areas === "'全部'"? areas : areas.map(function (item) {
+                return "\'" + item + "\'"
+            }).join(','),
+            baseClassification: types === "'全部'"? types : types.map(function (item) {
+                return "\'" + item + "\'"
+            }).join(',')
+        };
+        $.ajax({
+            type: 'post',
+            url: '/getFilterData',
+            dataType: 'json',
+            data: params,
+            success: function (res) {
                 allPointData = res;
-                render(res)
             }
         })
     }
@@ -153,7 +175,7 @@ define(function(require, exports, module){
     }
 
     // 渲染文地点
-    function renderPoint (data) {
+    function renderPoint (data, isShowIcon) {
         map.removeLayer(cultural_point);
         if (highlight) {
             featureOverlay.getSource().removeFeature(highlight);
@@ -161,41 +183,157 @@ define(function(require, exports, module){
             closer.blur();
             highlight = null;
         }
-        // featureOverlay.getSource().removeFeature(highlight);
+
         // 创建点
         tempPointArr = data.filter(function (item) {
             return item.basePoint !== null;
         });
-        pointArr = tempPointArr.map(function (item) {
-            var pointCoordArr = item.basePoint.split(',');
-            // console.log('pointCoordArr=========',pointCoordArr)
-            return new ol.Feature({
-                geometry:  new ol.geom.Point([Number(pointCoordArr[0]),Number(pointCoordArr[1])]),
-                baseName: item.baseName,
-                baseArea: item.baseArea,
-                baseDistrict: item.baseDistrict,
-                baseClassfication: item.baseClassfication
-            })
-        });
-        pointSource = new ol.source.Vector({
-            features: pointArr
-        });
+        if (!isShowIcon){
+            pointArr = tempPointArr.map(function (item) {
+                var pointCoordArr = item.basePoint.split(',');
+                return new ol.Feature({
+                    geometry:  new ol.geom.Point([Number(pointCoordArr[0]),Number(pointCoordArr[1])]),
+                    baseName: item.baseName,
+                    baseArea: item.baseArea,
+                    baseDistrict: item.baseDistrict,
+                    baseClassfication: item.baseClassfication
+                })
+            });
+            pointSource = new ol.source.Vector({
+                features: pointArr
+            });
 
-        cultural_point = new ol.layer.Vector({
-            source: pointSource,
-            zIndex: 3,
-            style: new ol.style.Style({
-                image: new ol.style.Circle({
-                    radius: 5,
-                    stroke: new ol.style.Stroke({
-                        color: '#fff'
-                    }),
-                    fill: new ol.style.Fill({
-                        color: '#FF0033'
+            cultural_point = new ol.layer.Vector({
+                source: pointSource,
+                zIndex: 3,
+                style: new ol.style.Style({
+                    image: new ol.style.Circle({
+                        radius: 5,
+                        stroke: new ol.style.Stroke({
+                            color: '#fff'
+                        }),
+                        fill: new ol.style.Fill({
+                            color: '#FF0033'
+                        })
                     })
                 })
+            });
+        } else {
+            pointArr = tempPointArr.map(function (item) {
+                var pointCoordArr = item.basePoint.split(',');
+                var onePoint, twoPoint, threePoint, fourPoint, fivePoint , sixPoint = null;
+                if (item.baseClassfication === '一类文地') {
+                    var test1 = new ol.Feature({
+                        geometry:  new ol.geom.Point([Number(pointCoordArr[0]),Number(pointCoordArr[1])]),
+                        baseName: item.baseName,
+                        baseArea: item.baseArea,
+                        baseDistrict: item.baseDistrict,
+                        baseClassfication: item.baseClassfication
+
+                    });
+                    console.log('item======',item);
+                    test1.setStyle(new ol.style.Style({
+                        image: new ol.style.Icon({
+                            src: '../../static/icons/文化精神标识用地.png'
+                        })
+                    }));
+                    onePoint =test1;
+                } else if (item.baseClassfication === '二类文地'){
+                    var test2 = new ol.Feature({
+                        geometry:  new ol.geom.Point([Number(pointCoordArr[0]),Number(pointCoordArr[1])]),
+                        baseName: item.baseName,
+                        baseArea: item.baseArea,
+                        baseDistrict: item.baseDistrict,
+                        baseClassfication: item.baseClassfication
+
+                    })
+                    test2.setStyle(new ol.style.Style({
+                        image: new ol.style.Icon({
+                            src: '../../static/icons/纪念用地.png'
+                        })
+                    }))
+                    twoPoint = test2;
+                } else if (item.baseClassfication === '三类文地') {
+                    var test3 = new ol.Feature({
+                        geometry:  new ol.geom.Point([Number(pointCoordArr[0]),Number(pointCoordArr[1])]),
+                        baseName: item.baseName,
+                        baseArea: item.baseArea,
+                        baseDistrict: item.baseDistrict,
+                        baseClassfication: item.baseClassfication
+
+                    })
+                        test3.setStyle(new ol.style.Style({
+                        image: new ol.style.Icon({
+                            src: '../../static/icons/宗教用地.png'
+                        })
+                    }))
+                    threePoint = test3;
+                } else if (item.baseClassfication === '四类文地') {
+                    var test4 = new ol.Feature({
+                        geometry:  new ol.geom.Point([Number(pointCoordArr[0]),Number(pointCoordArr[1])]),
+                        baseName: item.baseName,
+                        baseArea: item.baseArea,
+                        baseDistrict: item.baseDistrict,
+                        baseClassfication: item.baseClassfication
+
+                    })
+                        test4.setStyle(new ol.style.Style({
+                        image: new ol.style.Icon({
+                            src: '../../static/icons/遗产用地.png'
+                        })
+                    }))
+                    fourPoint = test4;
+                } else if (item.baseClassfication === '五类文地') {
+                    var test5 = new ol.Feature({
+                        geometry:  new ol.geom.Point([Number(pointCoordArr[0]),Number(pointCoordArr[1])]),
+                        baseName: item.baseName,
+                        baseArea: item.baseArea,
+                        baseDistrict: item.baseDistrict,
+                        baseClassfication: item.baseClassfication
+
+                    })
+                        test5.setStyle(new ol.style.Style({
+                        image: new ol.style.Icon({
+                            src: '../../static/icons/文化设施.png'
+                        })
+                    }))
+                    fivePoint = test5;
+                } else {
+                    var test6 = new ol.Feature({
+                        geometry:  new ol.geom.Point([Number(pointCoordArr[0]),Number(pointCoordArr[1])]),
+                        baseName: item.baseName,
+                        baseArea: item.baseArea,
+                        baseDistrict: item.baseDistrict,
+                        baseClassfication: item.baseClassfication
+
+                    })
+                        test6.setStyle(new ol.style.Style({
+                        image: new ol.style.Icon({
+                            src: '../../static/icons/文化产业.png'
+                        })
+                    }))
+                    sixPoint = test6;
+                }
+
+                return item.baseClassfication === '一类文地' ? onePoint : item.baseClassfication === '二类文地' ? twoPoint:
+                    item.baseClassfication === '三类文地' ? threePoint : item.baseClassfication === '四类文地' ? fourPoint:
+                        item.baseClassfication === '五类文地' ? fivePoint : sixPoint;
+            });
+            var finalPointArr = pointArr.filter(function (value) {
+                return value !== null;
             })
-        });
+            console.log('pointArr=====', pointArr);
+            console.log('finalPointArr=====', finalPointArr)
+            pointSource = new ol.source.Vector({
+                features: finalPointArr
+            });
+
+            cultural_point = new ol.layer.Vector({
+                source: pointSource,
+                zIndex: 3
+            });
+        }
+
 
         // 地图根据文地点范围显示
         // 计算经度最大值
@@ -272,6 +410,7 @@ define(function(require, exports, module){
     // 加载地图
     getMapGeoJson(renderMap);
     getPointData("'全部'", "'全部'", renderPoint);
+    getAllPointData("'全部'", "'全部'");
     getCulturalMap(renderCulturalMap);
 
 
@@ -345,12 +484,6 @@ define(function(require, exports, module){
             getAreaData(valChange('area-districts'),valChange('area-types'));
         }
         else {
-            // if($('#area-all').prop('checked',true)){
-            //     $('.area-districts').prop('checked',true)
-            // }
-            // if($('#area-all').prop('checked',false)){
-            //     $('.area-districts').prop('checked',false)
-            // }
             var typeCheckedValTemp = valChange('area-types');
             this.checked === false ? $('.area-districts').prop('checked', false) : $('.area-districts').prop('checked', true);
         }
@@ -400,11 +533,11 @@ define(function(require, exports, module){
             }
         });
     }
-    //点击搜索，调用方法
+    // 点击搜索，调用方法
     $('#POIName').on('click',function (){
         POISelect(renderPoint)
-    })
-    //改变焦点 类别变暗
+    });
+    // 改变焦点 类别变暗
     $("#POI").on('input propertychange',function(){
         var poi=$('#POI').val();
         if(!(poi == null||poi == ""||poi == undefined))
@@ -465,7 +598,6 @@ define(function(require, exports, module){
         style: highlightStyle
     });
     map.on('click', function(evt) {
-        console.log('evt',evt)
         var feature = map.forEachFeatureAtPixel(evt.pixel,
             function(feature) {
                 console.log('feature============',feature)
@@ -520,7 +652,7 @@ define(function(require, exports, module){
 
 
 
-    //堆叠柱状图
+    // 堆叠柱状图
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
     // 指定图表的配置项和数据
@@ -540,7 +672,6 @@ define(function(require, exports, module){
         $.ajax({
             type: 'post',
             url: '/getAreaData',
-            // contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             data: params,
             success: function (data) {
@@ -554,15 +685,6 @@ define(function(require, exports, module){
                 $('.area-types').each(function(){
                     id_array.push($(this).val());//向数组中添加元素
                 });
-                // console.log('1111111111111111111111111',  id_array.map(function (item) {
-                //     return "\'" +item+"\'"
-                // }).join(','));
-                // function refreshData(data){
-                //     //刷新数据
-                //     var option = myChart.getOption();
-                //     option.data= data;
-                //     myChart.setOption(option);
-                // refreshData(data);//自定义刷新的时候调用
 
                 var option = {
 
@@ -619,9 +741,6 @@ define(function(require, exports, module){
                                 type:'bar',
                                 stack: '类别',
                                 data: data.map(function (child) {
-
-                                    // console.log('item+++++++++++++++++',item)
-                                    // console.log('child[item]+++++++++++++++++',child[item])
                                     return child[item]
 
                                 })
@@ -644,8 +763,10 @@ define(function(require, exports, module){
 
     var controlContent = "<div id='draw-button' class='ol-control'><button id='draw-button-toggle' type='button'></button>" +
         "<ul id='draw-button-box'><li class='ol-control'><button type='button' name='Box'></button></li><li class='ol-control'><button type='button' name='Polygon'></button></li>" +
-        "<li class='ol-control'><button type='button' name='None'></button></li></ul></div>"
-    $(viewport).append(controlContent)
+        "<li class='ol-control'><button type='button' name='None'></button></li></ul></div>";
+    var iconControlContent = "<div id='icon-control' class='ol-control'><button type='button'></button><button type='button'></button></div>";
+    $(viewport).append(controlContent);
+    $(viewport).append(iconControlContent);
 
     $('#draw-button-toggle').bind('click', function (e) {
         e.preventDefault();
@@ -658,6 +779,7 @@ define(function(require, exports, module){
                 $('.area-types').prop('disabled', true);
                 $('#area-all').prop('disabled', true);
                 $('#type-all').prop('disabled', true);
+                isBoxSelect = true;
             } else {
                 getPointData("'全部'", "'全部'", renderPoint);
                 drawSource.clear();
@@ -665,7 +787,11 @@ define(function(require, exports, module){
                 $('.area-types').prop('disabled', false);
                 $('#area-all').prop('disabled', false);
                 $('#type-all').prop('disabled', false);
-
+                $('.area-districts').prop('checked', true);
+                $('.area-types').prop('checked', true);
+                $('#area-all').prop('checked', true);
+                $('#type-all').prop('checked', true);
+                isBoxSelect = false;
             }
         });
     });
@@ -779,9 +905,10 @@ define(function(require, exports, module){
                 });
                 var renderTurfResult = turfResult.filter(function (value) {
                     return value !== undefined;
-                })
+                });
+                boxSelectData = renderTurfResult;
                 console.log('result============',renderTurfResult)
-                renderPoint(renderTurfResult);
+                renderPoint(renderTurfResult, isShowImageIcon);
                 map.removeInteraction(draw)
             })
 
@@ -791,5 +918,28 @@ define(function(require, exports, module){
             drawSource.clear();
         }
     }
+
+    /***
+     * 图形化标注
+     *
+     * */
+
+    $('#icon-control button:first-child').bind('click', function () {
+        isShowImageIcon = false;
+        isBoxSelect ? renderPoint(boxSelectData, isShowImageIcon) : renderPoint(pointData,isShowImageIcon);
+    });
+    $('#icon-control button:last-child').bind('click', function () {
+       isShowImageIcon = true;
+       isBoxSelect ? renderPoint(boxSelectData, isShowImageIcon) : renderPoint(pointData,isShowImageIcon);
+    })
+
+
+
+
+
+
+
+
+
 
 });
