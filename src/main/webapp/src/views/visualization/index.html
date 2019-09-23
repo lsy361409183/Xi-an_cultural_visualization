@@ -21,129 +21,146 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="nav-tpl"></div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 col-xs-12" id="select-conditions">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="input-group">
-                            <input id="POI" type="text" class="form-control" placeholder="请输入...">
-                            <span class="input-group-btn">
+<div id="nav-tpl"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-xs-12" id="select-conditions">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <input id="POI" type="text" class="form-control" placeholder="请输入...">
+                        <span class="input-group-btn">
                                 <button id="POIName" class="btn btn-default" type="button">搜索</button>
                             </span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="areas-select">
+                        <span class="areas-select-title">区域</span>
+                        <hr />
+                    </div>
+                    <div class="row select-row">
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="area-districts" id="area-1" value="未央区">未央区
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="area-districts" id="area-2" value="灞桥区">灞桥区
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="area-districts" id="area-3" value="明城区">明城区
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="area-districts" id="area-4" value="新城区">新城区
+                            </label>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="areas-select">
-                            <span class="areas-select-title">区域</span>
-                            <hr />
+                    <div class="row select-row">
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="area-districts" id="area-5" value="碑林区">碑林区
+                            </label>
                         </div>
-                        <div class="row select-row">
-                            <div class="col-md-3">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" class="area-districts" id="area-1" value="未央区">未央区
-                                </label>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" class="area-districts" id="area-2" value="灞桥区">灞桥区
-                                </label>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" class="area-districts" id="area-3" value="明城区">明城区
-                                </label>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" class="area-districts" id="area-4" value="新城区">新城区
-                                </label>
-                            </div>
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="area-districts" id="area-6" value="雁塔区">雁塔区
+                            </label>
                         </div>
-                        <div class="row select-row">
-                            <div class="col-md-3">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" class="area-districts" id="area-5" value="碑林区">碑林区
-                                </label>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" class="area-districts" id="area-6" value="雁塔区">雁塔区
-                                </label>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" class="area-districts" id="area-7" value="莲湖区">莲湖区
-                                </label>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" id="area-all" value="全部">全部
-                                </label>
-                            </div>
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="area-districts" id="area-7" value="莲湖区">莲湖区
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" id="area-all" value="全部">全部
+                            </label>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="areas-select">
-                            <span class="areas-select-title">文地类别</span>
-                            <hr />
-                        </div>
-                        <ul class="category-radio">
-                            <li>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" class="area-types" id="type-1" value="一类文地">文化精神标识用地
-                                </label>
-                            </li>
-                            <li>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" class="area-types" id="type-2" value="二类文地">纪念用地
-                                </label>
-                            </li>
-                            <li>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" class="area-types" id="type-3" value="三类文地">宗教用地
-                                </label>
-                            </li>
-                            <li>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" class="area-types" id="type-4" value="四类文地">文化遗产用地
-                                </label>
-                            </li>
-                            <li>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" class="area-types" id="type-5" value="五类文地">文化设施用地
-                                </label>
-                            </li>
-                            <li>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" class="area-types" id="type-6" value="六类文地">文化产业用地
-                                </label>
-                            </li>
-                            <li>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" id="type-all" value="全部">全部
-                                </label>
-                            </li>
-                        </ul>
+                </div>
+                <div class="col-md-12">
+                    <div class="areas-select">
+                        <span class="areas-select-title">文地类别</span>
+                        <hr />
                     </div>
-                    <div class="col-md-12">
-                        <div id="main" style="width: 545px;height:350px;">
+                    <ul class="category-radio">
+                        <li>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="area-types" id="type-1" value="一类文地">文化精神标识用地
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="area-types" id="type-2" value="二类文地">纪念用地
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="area-types" id="type-3" value="三类文地">宗教用地
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="area-types" id="type-4" value="四类文地">文化遗产用地
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="area-types" id="type-5" value="五类文地">文化设施用地
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="area-types" id="type-6" value="六类文地">文化产业用地
+                            </label>
+                        </li>
+                        <li>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" id="type-all" value="全部">全部
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-12">
+                    <div id="main" style="width: 545px;height:350px;">
 
-                        </div>
-                </div>
-                  </div>
-            </div>
-            <div class="col-md-9 col-xs-12 map-container"  >
-                <div id="visualization-map" >
-                </div>
-                <div id="popup" class="ol-popup">
-                    <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-                    <div id="popup-content"></div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-9 col-xs-12 map-container"  style="position: relative">
+            <div id="legend" style="width:170px;height: 170px;
+                    border: 1px solid #afd9ee;background: #F6F6F9;
+                        position: absolute;z-index: 2;margin-top:645px;margin-left: 20px">
+                <br>
+                <img src="../../static/icons/文化精神标识用地.png"
+                     align="absmiddle" style="padding-left:20px;"><span style="color: #000000;font-weight: 500;">文化精神标识用地</span><br>
+                <img src="../../static/icons/纪念用地.png"
+                     align="absmiddle" style="padding-left:20px;"><span style="color: #000000;font-weight: 500;">纪念用地</span><br>
+                <img src="../../static/icons/宗教用地.png"
+                     align="absmiddle" style="padding-left:20px;"><span style="color: #000000;font-weight: 500;">宗教用地</span><br>
+                <img src="../../static/icons/遗产用地.png"
+                     align="absmiddle" style="padding-left:20px;"><span style="color: #000000;font-weight: 500;">文化遗产用地</span><br>
+                <img src="../../static/icons/文化设施用地.png"
+                     align="absmiddle" style="padding-left:20px;"><span style="color: #000000;font-weight: 500;">文化设施用地</span><br>
+                <img src="../../static/icons/文化产业.png"
+                     align="absmiddle" style="padding-left:20px;"><span style="color: #000000;font-weight: 500;">文化产业用地</span>
+            </div>
+            <div id="visualization-map" >
+            </div>
+            <div id="popup" class="ol-popup">
+                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                <div id="popup-content"></div>
+            </div>
+        </div>
     </div>
+</div>
 </body>
 
 <script type="text/javascript">
