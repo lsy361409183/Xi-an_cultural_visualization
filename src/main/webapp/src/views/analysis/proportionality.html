@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../libs/jquery.js"></script>
+    <script type="text/javascript" src="../../libs/sea.js" id="seajsnode"></script>
+    <script type="text/javascript" src="../../libs/seajs-text.js"></script>
+    <script type="text/javascript" src="../../libs/seajs-css.js"></script>
+    <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../libs/ol.js"></script>
+    <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
+    <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
+    <script type="text/javascript">seajs.use('../../js/abroad')</script>
+
+    <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="../../libs/css/ol.css" />
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link rel="stylesheet" href="../../css/analysis.css" />
+
+    <title>proportionality</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<div id="nav-tpl"></div>
+<div id="square">
+    <div class="btn-large" id="but-group" data-toggle="buttons">
+        <label class="btn btn-primary active" id="accessiblityJump">
+            <input type="radio" name="options" id="option1" autocomplete="off"  checked > 可达性
+        </label>
+        <label class="btn btn-primary" id="propotionalityJump">
+            <input type="radio" name="options" id="option2" autocomplete="off"> 均衡性
+        </label>
+        <label class="btn btn-primary" id="aggregationJump">
+            <input type="radio" name="options" id="option3" autocomplete="off"> 聚集性
+        </label>
+        <label class="btn btn-primary" id="landscapeAndWater">
+            <input type="radio" name="options" id="option4" autocomplete="off"> 山水关联性
+        </label>
+    </div>
+</div>
+
+<script language="JavaScript">
+
+    var accessiblityJump = document.getElementById("accessiblityJump");
+    accessiblityJump.onclick = function () {
+        window.location.href='index.html';
+    };
+
+    var propotionalityJump = document.getElementById("propotionalityJump");
+    propotionalityJump.onclick = function () {
+        window.location.href='proportionality.html';
+    };
+
+    var aggregationJump = document.getElementById("aggregationJump");
+    aggregationJump.onclick = function () {
+        window.location.href='aggregation.html';
+    };
+
+    var landscapeAndWater = document.getElementById("landscapeAndWater");
+    landscapeAndWater.onclick = function () {
+        window.location.href='landscapeAndWater.html';
+    };
+
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+
+
+
+/*.btn {*/
+    /*top: 50%;*/
+    /*left:380%;*/
+    /*padding: 15px 20px;*/
+    /*font-size: 16px;*/
+
+/*}*/
+#but-group{
+    float: right;
+    margin-right:5%;
+    margin-top: 3%;
+}
+/*#but-group input{*/
+    /*display: inline-block;*/
+    /*height: 30px;*/
+    /*width: 200px;*/
+/*}*/
+#but-group label{
+    display: inline-block;
+    height: 35px;
+    width: 120px;
+}
+#square{
+    float: right;
+    margin-top: 0%;
+    margin-right: 0%;
+    height: 900px;
+    width: 600px;
+    background-color: #d7d7d7;
+    z-index: 1;
+}
+.nav-tabs {
+    border-bottom: 1px solid #d7d7d7;
+    border-bottom: 1px solid #d7d7d7;
+    width: 400px;
+    float: right;
+    margin-right: 8%;
+    margin-top: 3%;
+}
+#aaa01{
+    float: right;
+    margin-right: 30%;
+    margin-top: 5%;
+}
+#aaa02{
+    /*float: right;*/
+top: 10%;
+}
+#landscapeAndWater02{
+    float: right;
+    margin-right: 60%;
+    margin-top: 5%;
+}
+#landscapeAndWater03{
+    float: right;
+    margin-right: 20%;
+    margin-top: -6%;
+}
+#bbb01{
+    float: right;
+    margin-right: 30%;
+    margin-top: 5%;
+}
+#ccc01{
+    float: right;
+    margin-right: 70%;
+    margin-top: 5%;
+}
+#ccc02{
+    float: right;
+    margin-right: 70%;
+    margin-top: 5%;
+}
+#ddd01{
+     /*float: right;*/
+     left: 70%;
+}
