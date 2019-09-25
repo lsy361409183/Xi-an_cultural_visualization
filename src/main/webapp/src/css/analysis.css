@@ -74,7 +74,131 @@ top: 10%;
     margin-right: 70%;
     margin-top: 5%;
 }
+/*第一个搜索框*/
 #ddd01{
-     /*float: right;*/
-     left: 70%;
+     float: right;
+     /*left: 70%;*/
+}
+
+#form-contro01{
+    float: right;
+    margin-right: 120%;
+    margin-top: -43%;
+    width: 200px;
+
+}
+#search01{
+    width: 200px;
+}
+/*第二个搜索框*/
+
+#ddd02{
+    float: right;
+    /*left: 70%;*/
+}
+
+#form-contro02{
+    float: right;
+    margin-right: 20%;
+    margin-top: -18%;
+    width: 200px;
+
+}
+#search02{
+    width: 200px;
+}
+
+
+
+#landscapeAndWater04{
+    float: right;
+    margin-right: 20%;
+    margin-top: -10%;
+}
+
+
+/*三个按钮*/
+/*#landscapeAndWater05{*/
+    /*float: right;*/
+
+/*}*/
+#landscapeAndWater05,#landscapeAndWater06,#landscapeAndWater07{
+    float: left;
+    margin-left: 15%;
+}
+
+
+#ccc03{
+    float: left;
+    margin-top: 5%;
+margin-left: 45%;
+}
+#ccc04{
+    float: left;
+    margin-top: 8%;
+    width: 500px;
+}
+
+
+
+/*均衡性*/
+#proportionalitytext01{
+    float: left;
+    margin-left: 12%;
+    margin-right: 8%;
+    margin-top: 5%;
+font-size: x-large;
+}
+#proportionalitytext02{
+    float: left;
+    margin-left: 12%;
+    margin-right: 8%;
+    margin-top: 5%;
+    font-size: large;
+}
+#proportionalitytext03{
+    float: left;
+    margin-left: 12%;
+    margin-right: 8%;
+    margin-top: 5%;
+    font-size: large;
+    width: 500px;
+    height: 600px;
+    background: #d7d7d7;
+
+}
+textarea{
+    resize: none;
+}
+#aggregationText01{
+    float: left;
+    font-size: x-large;
+    margin-top: 15%;
+    margin-left: 5%;
+}
+#aggregationText02{
+    float: left;
+    margin-left: 12%;
+    margin-right: 8%;
+    margin-top: 5%;
+    font-size: large;
+    width: 500px;
+    height: 600px;
+    background: #d7d7d7;
+}
+#aggregationText03{
+    float: left;
+    font-size: x-large;
+    margin-top: 15%;
+    margin-left: 5%;
+}
+#aggregationText04{
+    float: left;
+    margin-left: 12%;
+    margin-right: 8%;
+    margin-top: 5%;
+    font-size: large;
+    width: 500px;
+    height: 600px;
+    background: #d7d7d7;
 }

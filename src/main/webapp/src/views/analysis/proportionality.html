@@ -31,10 +31,10 @@
 <div id="square">
     <div class="btn-large" id="but-group" data-toggle="buttons">
         <label class="btn btn-primary active" id="accessiblityJump">
-            <input type="radio" name="options" id="option1" autocomplete="off"  checked > 可达性
+            <input type="radio" name="options" id="option1" autocomplete="off"   > 可达性
         </label>
         <label class="btn btn-primary" id="propotionalityJump">
-            <input type="radio" name="options" id="option2" autocomplete="off"> 均衡性
+            <input type="radio" name="options" id="option2" autocomplete="off" checked> 均衡性
         </label>
         <label class="btn btn-primary" id="aggregationJump">
             <input type="radio" name="options" id="option3" autocomplete="off"> 聚集性
@@ -43,7 +43,23 @@
             <input type="radio" name="options" id="option4" autocomplete="off"> 山水关联性
         </label>
     </div>
+
+    <div>
+        <p id="proportionalitytext01">利用街道办人口数据和街道办的文地面积数据计算出人均文地值，得到均衡性分布：</p>
+        <p id="proportionalitytext02">文字解读</p>
+        <textarea id="proportionalitytext03" readonly>
+均衡性比较高的区域主要分布在XX。
+整体而言，西安市的文地均衡性分布比较合理。
+
+        均衡性比较低的位置主要分布在某某区域，这些街道人口较多，但是人均文地面积比较小，是未来文地规划的应重点考虑的区域。
+</textarea>
+    </div>
+
+
 </div>
+
+
+
 
 <script language="JavaScript">
 

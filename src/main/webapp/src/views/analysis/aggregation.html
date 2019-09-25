@@ -42,6 +42,33 @@
             <input type="radio" name="options" id="option4" autocomplete="off"> 山水关联性
         </label>
     </div>
+    <div>
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">最近邻指数分析</a></li>
+            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">核密度法分析</a></li>
+
+
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+
+                <p id="aggregationText01">聚集性分析</p>
+                <textarea id="aggregationText02" readonly></textarea>
+
+            </div>
+            <div role="tabpanel" class="tab-pane" id="profile">
+
+                <p id="aggregationText03">核密度分析</p>
+                <textarea id="aggregationText04" readonly></textarea>
+            </div>
+
+        </div>
+
+    </div>
 </div>
 
 <script language="JavaScript">

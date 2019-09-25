@@ -87,34 +87,41 @@
 
 
             <div role="tabpanel" class="tab-pane" id="messages">
+                <div>
                 <label id="ccc01" >出发地：</label>
-                <div class="row" id="ddd01">
-                    <div class="col-lg-6">
-                        <div class="input-group">
-                  <span class="input-group-btn">
-                  </span>
-                            <input type="text" class="form-control" placeholder="Search for...">
-                        </div>
-                    </div>
-                </div>
                 <label id="ccc02" >目的地：</label>
-                <div class="row" id="ddd02">
-                    <div class="col-lg-6">
-                        <div class="input-group">
-                  <span class="input-group-btn">
-                  </span>
-                            <input type="text" class="form-control" placeholder="Search for...">
-                        </div>
-                    </div>
+                <div class="btn-large" id="but-group02" data-toggle="buttons">
+
+                    <label class="btn btn-primary" id="landscapeAndWater04">
+                        <input type="radio" name="options" id="option8" autocomplete="off"> 搜索
+                    </label>
                 </div>
 
-                <label class="btn btn-primary" id="landscapeAndWater04">
-                    <input type="radio" name="options" id="option8" autocomplete="off"> 搜索
-                </label>
+                <div class="row" id="ddd01">
+                    <div class="col-lg-6" id="search01">
+                        <div class="input-group">
+                  <!--<span class="input-group-btn">-->
+                  <!--</span>-->
+                            <input type="text" class="form-control" id="form-contro01" placeholder="Search for...">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="ddd02">
+                    <div class="col-lg-6">
+                        <div class="input-group" id="search02">
+                  <!--<span class="input-group-btn">-->
+                  <!--</span>-->
+                            <input type="text" class="form-control" id="form-contro02" placeholder="Search for...">
+                        </div>
+                    </div>
+                </div>
+                </div>
+
 
 
                 <label id="ccc03" >目的选项</label>
 
+                <div id="ccc04">
                 <label class="btn btn-primary" id="landscapeAndWater05">
                     <input type="radio" name="options" id="option9" autocomplete="off"> 30公里内
                 </label>
@@ -124,6 +131,8 @@
                 <label class="btn btn-primary" id="landscapeAndWater07">
                     <input type="radio" name="options" id="option11" autocomplete="off"> 不限
                 </label>
+                </div>
+
             </div>
         </div>
 
