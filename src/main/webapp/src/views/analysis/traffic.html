@@ -11,30 +11,23 @@
     <script type="text/javascript" src="../../libs/seajs-css.js"></script>
     <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../libs/ol.js"></script>
-    <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
-    <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
     <script type="text/javascript">seajs.use('../../js/abroad')</script>
-
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/reset.css" />
     <link rel="stylesheet" href="../../libs/css/ol.css" />
     <link rel="stylesheet" href="../../css/main.css" />
     <link rel="stylesheet" href="../../css/analysis.css" />
-
-    <title>proportionality</title>
-    <style>
-
-    </style>
+    <title>交通可达性</title>
 </head>
 <body>
-<div id="nav-tpl"></div>
-<div id="square">
+      <div id="nav-tpl"></div>
+      <div id="square">
     <div class="btn-large" id="but-group" data-toggle="buttons">
-        <label class="btn btn-primary " id="accessiblityJump">
-            <input type="radio" name="options" id="option1" autocomplete="off" > 可达性
+        <label class="btn btn-primary active" id="accessiblityJump">
+            <input type="radio" name="options" id="option1" autocomplete="off"  checked > 可达性
         </label>
-        <label class="btn btn-primary active" id="propotionalityJump">
-            <input type="radio" name="options" id="option2" autocomplete="off" > 均衡性
+        <label class="btn btn-primary" id="propotionalityJump">
+            <input type="radio" name="options" id="option2" autocomplete="off"> 均衡性
         </label>
         <label class="btn btn-primary" id="aggregationJump">
             <input type="radio" name="options" id="option3" autocomplete="off"> 聚集性
@@ -43,24 +36,39 @@
             <input type="radio" name="options" id="option4" autocomplete="off"> 山水关联性
         </label>
     </div>
+    <!--标签页-->
+    <div id="label_page">
 
-    <div>
-        <p id="proportionalitytext01">利用街道办人口数据和街道办的文地面积数据计算出人均文地值，得到均衡性分布：</p>
-        <p id="proportionalitytext02">文字解读</p>
-        <textarea id="proportionalitytext03" readonly>
-均衡性比较高的区域主要分布在XX。
-整体而言，西安市的文地均衡性分布比较合理。
+        <!-- Nav tabs -->
+        <ul id="test" class="nav nav-tabs"  role="tablist" >
+            <li role="presentation"><a href="index.html">居住可达性</a></li>
+            <li role="presentation" class="active"><a href="traffic.html" >交通可达性</a></li>
+            <li role="presentation" id="self"><a href="customize.html">自定义可达性</a></li>
+        </ul>
 
-        均衡性比较低的位置主要分布在某某区域，这些街道人口较多，但是人均文地面积比较小，是未来文地规划的应重点考虑的区域。
-</textarea>
+        <div role="tabpanel" class="tab-pane" id="profile">
+            <label class="btn btn-primary" id="landscapeAndWater02">
+                <input type="radio" name="options" id="option5" autocomplete="off"> 车站/机场
+            </label>
+            <label class="btn btn-primary" id="landscapeAndWater03">
+                <input type="radio" name="options" id="option6" autocomplete="off"> 热门酒店
+            </label>
+            <label id="bbb01" >可达性分布最高的五大文地</label>
+            <div class="list-group" id="bbb02">
+                <button type="button" class="list-group-item">文地1</button>
+                <button type="button" class="list-group-item">文地2</button>
+                <button type="button" class="list-group-item">文地3</button>
+                <button type="button" class="list-group-item">文地4</button>
+                <button type="button" class="list-group-item">文地5</button>
+            </div>
+            <label id="bbb03" >文字解读</label>
+            <div class="well well-lg">...</div>
+        </div>
+
+
     </div>
-
-
-</div>
-
-
-
-
+    </div>
+</body>
 <script language="JavaScript">
 
     var accessiblityJump = document.getElementById("accessiblityJump");
@@ -84,5 +92,4 @@
     };
 
 </script>
-</body>
 </html>
