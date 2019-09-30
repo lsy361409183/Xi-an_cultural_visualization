@@ -27,43 +27,43 @@
     </resultMap>
     <!--//查询出文地的基本信息：区域、类别、名称、位置、面积-->
     <select id="selectAllTable" resultMap="Base">
-                select * from public."tb_base_data"
+                select * from public."tb_base_data" order by base_id
     </select>
     <!--根据区域和类别进行查询-->
     <select id="selectTableWithRegionAndClassification" resultMap="Base">
-        select * from public."tb_base_data" where base_district in(${baseDistrict}) and base_classification in(${baseClassification})
+        select * from public."tb_base_data" where base_district in(${baseDistrict}) and base_classification in(${baseClassification}) order by base_id
     </select>
     <!--根据区域进行查询-->
     <select id="selectTableByRegion" resultMap="Base">
-        select * from public."tb_base_data" where base_district in(${baseDistrict})
+        select * from public."tb_base_data" where base_district in(${baseDistrict}) order by base_id
     </select>
     <!--根据类别进行查询-->
     <select id="selectTableByClassification" resultMap="Base">
-        select * from public."tb_base_data" where base_classification in(${baseClassification})
+        select * from public."tb_base_data" where base_classification in(${baseClassification}) order by base_id
     </select>
 
     <!--区域/类别/模糊查询文地信息-->
     <select id="selectTableFuzzySearch" resultMap="Base">
         select base_district,base_district_id,base_id,base_name,base_region,base_area,base_date,base_planeform,base_classification,
             base_basis,base_unit,base_remarks
-        from  public."tb_base_data" where base_name like CONCAT('%',${fuzzyName},'%')and base_district =${baseDistrict} and base_classification = ${baseClassification}
+        from  public."tb_base_data" where base_name like CONCAT('%',${fuzzyName},'%')and base_district =${baseDistrict} and base_classification = ${baseClassification} order by base_id
  </select>
     <!--全部状况模糊查询文地信息-->
     <select id="selectTableFuzzySearchAll" resultMap="Base">
         select base_district,base_district_id,base_id,base_name,base_region,base_area,base_date,base_planeform,base_classification,base_basis,base_unit,base_remarks
-        from  public."tb_base_data" where base_name like CONCAT('%',${fuzzyName},'%')
+        from  public."tb_base_data" where base_name like CONCAT('%',${fuzzyName},'%') order by base_id
      </select>
 
     <!--根据区域进行模糊查询-->
     <select id="selectTableFuzzySearchRegion" resultMap="Base">
         select base_district,base_district_id,base_id,base_name,base_region,base_area,base_date,base_planeform,base_classification,
-            base_basis,base_unit,base_remarks from public."tb_base_data" where base_name like CONCAT('%',${fuzzyName},'%') and base_district=${baseDistrict}
+            base_basis,base_unit,base_remarks from public."tb_base_data" where base_name like CONCAT('%',${fuzzyName},'%') and base_district=${baseDistrict} order by base_id
     </select>
 
     <!--根据类别进行模糊查询-->
     <select id="selectTableFuzzySearchClassification" resultMap="Base">
         select base_district,base_district_id,base_id,base_name,base_region,base_area,base_date,base_planeform,base_classification,
-            base_basis,base_unit,base_remarks from public."tb_base_data" where base_name like CONCAT('%',${fuzzyName},'%') and base_classification=${baseClassification}
+            base_basis,base_unit,base_remarks from public."tb_base_data" where base_name like CONCAT('%',${fuzzyName},'%') and base_classification=${baseClassification} order by base_id
     </select>
 
 <!--根据ID进行图片等信息的查询-->
