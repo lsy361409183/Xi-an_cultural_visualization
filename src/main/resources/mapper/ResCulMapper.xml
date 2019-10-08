@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaancultural1.demo.mapper.ResCulMapper">
+
+    <resultMap id="Cul" type="com.xiaancultural1.demo.pojo.CultureLand">
+        <result column="cu_id" property="cuId"/>
+        <result column="cu_name" property="cuName"/>
+        <result column="cu_type" property="cuType"/>
+        <result column="cu_lat" property="cuLat"/>
+        <result column="cu_lon" property="cuLon"/>
+        <result column="cu_district" property="cuDistrict"/>
+        <result column="cu_serviceCap" property="cuServiceCap"/>
+        <result column="cu_SDRatio" property="cuSDRatio"/>
+    </resultMap>
+
+    <resultMap id="Res" type="com.xiaancultural1.demo.pojo.ResArea">
+        <result column="jm_id" property="jmId"/>
+        <result column="jm_name" property="jmName"/>
+        <result column="jm_latitude" property="jmLatitude"/>
+        <result column="jm_longitude" property="jmLongitude"/>
+        <result column="jm_AF" property="jmAF"/>
+        <result column="jm_people" property="jmPeople"/>
+
+    </resultMap>
+    <!--查询出居民地的所有信息-->
+    <select id="selectAllRes" resultMap="Res">
+        select * from public."tb_jm" order by jm_id
+    </select>
+    <!--查询出文地的所有信息-->
+    <select id="selectAllCul" resultMap="Cul">
+        select * from public."tb_culturalLand" order by cu_id
+    </select>
+
+</mapper>
