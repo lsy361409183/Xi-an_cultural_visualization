@@ -10,8 +10,9 @@
     <script type="text/javascript" src="../../libs/seajs-text.js"></script>
     <script type="text/javascript" src="../../libs/seajs-css.js"></script>
     <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../libs/ol.js"></script>
-    <script type="text/javascript">seajs.use('../../js/abroad')</script>
+    <script type="text/javascript" src="../../js/traffic.js"></script>
+
+    <script type="text/javascript" src="../../libs/echarts.js"></script>
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/reset.css" />
     <link rel="stylesheet" href="../../libs/css/ol.css" />
@@ -20,7 +21,27 @@
     <title>交通可达性</title>
 </head>
 <body>
-      <div id="nav-tpl"></div>
+        <!--地图设置宽和高-->
+        <style>
+            #wrapper{
+                width: 1295px;
+                height: 890px;
+                float:left;
+            }
+            /*西安站 西安南站 机场*/
+            .btn-group{
+                padding-left: 150px;
+                padding-top: 20px;
+            }
+
+        </style>
+
+        <!--导航-->
+        <div id="nav-tpl">
+        </div>
+        <!--新建一个地图容器-->
+      <div id="wrapper"></div>
+
       <div id="square">
     <div class="btn-large" id="but-group" data-toggle="buttons">
         <label class="btn btn-primary active" id="accessiblityJump">
@@ -47,27 +68,69 @@
         </ul>
 
         <div role="tabpanel" class="tab-pane" id="profile">
-            <label class="btn btn-primary" id="landscapeAndWater02">
-                <input type="radio" name="options" id="option5" autocomplete="off"> 车站/机场
-            </label>
-            <label class="btn btn-primary" id="landscapeAndWater03">
-                <input type="radio" name="options" id="option6" autocomplete="off"> 热门酒店
-            </label>
-            <label id="bbb01" >可达性分布最高的五大文地</label>
-            <div class="list-group" id="bbb02">
-                <button type="button" class="list-group-item">文地1</button>
-                <button type="button" class="list-group-item">文地2</button>
-                <button type="button" class="list-group-item">文地3</button>
-                <button type="button" class="list-group-item">文地4</button>
-                <button type="button" class="list-group-item">文地5</button>
+
+            <!--车站、机场按钮-->
+            <div>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#station" aria-controls="station" role="tab" data-toggle="tab">车站/机场</a></li>
+                    <li role="presentation"><a href="#airport" aria-controls="airport" role="tab" data-toggle="tab">热门酒店</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <!--点击车站/机场显示的内容-->
+                    <div role="tabpanel" class="tab-pane fade in active" id="station">
+                        <!--具体内容-->
+                        <div class="btn-group" data-toggle="buttons" >
+                            <label class="btn btn-primary">
+                                <input id="xian" type="checkbox" autocomplete="off"> 西安站
+                            </label>
+                            <label class="btn btn-primary">
+                                <input id="xian2" type="checkbox" autocomplete="off"> 西安南站
+                            </label>
+                            <label class="btn btn-primary">
+                                <input id="xian3" type="checkbox" autocomplete="off"> 西安北站
+                            </label>
+                            <label class="btn btn-primary">
+                                <input id="xian4" type="checkbox" autocomplete="off"> 咸阳机场
+                            </label>
+                        </div>
+                        <label id="bbb01" >可达性分布最高的五大文地</label>
+                        <div class="list-group" id="bbb02">
+                            <button type="button" class="list-group-item">文地1</button>
+                            <button type="button" class="list-group-item">文地2</button>
+                            <button type="button" class="list-group-item">文地3</button>
+                            <button type="button" class="list-group-item">文地4</button>
+                            <button type="button" class="list-group-item">文地5</button>
+                        </div>
+                        <label id="bbb03" >文字解读</label>
+                        <div class="well well-lg">...</div>
+                    </div>
+                    <!--点击车站/机场显示的内容-->
+                    <div role="tabpanel" class="tab-pane" id="airport">
+                        <!--具体内容-->
+                        <label id="bbb04" >可达性分布最高的五大文地</label>
+                        <div class="list-group" id="bbb05">
+                            <button type="button" class="list-group-item">文地1</button>
+                            <button type="button" class="list-group-item">文地2</button>
+                            <button type="button" class="list-group-item">文地3</button>
+                            <button type="button" class="list-group-item">文地4</button>
+                            <button type="button" class="list-group-item">文地5</button>
+                        </div>
+                        <label id="bbb06" >文字解读</label>
+                        <div class="well well-lg">...</div>
+                    </div>
+                </div>
+
             </div>
-            <label id="bbb03" >文字解读</label>
-            <div class="well well-lg">...</div>
+
+
         </div>
-
+    </div>
 
     </div>
-    </div>
+
+
 </body>
 <script language="JavaScript">
 
@@ -92,4 +155,9 @@
     };
 
 </script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.8&key=b6501787ccc03b523cbf986f1872bde5"></script>
+<script type="text/javascript">
+    seajs.use('../../js/traffic.js')
+</script>
+<script type="text/javascript">seajs.use('../../js/abroad')</script>
 </html>
