@@ -27,21 +27,20 @@ define(function(require, exports, module) {
             {data: 'baseRemarks'},
         ],
         rowHeaders: false,
-        width: 750,
+        width: 940,
         minRows: 20,
         minCols: 12,
-        colWidths: ['55', '65', '45', '85', '65', '45', '60', '70', '70', '70', '60', '50'],//x轴上的每行的距离
-        rowWidths: 65,
+        // colWidths: ['65', '84', '65', '65', '65', '65', '84', '84', '84', '65', '84', '65'],//x轴上的每行的距离
+        rowWidths: 75,
         contextMenu: true,
         manualRowResize: true,
         manualColumnResize: true,
     });
 
     var button = document.getElementById('export-file');
-    // console.log('exportPlugin', hot.getPlugin)
     button.addEventListener('click', function() {
         hot.getPlugin('exportFile').downloadFile('csv', {
-            filename: '西安文地',
+            filename: '西安文地一览表',
         });
     });
 
@@ -121,8 +120,8 @@ define(function(require, exports, module) {
     //地图
     var map = new AMap.Map('gaodemap', {
         resizeEnable: true,
-        center: [108.797253, 34.388205],//西安坐标
-        zoom: 11
+        center: [108.931711,34.277604],//西安坐标
+        zoom: 10
     });
 
     $("#table td").on('click',function (){
@@ -147,8 +146,10 @@ define(function(require, exports, module) {
                 var infoWindow;
                 var marker;
                 var position=e[0].baseLatandlon;
+                //string转obj
+                var obj = eval("(" + position + ")");
                     marker = new AMap.Marker({
-                        position: '',
+                        position:obj,
                         zIndex: 101,
                         map:map
                     });
@@ -163,9 +164,7 @@ define(function(require, exports, module) {
                 marker.baseArea=e[0].baseArea;
                 marker.on('click', function(e){
                         infoWindow.setContent(
-                            "</br>"+"<div id='info-content' " +
-                            "style='background-color: #F9F9F9;border: 1px solid #CCC;  border-bottom: 1px solid #CCC;\n" +
-                            "  border-radius: 5px 5px 5px 5px;'>" + "<ul class='main'>" +
+                            "</br>"+"<div id='info-content'>" + "<ul class='main'>" +
                             "<li > 文地名称:<span style='color:#222222'>"+e.target.baseName+"</span></li>"
                             + "<li>  文地类别: <span style='color:#222222'>"+e.target.baseClassification+"  </span></li>"
                             + "<li>  文地面积: <span style='color:#222222'>"+e.target.baseArea+" </span></li>"

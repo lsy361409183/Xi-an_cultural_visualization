@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Title</title>
-    <link rel="stylesheet" href="../../css/reset.css" />
     <script type="text/javascript" src="../../libs/jquery.js"></script>
     <script type="text/javascript" src="../../libs/sea.js" id="seajsnode"></script>
     <script type="text/javascript" src="../../libs/seajs-text.js"></script>
@@ -14,68 +13,19 @@
     <script type="text/javascript" src="../../libs/bootstrap-paginator.js"></script>
     <script type="text/javascript" src="../../libs/handsontable.full.js"></script>
     <link rel="stylesheet" href="../../libs/css/handsontable.full.css">
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="../../css/schedule.css">
     <link rel="stylesheet" href="../../css/main.css">
-    <style type="text/css">
-        .select1, .select2{
-            height: 25px;width: 80px;display: inline-block;
-        }
-        #table{
-            overflow-y: scroll;
-            min-height: 500px;
-        }
-        #table tr:hover {
-            background:#288fe0;
-            /*@hover_color;*/
-        }
-        tr:hover td {
-            background: transparent;
-        }
-        /*表格全部单行显示*/
-        .handsontable td{
-            /*white-space: nowrap;*/
-            font-size: 80%;
-        }
-        #page li{
-            cursor:pointer;
-        }
-        .handsontable td:nth-child(5),.handsontable td:nth-child(10),.handsontable td:nth-child(11),.handsontable td:nth-child(12) {
-            white-space: nowrap;
-        }
-        #poiText{
-            display: inline;height: 23px;width: 150px;border-width: 1px;padding: 0
-        ;border-style: solid
-        }
-        #poiSelect{
-            height: 25px;width:60px;display: inline-block;margin-left:-4px
-        }
-        img {
-            position: relative;
-        }
-        img::after {
-            content: "";
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: url(../../static/icons/bingmayong.jpg ) no-repeat center;
-        }
-        #gaodemap {
-            margin: 0;
-            padding: 0;
-            height:250px;
-            width:350px;
-        }
-    </style>
+
 </head>
-<body style="overflow-x:hidden">
+<body>
 <!--导航栏-->
 <div id="nav-tpl"></div>
 <div>
-    <table style="margin-left:70px">
-        <tr  style="padding: 5px 20px">
+    <table>
+        <tr class="form-inline">
             <td>
-                <form id="area-select" class="singleBox" style="padding: 5px 10px">
+                <form id="area-select" class="singleBox">
                     <select class="select1" name="区域">
                         <option id="area-all" class="area-districts" value="全部">全部</option>
 <!--                        <option id="area-1" class="area-districts" value="临潼区">临潼区</option>-->
@@ -91,7 +41,7 @@
                 </form>
             </td>
             <td>
-                <form id="type-select" class="singleBox" style="padding: 5px 10px">
+                <form id="type-select" class="singleBox">
                     <select class="select2" name="文地类别" >
                         <option class="areas-types" id="type-all" value="全部">全部</option>
                         <option class="areas-types" id="type1" value="一类文地">文化精神标识用地</option>
@@ -105,7 +55,7 @@
                 </form>
             </td>
             <td>
-                <form style="padding: 5px 10px;width: 240px;;display: inline-block">
+                <form class="singleBox" >
                     <input type="text" id="poiText" placeholder="按文地名称模糊查询" >
                     <input type="button" id="poiSelect" value="搜索">
                 </form>
@@ -115,32 +65,28 @@
             </td>
         </tr>
     </table>
-
 </div>
 <div class="container">
     <div class="row" >
-        <div class="col-md-8" >
+        <div class="col-ml-9 col-md-9">
             <div id="table"></div>
 <!--            //分页-->
             <div>
-                <span style="font-size:14px;">
+                <span>
                     <ul class="pagination" id="pageUl">
                     </ul>
                 </span>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-ml-3 col-md-3" id="rightPicture">
             <div class="xpanel-wrapper xpanel-wrapper-1">
                 <div class="xpanel">
-                    <div class="pic" id="photo-pic" >
-                        <img src="#" id="imgID" style="height: 250px;width:350px">
-                      </div>
+                        <img src="#" id="imgID">
                 </div>
             </div>
             <div class="xpanel-wrapper xpanel-wrapper-2">
                 <div class="xpanel" >
                     <div class="pic" id="gaodemap"></div>
-<!--                    <img src="../../views/schedule/png/map-pic.jpg" >-->
                 </div>
             </div>
         </div>

@@ -1,0 +1,100 @@
+body{
+    overflow-x:hidden;
+    font-size:16px;
+}
+table{
+    margin-left:75px
+}
+tr{
+    padding: 5px 20px;
+    height:30px;
+}
+/*表格样式*/
+#pageUl{
+    margin: 10px 0;
+}
+.pagination-sm>li>a{
+    font-size: 14px;
+}
+/*信息窗体样式*/
+#info-content{
+    background-color: #F9F9F9;
+    border: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+    border-radius: 5px 5px 5px 5px;
+}
+.row{
+    margin-left: -150px;
+}
+.singleBox{
+    padding: 5px 10px
+}
+.select1, .select2{
+    height:2rem;width:8rem;
+   display: inline-block;
+    margin: 0 5px;
+}
+.areas-select-title{
+    height:2rem;width:4rem;
+    display: inline-block;
+}
+#poiText{
+    display: inline;
+    height:2rem;width: 15rem;border-width: 1px;padding: 0
+;border-style: solid;margin-left: 5px;
+}
+#poiSelect{
+    height:2rem;width:4rem;display: inline-block;margin-left:-4px
+}
+#export-file{
+    height:2rem;width:10rem;
+    margin-left: 10px;
+}
+#table{
+    overflow: hidden;
+    min-height:570px;
+    font-size:18px
+}
+#table tr:hover {
+    background:#288fe0;
+    /*@hover_color;*/
+}
+tr:hover td {
+    background: transparent;
+}
+/*表格全部单行显示*/
+.handsontable td{
+    white-space: nowrap;
+    font-size: 80%;
+}
+#page li{
+    cursor:pointer;
+}
+/*.handsontable td:nth-child(5),.handsontable td:nth-child(10),.handsontable td:nth-child(11),.handsontable td:nth-child(12) {*/
+/*    white-space: nowrap;*/
+/*}*/
+img {
+    position: relative;
+}
+img::after {
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: url(../static/icons/timg.jpg ) no-repeat center;
+}
+#gaodemap {
+    margin: 0;
+    padding: 0;
+    height:290px;
+    width:450px;
+}
+#imgID{
+    height:250px;
+    width:450px;
+}
+#rightPicture{
+    float: right;
+}
