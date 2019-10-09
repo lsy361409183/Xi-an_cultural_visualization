@@ -25,7 +25,7 @@ public class TableCulturalController {
                                      @RequestParam(value = "fuzzyName",required = false)String fuzzyName){
 //        设置分页规则
        // PageHelper.clearPage();
-        PageHelper.startPage(page,20);
+        PageHelper.startPage(page,40);
 //        返回所有分页信息参数为查询所有记录的信息
         PageInfo<tableBase> pageInfo = new PageInfo<>(tableCulturalService.selectAllTableWithPage(baseDistrict,baseClassification));
         return pageInfo;
@@ -39,7 +39,7 @@ public class TableCulturalController {
                                             @RequestParam(value = "baseClassification",required = false)String baseClassification,
                                            @RequestParam(value = "fuzzyName",required = false)String fuzzyName) {
         PageHelper.clearPage();
-        PageHelper.startPage(page, 20);
+        PageHelper.startPage(page, 40);
         System.out.println(fuzzyName);
         if (fuzzyName != "''") {
             if(baseDistrict.equals("'全部'")&&baseClassification.equals("'全部'")) {
@@ -69,7 +69,7 @@ public class TableCulturalController {
                                           @RequestParam(value = "baseClassification",required = false)String baseClassification,
                                           @RequestParam(value = "fuzzyname")String fuzzyName){
         PageHelper.clearPage();
-        PageHelper.startPage(page,20);
+        PageHelper.startPage(page,40);
         PageInfo<tableBase> pageInfo=new PageInfo<>(tableCulturalService.selectTableFuzzySearch(baseDistrict,baseClassification,fuzzyName));
         return pageInfo;
     }

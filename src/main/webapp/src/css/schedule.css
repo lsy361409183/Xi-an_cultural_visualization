@@ -1,20 +1,23 @@
 body{
     overflow-x:hidden;
-    font-size:16px;
+    font-size:20px;
 }
 table{
-    margin-left:75px
+    margin-left:70px
 }
 tr{
     padding: 5px 20px;
     height:30px;
 }
-/*表格样式*/
+/*表格、分页样式*/
 #pageUl{
     margin: 10px 0;
 }
 .pagination-sm>li>a{
-    font-size: 14px;
+    font-size: 18px;
+}
+.handsontable span.colHeader{
+    font-size: 20px;
 }
 /*信息窗体样式*/
 #info-content{
@@ -52,8 +55,9 @@ tr{
 }
 #table{
     overflow: hidden;
-    min-height:570px;
-    font-size:18px
+    min-height:900px;
+    font-size:18px;
+    margin-left: -400px;
 }
 #table tr:hover {
     background:#288fe0;
@@ -65,7 +69,7 @@ tr:hover td {
 /*表格全部单行显示*/
 .handsontable td{
     white-space: nowrap;
-    font-size: 80%;
+    font-size: 100%;
 }
 #page li{
     cursor:pointer;
@@ -88,12 +92,12 @@ img::after {
 #gaodemap {
     margin: 0;
     padding: 0;
-    height:290px;
-    width:450px;
+    height:450px;
+    width:800px;
 }
 #imgID{
-    height:250px;
-    width:450px;
+    height:450px;
+    width:800px;
 }
 #rightPicture{
     float: right;

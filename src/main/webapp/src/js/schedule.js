@@ -27,8 +27,8 @@ define(function(require, exports, module) {
             {data: 'baseRemarks'},
         ],
         rowHeaders: false,
-        width: 940,
-        minRows: 20,
+        width: 1350,
+        minRows: 40,
         minCols: 12,
         // colWidths: ['65', '84', '65', '65', '65', '65', '84', '84', '84', '65', '84', '65'],//x轴上的每行的距离
         rowWidths: 75,
@@ -121,7 +121,7 @@ define(function(require, exports, module) {
     var map = new AMap.Map('gaodemap', {
         resizeEnable: true,
         center: [108.931711,34.277604],//西安坐标
-        zoom: 10
+        zoom: 11
     });
 
     $("#table td").on('click',function (){
