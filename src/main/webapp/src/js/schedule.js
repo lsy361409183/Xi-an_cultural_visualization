@@ -27,7 +27,7 @@ define(function(require, exports, module) {
             {data: 'baseRemarks'},
         ],
         rowHeaders: false,
-        width: 1350,
+        width: 1150,
         minRows: 40,
         minCols: 12,
         // colWidths: ['65', '84', '65', '65', '65', '65', '84', '84', '84', '65', '84', '65'],//x轴上的每行的距离

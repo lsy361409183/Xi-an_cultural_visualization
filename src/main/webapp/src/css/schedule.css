@@ -3,7 +3,7 @@ body{
     font-size:20px;
 }
 table{
-    margin-left:70px
+    margin-left:40px
 }
 tr{
     padding: 5px 20px;
@@ -55,9 +55,9 @@ tr{
 }
 #table{
     overflow: hidden;
-    min-height:900px;
+    min-height:770px;
     font-size:18px;
-    margin-left: -400px;
+    margin-left: -200px;
 }
 #table tr:hover {
     background:#288fe0;
@@ -92,12 +92,12 @@ img::after {
 #gaodemap {
     margin: 0;
     padding: 0;
-    height:450px;
-    width:800px;
+    height:380px;
+    width:620px;
 }
 #imgID{
-    height:450px;
-    width:800px;
+    height:400px;
+    width:620px;
 }
 #rightPicture{
     float: right;
