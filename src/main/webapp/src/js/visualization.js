@@ -202,6 +202,8 @@ define(function(require, exports, module){
      *
      * */
     function renderMap (data) {
+        console.log('data=====',data)
+        console.log('xianJson=====',xianJson)
         // 创建矢量图层
         var vectorLayer = new ol.layer.Vector({
             source: new ol.source.Vector({
@@ -210,9 +212,32 @@ define(function(require, exports, module){
             zIndex: 0
         });
 
+
         // 把图层加载到地图容器中
         map.addLayer(vectorLayer);
     }
+    var xianJsonVectorLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: (new ol.format.GeoJSON()).readFeatures(xianJson)
+        }),
+        style: new ol.style.Style({
+            fill: new ol.style.Fill({               //填充样式
+                color: 'rgba(37,124,169, 0.5)'
+            }),
+            stroke: new ol.style.Stroke({           //线样式
+                color: 'rgba(0, 0, 153)',
+                width: 2
+            }),
+            image: new ol.style.Circle({            //点样式
+                radius: 7,
+                fill: new ol.style.Fill({
+                    color: '#ffcc33'
+                })
+            })
+        }),
+        zIndex: 1
+    });
+    map.addLayer(xianJsonVectorLayer);
 
     /**
      * 渲染文地点
@@ -257,7 +282,7 @@ define(function(require, exports, module){
 
             cultural_point = new ol.layer.Vector({
                 source: pointSource,
-                zIndex: 3,
+                zIndex: 4,
                 style: new ol.style.Style({
                     image: new ol.style.Circle({
                         radius: 5,
@@ -390,7 +415,7 @@ define(function(require, exports, module){
 
             cultural_point = new ol.layer.Vector({
                 source: pointSource,
-                zIndex: 3
+                zIndex: 4
             });
         }
 
@@ -398,12 +423,15 @@ define(function(require, exports, module){
         // 地图根据文地点范围显示
         // [2,6,4,23,9].sort(function(a, b){ return b - a });    返回[23,9,6,4,2]
 
+        var test = [2,6,4,23,9].sort(function(a, b){ return b - a });
+        console.log('test===',test)
         // 按经度由大到小排序
-        var mLngPoint =tempPointArr.sort(function (a, b) {
+        var mLngPoint = tempPointArr.sort(function (a, b) {
             var tempLngA = Number(a.basePoint && a.basePoint.split(',')[0]),
-                tempLatB = Number(b.basePoint && b.basePoint.split(',')[0]);
-            return tempLatB - tempLngA
+                tempLngB = Number(b.basePoint && b.basePoint.split(',')[0]);
+            return tempLngB - tempLngA
         });
+        console.log('mLngPoint=====', mLngPoint)
         // 取经度最大最小值
         var maxLng = mLngPoint[0].basePoint.split(',')[0],
             minLng = mLngPoint[mLngPoint.length - 1].basePoint.split(',')[0];
@@ -461,7 +489,7 @@ define(function(require, exports, module){
             source: new ol.source.Vector({
                 features: (new ol.format.GeoJSON()).readFeatures(cultural_mapData)
             }),
-            zIndex: 1,
+            zIndex: 2,
             style: new ol.style.Style({
                 fill: new ol.style.Fill({
                     color: "rgba(0, 153, 51, 0.5)"
@@ -908,7 +936,7 @@ define(function(require, exports, module){
     var drawSource = new ol.source.Vector();
     var drawVectorLayer = new ol.layer.Vector({
         source: drawSource,
-        zIndex: 2,
+        zIndex: 3,
         style: new ol.style.Style({
             fill: new ol.style.Fill({               //填充样式
                 color: 'rgba(255, 255, 255, 0.2)'

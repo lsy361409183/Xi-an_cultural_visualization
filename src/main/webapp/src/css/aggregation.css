@@ -1,0 +1,25 @@
+#square{
+    float: right;
+    height: 100%;
+    width: 600px;
+    background-color: #d7d7d7;
+    z-index: 1;
+}
+.aggregation-content{
+    width: 100%;
+}
+.aggregation-content .draw-left{
+    position: absolute;
+    top: 50px;
+    left: 0;
+    float: left;
+    height: calc(100% - 50px);
+}
+.aggregation-content .draw-left-one{
+    z-index: 2;
+    background-color: #ddd;
+}
+.aggregation-content .draw-left-two{
+    z-index: 1;
+    background-color: #b8dcff;
+}

@@ -1,0 +1,73 @@
+function setMapHeight() {
+    var clientHeight = $(window).height();
+    var clientWidth = $(window).width();
+    // 获取导航高度
+    var nav_height = $('#nav-tpl').height();
+
+    var map_container = $('.aggregation-content');
+
+    var draw_left_width = $('.aggregation-content .draw-left');
+    var square_width = $('.aggregation-content #square').width();
+
+    map_container.css('height', (clientHeight - nav_height)+'px');
+    draw_left_width.css('width', (clientWidth - square_width)+'px');
+}
+setMapHeight();
+// 浏览器高度变化时
+$(window).resize(function () {
+    setMapHeight();
+});
+var pointsData = [];
+var cluster, markers = [];
+var map = new AMap.Map("KNNMap", {
+    resizeEnable: true,
+    center: [105, 34],
+    zoom: 8
+});
+function getPointData(areas, types) {
+    // 构造请求参数，在每一项上加单引号
+    var params = {
+        baseDistrict: areas === "'全部'"? areas : areas.map(function (item) {
+            return "\'" + item + "\'"
+        }).join(','),
+        baseClassification: types === "'全部'"? types : types.map(function (item) {
+            return "\'" + item + "\'"
+        }).join(',')
+    };
+    $.ajax({
+        type: 'post',
+        url: '/getFilterData',
+        dataType: 'json',
+        data: params,
+        success: function (res) {
+            console.log('文地点res==============',res);
+            pointsData = res;
+            for (var i = 0; i < pointsData.length; i++) {
+                if (pointsData[i].basePoint !== null){
+                    console.log('basePoint=====', [pointsData[i].basePoint.split(',')[0], pointsData[i].basePoint.split(',')[1]])
+                    markers.push(new AMap.Marker({
+                        position: [pointsData[i].basePoint.split(',')[0], pointsData[i].basePoint.split(',')[1]],
+                        content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+                        offset: new AMap.Pixel(-15, -15)
+                    }))
+                    console.log('makers====',markers)
+                }
+            }
+            addCluster();
+        }
+    })
+}
+getPointData("'全部'","'全部'");
+
+
+var count = markers.length;
+
+function addCluster() {
+    if (cluster) {
+        cluster.setMap(null);
+    }
+
+    cluster = new AMap.MarkerClusterer(map, markers, {gridSize: 80});
+}
+
+

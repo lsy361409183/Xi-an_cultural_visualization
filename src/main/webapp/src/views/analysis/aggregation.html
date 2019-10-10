@@ -11,67 +11,66 @@
     <script type="text/javascript" src="../../libs/seajs-css.js"></script>
     <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../libs/ol.js"></script>
-    <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
-    <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
     <script type="text/javascript">seajs.use('../../js/abroad')</script>
 
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="../../css/reset.css" />
     <link rel="stylesheet" href="../../libs/css/ol.css" />
     <link rel="stylesheet" href="../../css/main.css" />
     <link rel="stylesheet" href="../../css/analysis.css" />
-    <title>aggregation</title>
-    <style>
-
-    </style>
+    <link rel="stylesheet" href="../../css/aggregation.css"/>
+    <title>可视化分析</title>
 </head>
 <body>
 <div id="nav-tpl"></div>
-<div id="square">
-    <div class="btn-large" id="but-group" data-toggle="buttons">
-        <label class="btn btn-primary " id="accessiblityJump">
-            <input type="radio" name="options" id="option1" autocomplete="off"> 可达性
-        </label>
-        <label class="btn btn-primary" id="propotionalityJump">
-            <input type="radio" name="options" id="option2" autocomplete="off"> 均衡性
-        </label>
-        <label class="btn btn-primary active" id="aggregationJump">
-            <input type="radio" name="options" id="option3" autocomplete="off"> 聚集性
-        </label>
-        <label class="btn btn-primary" id="landscapeAndWater">
-            <input type="radio" name="options" id="option4" autocomplete="off"> 山水关联性
-        </label>
+<div class="aggregation-content">
+    <div class="draw-left draw-left-one" id="KNNMap">
+        knn
     </div>
-    <div>
+    <div class="draw-left draw-left-two">
+        kde
+    </div>
+    <div id="square">
+        <div class="btn-large" id="but-group" data-toggle="buttons">
+            <label class="btn btn-primary " id="accessiblityJump">
+                <input type="radio" name="options" id="option1" autocomplete="off"> 可达性
+            </label>
+            <label class="btn btn-primary" id="propotionalityJump">
+                <input type="radio" name="options" id="option2" autocomplete="off"> 均衡性
+            </label>
+            <label class="btn btn-primary active" id="aggregationJump">
+                <input type="radio" name="options" id="option3" autocomplete="off"> 聚集性
+            </label>
+            <label class="btn btn-primary" id="landscapeAndWater">
+                <input type="radio" name="options" id="option4" autocomplete="off"> 山水关联性
+            </label>
+        </div>
+        <div>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" id="KNN-btn" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">最近邻指数分析</a></li>
+                <li role="presentation" id="KDE-btn"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">核密度法分析</a></li>
+            </ul>
 
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">最近邻指数分析</a></li>
-            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">核密度法分析</a></li>
-
-
-        </ul>
-
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="home">
-
-                <p id="aggregationText01">聚集性分析</p>
-                <textarea id="aggregationText02" readonly></textarea>
-
-            </div>
-            <div role="tabpanel" class="tab-pane" id="profile">
-
-                <p id="aggregationText03">核密度分析</p>
-                <textarea id="aggregationText04" readonly></textarea>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <p id="aggregationText01">聚集性分析</p>
+                    <textarea id="aggregationText02" readonly></textarea>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="profile">
+                    <p id="aggregationText03">核密度分析</p>
+                    <textarea id="aggregationText04" readonly></textarea>
+                </div>
             </div>
 
         </div>
-
     </div>
 </div>
 
-<script language="JavaScript">
+
+<script>
 
     var accessiblityJump = document.getElementById("accessiblityJump");
     accessiblityJump.onclick = function () {
@@ -93,6 +92,26 @@
         window.location.href='landscapeAndWater.html';
     };
 
+    var knnBtn = $('#KNN-btn'),
+        kdeBtn = $('#KDE-btn');
+    knnBtn.bind('click', function () {
+        var knnContent = $('.draw-left-one'),
+            kdeContent = $('.draw-left-two');
+        knnContent.css('z-index', 2);
+        kdeContent.css('z-index', 1);
+        console.log('KNN=========')
+    });
+    kdeBtn.bind('click', function () {
+        console.log('KDE=========')
+        var knnContent = $('.draw-left-one'),
+            kdeContent = $('.draw-left-two');
+        knnContent.css('z-index', 1);
+        kdeContent.css('z-index', 2);
+    })
+
 </script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=2f80880dccbc4291d4c02e7964c81ed5&plugin=AMap.MarkerClusterer"></script>
+<script type="text/javascript" src="../../js/chinaPoint.js"></script>
+<script src="../../js/aggregation.js"></script>
 </body>
 </html>
