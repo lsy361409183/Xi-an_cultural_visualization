@@ -21,9 +21,28 @@ var pointsData = [];
 var cluster, markers = [];
 var map = new AMap.Map("KNNMap", {
     resizeEnable: true,
-    center: [105, 34],
-    zoom: 8
+    center: [108.948204,34.275512],
+    zoom: 11,
+    zoomEnable:false
 });
+var geojson = new AMap.GeoJSON({
+    geoJSON: xianJson,
+    // 还可以自定义getMarker和getPolyline
+    getPolygon: function(geojson, lnglats) {
+        // 计算面积
+        var area = AMap.GeometryUtil.ringArea(lnglats[0])
+
+        return new AMap.Polygon({
+            path: lnglats,
+            fillOpacity: 1 - Math.sqrt(area / 8000000000),// 面积越大透明度越高
+            strokeColor: 'white',
+            fillColor: 'rgba(145,199,174, .4)'
+        });
+    }
+});
+
+geojson.setMap(map);
+
 function getPointData(areas, types) {
     // 构造请求参数，在每一项上加单引号
     var params = {
@@ -59,15 +78,40 @@ function getPointData(areas, types) {
 }
 getPointData("'全部'","'全部'");
 
-
-var count = markers.length;
-
+var _renderClusterMarker = function (context) {
+    var count = markers.length;
+    var factor = Math.pow(context.count / count, 1 / 18);
+    console.log('factor======', factor);
+    var div = document.createElement('div');
+    var Hue = 360 - (factor * 240);
+    var bgColor = 'hsla(' + Hue + ',100%,50%,0.7)';
+    var fontColor = 'hsla(' + Hue + ',100%,20%,1)';
+    var borderColor = 'hsla(' + Hue + ',100%,40%,1)';
+    var shadowColor = 'hsla(' + Hue + ',100%,50%,1)';
+    div.style.backgroundColor = bgColor;
+    var size = Math.round(30 + Math.pow(context.count / count, 1 / 5) * 60);
+    div.style.width = div.style.height = size + 'px';
+    div.style.border = 'solid 1px ' + borderColor;
+    div.style.borderRadius = size / 2 + 'px';
+    div.style.boxShadow = '0 0 1px ' + shadowColor;
+    div.innerHTML = context.count;
+    div.style.lineHeight = size + 'px';
+    div.style.color = fontColor;
+    div.style.fontSize = '14px';
+    div.style.textAlign = 'center';
+    context.marker.setOffset(new AMap.Pixel(-size / 2, -size / 2));
+    context.marker.setContent(div)
+};
 function addCluster() {
     if (cluster) {
         cluster.setMap(null);
     }
 
-    cluster = new AMap.MarkerClusterer(map, markers, {gridSize: 80});
+    // cluster = new AMap.MarkerClusterer(map, markers, {gridSize: 80});
+    cluster = new AMap.MarkerClusterer(map, markers, {
+        gridSize: 80,
+        renderClusterMarker: _renderClusterMarker
+    });
 }
 
 

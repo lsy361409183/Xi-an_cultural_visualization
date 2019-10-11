@@ -216,25 +216,37 @@ define(function(require, exports, module){
         // 把图层加载到地图容器中
         map.addLayer(vectorLayer);
     }
+
+    var xianJsonStyle = new ol.style.Style({
+        fill: new ol.style.Fill({               //填充样式
+            color: 'rgba(255,255,255, 0.5)'
+        }),
+        stroke: new ol.style.Stroke({           //线样式
+            color: 'rgba(145,199,174)',
+            width: 2
+        }),
+        image: new ol.style.Circle({            //点样式
+            radius: 7,
+            fill: new ol.style.Fill({
+                color: '#ffcc33'
+            })
+        }),
+        text: new ol.style.Text({
+            font: '16px Calibri,sans-serif',
+            fill: new ol.style.Fill({
+                color: '#000'
+            })
+        })
+    });
+
     var xianJsonVectorLayer = new ol.layer.Vector({
         source: new ol.source.Vector({
             features: (new ol.format.GeoJSON()).readFeatures(xianJson)
         }),
-        style: new ol.style.Style({
-            fill: new ol.style.Fill({               //填充样式
-                color: 'rgba(37,124,169, 0.5)'
-            }),
-            stroke: new ol.style.Stroke({           //线样式
-                color: 'rgba(0, 0, 153)',
-                width: 2
-            }),
-            image: new ol.style.Circle({            //点样式
-                radius: 7,
-                fill: new ol.style.Fill({
-                    color: '#ffcc33'
-                })
-            })
-        }),
+        style: function (feature) {
+            xianJsonStyle.getText().setText(feature.get('name'));
+            return xianJsonStyle;
+        },
         zIndex: 1
     });
     map.addLayer(xianJsonVectorLayer);
@@ -507,7 +519,7 @@ define(function(require, exports, module){
     getMapGeoJson(renderMap);
     getPointData("'全部'", "'全部'", renderPoint);
     getAllPointData("'全部'", "'全部'");
-    getCulturalMap(renderCulturalMap);
+    // getCulturalMap(renderCulturalMap);
 
 
 
