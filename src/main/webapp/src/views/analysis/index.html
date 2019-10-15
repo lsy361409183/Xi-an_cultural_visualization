@@ -24,8 +24,18 @@
     </style>
 </head>
 <body>
+<style>
+
+    #accessin{
+        width: 1295px;
+        height: 890px;
+        float:left;
+    }
+</style>
 
 <div id="nav-tpl"></div>
+<div id="accessin"><h1>这里应该要放地图</h1>
+ </div>
 <div id="square">
 <div class="btn-large" id="but-group" data-toggle="buttons">
     <label class="btn btn-primary active" id="accessiblityJump">
@@ -41,7 +51,6 @@
         <input type="radio" name="options" id="option4" autocomplete="off"> 山水关联性
     </label>
 </div>
-
 <!--标签页-->
     <div id="label_page">
 
@@ -62,8 +71,8 @@
                     <button type="button" class="list-group-item">文地4</button>
                     <button type="button" class="list-group-item">文地5</button>
                 </div>
-                <label id="aaa03" >文字解读</label>
-                <div class="well well-lg">...</div>
+                <label id="aaa03" >居住可达性</label>
+                <div class="well well-lg">居住可达性右下侧区域内容</div>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="profile">
@@ -163,5 +172,10 @@ landscapeAndWater.onclick = function () {
 };
 
 </script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.8&key=b6501787ccc03b523cbf986f1872bde5"></script>
+<script type="text/javascript">
+    seajs.use('../../js/index.js')
+</script>
+<script type="text/javascript">seajs.use('../../js/abroad')</script>
 </body>
 </html>
