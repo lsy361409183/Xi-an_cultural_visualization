@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaancultural1.demo.mapper.TrafficMapper">
+
+    <resultMap id="Point" type="com.xiaancultural1.demo.pojo.TrafficData">
+        <result column="base_name"  property="baseName"/>
+        <result column="base_point"  property="basePoint"/>
+        <result column="base_longitude"  property="baseLongitude"/>
+        <result column="base_latitude"  property="baseLatitude"/>
+    </resultMap>
+
+
+    <!--查询出所有的文地的经纬度点-->
+    <select id="selectPoint" resultMap="Point">
+                select base_name,base_point,base_longitude,base_latitude from public."tb_base_data"
+    </select>
+
+</mapper>

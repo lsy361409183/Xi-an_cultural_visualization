@@ -88,12 +88,12 @@
             <!--<version>1.2.4.RELEASE</version>-->
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>net.sf.json-lib</groupId>-->
-            <!--<artifactId>json-lib</artifactId>-->
-            <!--<classifier>jdk15</classifier>-->
-            <!--<version>2.4</version>-->
-        <!--</dependency>-->
+        <dependency>
+        <groupId>net.sf.json-lib</groupId>
+        <artifactId>json-lib</artifactId>
+        <classifier>jdk15</classifier>
+        <version>2.4</version>
+        </dependency>
         <!--添加依赖结束-->
     </dependencies>
 
