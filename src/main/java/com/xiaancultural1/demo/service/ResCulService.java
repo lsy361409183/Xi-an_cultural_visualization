@@ -141,6 +141,7 @@ public class ResCulService {
                     AFcount = AFcount + weights1;
                 }
             }
+            AFcount=AFcount*100000000;
             //新的居民区对象里添加对应的属性
             ResAreaAfter.setJmAF(AFcount);
             System.out.println(ResAreaAfter.getJmAF()+"这是第"+i+"个小区的可达性");
