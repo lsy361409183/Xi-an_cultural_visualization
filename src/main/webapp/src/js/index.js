@@ -19,7 +19,7 @@ define(function (require, exports, module) {
                         map.plugin(["AMap.Heatmap"], function () {
                             //初始化heatmap对象
                             heatmap = new AMap.Heatmap(map, {
-                                radius: 80, //给定半径
+                                radius: 100, //给定半径
                                 opacity: [0, 0.8],
                                 gradient:{
                                     0.5: 'rgb(131,171,155)',
