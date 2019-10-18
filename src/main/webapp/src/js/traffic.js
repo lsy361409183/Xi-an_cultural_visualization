@@ -1,11 +1,67 @@
 define(function(require, exports, module) {
 
     var map = new AMap.Map('wrapper', {
-        zoom: 12,//缩放级别
+        zoom: 11,//缩放级别
         resizeEnable: true,
         center: [108.948273, 34.275896]
     });
-//获取数据
+    var map2 = new AMap.Map('wrapper2', {
+        zoom: 11,//缩放级别
+        resizeEnable: true,
+        center: [108.948273, 34.275896]
+    });
+    var map3 = new AMap.Map('wrapper3', {
+        zoom: 11,//缩放级别
+        resizeEnable: true,
+        center: [108.948273, 34.275896]
+    });
+    var map4 = new AMap.Map('wrapper4', {
+        zoom: 11,//缩放级别
+        resizeEnable: true,
+        center: [108.948273, 34.275896]
+    });
+
+    setMapHeight();
+    //设置地图边框大小
+    //监听浏览器宽度的改变
+    window.onresize = function(){
+        setMapHeight();
+    };
+    function setMapHeight(){
+        //地图容器
+        var map_container =$('#map_container');
+        var clientWidth = $(window).width();
+        var clientHeight = $(window).height();
+        var s_height = $('#square').height();
+        var s_width = $('#square').width();
+        // 获取导航高度
+        var nav_height = $('#nav-tpl').height();
+        map_container.css('height',(clientHeight-nav_height)+'px');
+        map_container.css('width',(clientWidth-s_width)+'px');
+        //第一张图
+        var map = $('#wrapper');
+        var map_container_height =$('#map_container').height();
+        var map_container_width =$('#map_container').width();
+        map.css('width',(map_container_width-20)/2+'px');
+        map.css('height',(map_container_height/2)+'px');
+
+        //第二张图
+        var map2=$('#wrapper2');
+        map2.css('width',(map_container_width-20)/2+'px');
+        map2.css('height', (map_container_height/2)+'px');
+        //第三张图
+        var map3=$('#wrapper3');
+        map3.css('width',(map_container_width-20)/2+'px');
+        map3.css('height', (map_container_height/2-20)+'px');
+        //第四张图
+        var map4=$('#wrapper4');
+        map4.css('width',(map_container_width-20)/2+'px');
+        map4.css('height', (map_container_height/2-20)+'px');
+
+    }
+
+
+//获取西安站的数据
     $.ajax({
         type: 'post',
         url: '/getTrafficData',
@@ -46,7 +102,7 @@ define(function(require, exports, module) {
             map.plugin(["AMap.Heatmap"], function() {
                 //初始化heatmap对象
                 heatmap = new AMap.Heatmap(map, {
-                    radius: 100, //给定半径(热力图显示的圆点的半径)
+                    radius: 50, //给定半径(热力图显示的圆点的半径)
                     opacity: [0, 0.8],
                     /*,gradient:{
                      0.5: 'blue',

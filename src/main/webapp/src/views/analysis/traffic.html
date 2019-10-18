@@ -23,16 +23,30 @@
 <body>
         <!--地图设置宽和高-->
         <style>
+            #map_container{
+                float: left;
+            }
             #wrapper{
-                width: 1295px;
-                height: 890px;
+                /*width: 630px;*/
+                /*height: 440px;*/
                 float:left;
             }
-            /*西安站 西安南站 机场*/
-            /*.btn-group{*/
-                /*padding-left: 150px;*/
-                /*padding-top: 20px;*/
-            /*}*/
+            #wrapper2{
+                /*width: 630px;*/
+                /*height: 440px;*/
+                float: left;
+                margin-left: 20px;
+            }
+            #wrapper3{
+                float: left;
+                margin-top: 20px;
+            }
+            #wrapper4{
+                float: left;
+                margin-top: 20px;
+                margin-left: 20px;
+            }
+
 
         </style>
 
@@ -40,8 +54,17 @@
         <div id="nav-tpl">
         </div>
         <!--新建一个地图容器-->
-      <div id="wrapper"></div>
+        <div id="map_container">
+            <div id="wrapper"></div>
 
+            <div id="wrapper2"></div>
+
+            <div id="wrapper3"></div>
+
+            <div id="wrapper4"></div>
+
+        </div>
+        <!--右边的矩形框-->
       <div id="square">
     <div class="btn-large" id="but-group" data-toggle="buttons">
         <label class="btn btn-primary active" id="accessiblityJump">

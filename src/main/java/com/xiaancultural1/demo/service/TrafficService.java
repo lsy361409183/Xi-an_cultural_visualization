@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static com.xiaancultural1.demo.controller.GetDistance.getDistance;
 
@@ -27,7 +28,20 @@ public class TrafficService {
                         dis = null;
                        // System.out.println("point为空");
                     } else {
-                        String key = "c81d5b57fe288af2c84e71a76ddd9340";
+                        String[] k={"b1c8c31729c23c2712acb0017eb915f6",
+                        "10ac57c56404c6713bc970dc8b1192ca",
+                        "57f8d8f793af2a1c5969aa4ea0160682",
+                        "a6cf1b9378362a5e98a01dbd0dea44ab",
+                        "595119ffba7b522251c3b003fd8a9670",
+                        "1d54973156f6caa2a557dc5d6cdbea4c",
+                        "98d7b2968923dcf4a0222fb07c1cdf67",
+                        "ab26aae06df35bc076a928d722de40f8",
+                        "c81d5b57fe288af2c84e71a76ddd9340",
+                        "91ab4abc30069c37dc209791dd1ac224"};
+                        // 返回一个0~(指定数-1)之间的随机值
+                        Random random = new Random();
+                        int ran = random.nextInt(7);
+                        String key = k[ran];
                         String startLonLat = "108.961711,34.277604";
                         String endLonLat = point;
                        // System.out.println(startLonLat);
