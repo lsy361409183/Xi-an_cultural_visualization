@@ -11,14 +11,451 @@
     <script type="text/javascript" src="../../libs/seajs-css.js"></script>
     <script type="text/javascript" src="../../libs/jquery.js"></script>
     <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../libs/echarts.js"></script>
+    <script type="text/javascript" src="../../js/china.js"></script>
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/reset.css" />
     <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/secondhtml.css">
 </head>
 <body>
 <div id="nav-tpl"></div>
+<div class="wrapper">
+    <div class="container-fluid">
+        <div class="row fill-h">
+            <div class="col-lg-3 fill-h">
+                <div class="xpanel-wrapper xpanel-wrapper-2">
+                    <div class="xpanel">
+                        <!-- 左上 -->
+                        <div class="fill-h" id="pic1"></div>
+                    </div>
+                </div>
+                <div class="xpanel-wrapper xpanel-wrapper-2">
+                    <div class="xpanel">
+                        <!-- 左下 -->
+                        <div class="fill-h" id="pic2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 fill-h">
+                <div class="xpanel-wrapper xpanel-wrapper-1">
+                    <div class="xpanel">
+                        <!-- 中间 -->
+<!--                        <div class="fill-h" id="pic3"></div>-->
+<!--                        <div class="button-group">-->
+<!--                            <input id="up-btn" type="button" class="button" value="返回上一级" style="float: right"/>-->
+<!--                        </div>-->
+                        <div class="map_tips">
+                            <div v-cloak class="map_tips_city"></div>
+                            <div class="map_tips_group">
+<!--                                <div class="map_tips_lol">英雄联盟玩家：856321人</div>-->
+<!--                                <div class="map_tips_king">王者荣耀玩家：725654人</div>-->
+<!--                                <div class="map_tips_cf">穿越火线玩家：254268人</div>-->
+<!--                                <div class="map_tips_car">QQ飞车玩家：125436人</div>-->
+                            </div>
+                        </div>
+                        <div id="pic3"></div>
+                        <div class="back">返回</div>
+                        <div class="input-card" style="display: none">
+                            <h4>下属行政区查询</h4>
+                            <div class="input-item">
+                                <div class="input-item-prepend"><span class="input-item-text">省市区</span></div>
+                                <select id='province' style="width:100px"></select>
+                            </div>
+                            <div class="input-item">
+                                <div class="input-item-prepend"><span class="input-item-text">地级市</span></div>
+                                <select id='city' style="width:100px"></select>
+                            </div>
+                            <div class="input-item">
+                                <div class="input-item-prepend"><span class="input-item-text">区县</span></div>
+                                <select id='district' style="width:100px"></select>
+                            </div>
+                            <div class="input-item-" style='display: none;'>
+                                <div class="input-item-prepend"><span class="input-item-text" >街道</span></div>
+                                <select id='street' style="width:100px" onchange='setCenter(this)'></select>
+                            </div>
+                            <p>请选择文件命名方式</p>
+                            <div class="radio">
+                                <input type="radio" value="name" name="nameType">地域名称
+                                <input type="radio" value="code" checked name="nameType">地域行政编码
+                            </div>
+                            <div class="input-item download" @click="download">下载geoJson数据</div>
+                        </div><div class="map_tips">
+                        <div v-cloak class="map_tips_city"></div>
+
+
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-lg-3 fill-h">
+                <div class="xpanel-wrapper xpanel-wrapper-3">
+                    <div class="xpanel">
+                        <!-- 右上 -->
+                        <div class="fill-h" id="pic4"></div>
+                    </div>
+                </div>
+                <div class="xpanel-wrapper xpanel-wrapper-3">
+                    <div class="xpanel">
+                        <!-- 右下 -->
+                        <div class="fill-h" id="pic5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 </body>
+<script type="text/javascript" src="../../libs/vue.js"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=4c4050aecc55468f218b12408fecc9cb"></script>
+<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+<script type="text/javascript">
+    /**
+     自定义tooltips
+     边界数据的实时获取与应用，省市区县多级联动【附最新geoJson文件下载】
+     边界数据可以实时获取，也可以结合geojson本地文件加载
+
+     geojson文件下载地址：https://hxkj.vip/demo/echartsMap/
+
+     项目GitHub地址（欢迎star）：https://github.com/TangSY/echarts-map-demo
+
+     作者：TSY
+     作者个人空间（欢迎闲逛）：https://hxkj.vip
+     **/
+    var url = "";
+
+    // $($('#chart-panel').children("div").get(0)).css({
+    //     position: 'absolute',
+    //     'z-index': '8'
+    // })
+
+    var map, district, polygons = [],
+        mapData = [],
+        cityCode = 100000,
+        cityName = '中国',
+        areaCode = 10000,
+        geoJsonData = '';
+    // var provinceSelect = document.getElementById('province');
+    // var citySelect = document.getElementById('city');
+    // var districtSelect = document.getElementById('district');
+    // var areaSelect = document.getElementById('street');
+    var areaData = {};
+    var deepTree = [{mapData: mapData,code: 610100}];
+
+
+    $('.back').click(function(){
+        console.log(deepTree)
+        if(deepTree.length>1) {
+            mapData = deepTree[deepTree.length - 1].mapData
+            deepTree.pop();
+            console.log(deepTree[deepTree.length - 1])
+            console.log(deepTree[deepTree.length - 1],'back')
+            loadMapData(deepTree[deepTree.length - 1].code)
+        }
+    })
+
+    map = new AMap.Map('pic3', {
+        resizeEnable: true,
+        center: [116.30946, 39.937629],
+        zoom: 3,
+    });
+    AMap.plugin('AMap.DistrictSearch',function(){//异步加载插件
+        var districtSearch = new AMap.DistrictSearch();
+        map.addControl(districtSearch);
+    });
+    //行政区划查询
+    var opts = {
+        subdistrict: 1, //返回下一级行政区
+        showbiz: false //最后一级返回街道信息
+    };
+    district = new AMap.DistrictSearch(opts); //注意：需要使用插件同步下发功能才能这样直接使用
+    district.search('西安市', function(status, result) {
+        if (status == 'complete') {
+            getData(result.districtList[0], '', 610100);
+        }
+    });
+
+    function echartsMapClick(params) { //地图点击事件
+        if (!params.data || params.data.level == 'street') return;
+        cityName = params.data.name;
+        cityCode = params.data.cityCode;
+        district.setLevel(params.data.level); //行政区级别
+        district.setExtensions('all');
+        //行政区查询
+        //按照adcode进行查询可以保证数据返回的唯一性
+        district.search(params.data.cityCode, function (status, result) {
+            if (status === 'complete') {
+                deepTree.push({mapData: mapData,code: params.data.cityCode});
+                getData(result.districtList[0], params.data.level, params.data.cityCode);
+            }
+        });
+        setSearchOption(params.data, params.data.level, params.data.cityCode);
+
+    };
+
+    function loadMapData(areaCode) {
+        console.log(areaCode,'loadCode'),
+        AMapUI.loadUI(['geo/DistrictExplorer'],function (DistrictExplorer) {
+            //创建一个实例
+            var districtExplorer = window.districtExplorer = new DistrictExplorer({
+                eventSupport: true, //打开事件支持
+                map: map
+            });
+            //动态的获取城市的mapJson数据
+            districtExplorer.loadAreaNode(areaCode,function (error, areaNode) {
+                if (error) {
+                    console.error(error);
+                    return;
+                }
+                var mapJson = {};
+                // areaNode对象执行这个方法返回的geoJSON中的features。区县级以及部分没有子级的区划（比如台湾，东莞等）不在该列表中，也没有对应的AreaNode，它们的数据存在于其父级对应的AreaNode中。
+                // 比如东莞的数据可以通过加载广东省的AreaNode，然后调用 getSubFeatureByAdcode 获取
+                mapJson.features = areaNode.getSubFeatures();
+                console.log(cityName,mapJson,'loadmap')
+                loadMap(cityName, mapJson);
+                geoJsonData = mapJson;
+            })
+        });
+    };
+    var myChart = echarts.init(document.getElementById('pic3'));
+    function loadMap(mapName, data) {
+        if (data) {
+            echarts.registerMap(mapName, data);
+            var option = {
+                title:{
+                    x:'40%',
+                    Y:'30%',
+                    text: '西安文地分布',
+                    textStyle:{
+                        color:'#1e90ff'
+                    },
+                },
+                // backgroundColor: 'rgba(0,0,0,0)',
+                visualMap: {
+                    type: 'piecewise',
+                    pieces: [{
+                        max: 1,
+                        label:'没数据',
+                        color:'#83c2ff',
+                            // '#fffb74'
+                    },
+                        {
+                            min: 1,
+                            max: 99,
+                            label:'文地面积<100万顷',
+                            color:'#56acff'
+                                // '#ffe475'
+                        },
+                        {
+                            min: 100,
+                            max: 999,
+                            label:'文地面积<1000万顷',
+                            color: '#1e90ff'
+                                // '#ffda42'
+                        },
+                        {
+                            min: 1000,
+                            max: 4999,
+                            label:'文地面积<5000万顷',
+                            color: '#4169E1'
+                        },
+                        {
+                            min: 4000,
+                            max: 9999,
+                            label:'文地面积<10000万顷',
+                            color:'#0000FF'
+                                // '#ffa303'
+                        },
+                        {
+                            min: 10000,
+                            label:'文地面积>10000万顷',
+                            color: '#00008B'
+                                // '#ff6903'
+                        },
+                    ],
+                    // color: '#fff',
+                    textStyle: {
+                        color: '#1352b5',
+                    },
+                    visibility: 'off'
+                },
+                series: [{
+                    name: '数据名称',
+                    type: 'map',
+                    roam: false,
+                    mapType: mapName,
+                    selectedMode: 'single',
+                    showLegendSymbol: false,
+                    visibility: 'off',
+                    itemStyle: {
+                        normal: {
+                            color: '#7ba3bb',
+                            areaColor: '#fff',
+                            borderColor: '#fff',
+                            borderWidth: 0.5,
+                            label: {
+                                show: true,
+                                textStyle: {
+                                    color: "#fff"
+                                }
+                            }
+                        },
+                        emphasis: {
+                            areaColor: '#1e90ff',
+                            borderColor: '#fff',
+                            areaStyle: {
+                                color: '#fff'
+                            },
+                            label: {
+                                show: true,
+                                textStyle: {
+                                    color: "rgb(249, 249, 249)"
+                                }
+                            }
+                        }
+                    },
+                    data:
+                    // mapData,
+                    [
+                        {name: "阎良区", value: 0, cityCode: "610114", level: "district"},
+                        {name: "临潼区", value: 0, cityCode: "610115", level: "district"},
+                        {name: "鄠邑区", value: 0, cityCode: "610118", level: "district"},
+                        {name: "高陵区", value: 0, cityCode: "610117", level: "district"},
+                        {name: "蓝田县", value: 0, cityCode: "610122", level: "district"},
+                        {name: "长安区", value: 0, cityCode: "610116", level: "district"},
+                        {name: "未央区", value: 350774.93, cityCode: "610112", level: "district"},
+                        {name: "莲湖区", value: 36.41, cityCode: "610104", level: "district"},
+                        {name: "周至县", value: 0, cityCode: "610124", level: "district"},
+                        {name: "灞桥区", value: 2087.91, cityCode: "610111", level: "district"},
+                        {name: "新城区", value: 371.10, cityCode: "610102", level: "district"},
+                        {name: "碑林区", value: 84.11, cityCode: "610103", level: "district"},
+                        {name: "雁塔区", value: 518.56, cityCode: "610113", level: "district"},
+                    ],
+                }]
+            };
+            myChart.setOption(option);
+            console.log(option)
+        }
+    };
+    myChart.on('click', echartsMapClick);
+    var lastCode = '';
+    myChart.on('mousemove', function(params) {
+        var city = params.data.name;
+        var city = city.substring(0, 2);
+        lastCode = params.data.cityCode
+        var layerX = params.event.offsetX;
+        var layerY = params.event.offsetY;
+        var heightAdd = 80;
+    });
+
+    myChart.on('mouseout', function(params) {
+    });
+
+    function getData(data, level, adcode) {
+        var bounds = data.boundaries;
+        if (bounds) {
+            for (var i = 0, l = bounds.length; i < l; i++) {
+                var polygon = new AMap.Polygon({
+                    map: map,
+                    strokeWeight: 1,
+                    strokeColor: '#0091ea',
+                    fillColor: '#80d8ff',
+                    fillOpacity: 0.2,
+                    path: bounds[i]
+                });
+                polygons.push(polygon);
+            }
+            map.setFitView(); //地图自适应
+        }
+
+        setSearchOption(data, level, adcode);
+
+    }
+
+    function setSearchOption(data, level, adcode) {
+        //清空下一级别的下拉列表
+        // if (level === 'province') {
+        //     citySelect.innerHTML = '';
+        //     districtSelect.innerHTML = '';
+        // } else if (level === 'city') {
+        //     districtSelect.innerHTML = '';
+        // }
+
+        var subList = data.districtList;
+        if (subList) {
+            var contentSub = new Option('--请选择--');
+            var curlevel = subList[0].level;
+            if (curlevel === 'street') {
+                var mapJsonList = geoJsonData.features;
+                var mapJson = {};
+                for (var i in mapJsonList) {
+                    if (mapJsonList[i].properties.name == cityName) {
+                        mapJson.features = [].concat(mapJsonList[i]);
+                    }
+                }
+                mapData = [];
+                mapData.push({
+                    name: cityName,
+                    value: Math.random() * 100,
+                    level: curlevel
+                });
+                loadMap(cityName, mapJson);
+                geoJsonData = mapJson;
+                return;
+            }
+            var curList = document.querySelector('#' + curlevel);
+            curList.add(contentSub);
+            mapData = [];
+            for (var i = 0, l = subList.length; i < l; i++) {
+                var name = subList[i].name;
+                var citycode = subList[i].adcode;
+                mapData.push({
+                    name: name,
+                    value: Math.random() * 100,
+                    cityCode: citycode,
+                    level: curlevel
+                });
+                var levelSub = subList[i].level;
+                contentSub = new Option(name);
+                contentSub.setAttribute("value", levelSub);
+                contentSub.setAttribute("text", name);
+                contentSub.center = subList[i].center;
+                contentSub.adcode = subList[i].adcode;
+                curList.add(contentSub);
+            }
+            loadMapData(adcode);
+            areaData[curlevel] = curList;
+        }
+    }
+
+    function search(obj) {
+        console.log('111')
+        //清除地图上所有覆盖物
+        for (var i = 0, l = polygons.length; i < l; i++) {
+            polygons[i].setMap(null);
+        }
+        var option = obj[obj.options.selectedIndex];
+        var keyword = option.text; //关键字
+        var adcode = option.adcode;
+        cityName = keyword;
+        cityCode = adcode;
+        district.setLevel(option.value); //行政区级别
+        district.setExtensions('all');
+        //行政区查询
+        //按照adcode进行查询可以保证数据返回的唯一性
+        district.search(adcode, function(status, result) {
+            if (status === 'complete') {
+                deepTree.push({mapData: mapData,code:adcode});
+                getData(result.districtList[0], obj.id, adcode);
+            }
+        });
+    }
+
+    function setCenter(obj) {
+        map.setCenter(obj[obj.options.selectedIndex].center)
+    }
+</script>
 <script type="text/javascript">
     seajs.use('../../js/largescreen2nd.js')
 </script>
