@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="../../css/reset.css" />
     <link rel="stylesheet" href="../../libs/css/ol.css" />
     <link rel="stylesheet" href="../../css/main.css" />
-    <link rel="stylesheet" href="../../css/analysis.css" />
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
 
     <title>可视化分析</title>
     <style>
@@ -27,14 +27,14 @@
 <style>
 
     #accessin{
-        width: 1295px;
+        width: 1280px;
         height: 890px;
         float:left;
     }
 </style>
 
 <div id="nav-tpl"></div>
-<div id="accessin"><h1>这里应该要放地图</h1>
+<div id="accessin">
  </div>
 <div id="square">
 <div class="btn-large" id="but-group" data-toggle="buttons">
@@ -172,7 +172,11 @@ landscapeAndWater.onclick = function () {
 };
 
 </script>
-<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.8&key=b6501787ccc03b523cbf986f1872bde5"></script>
+<script type="text/javascript" src="//webapi.amap.com/maps?v=1.4.15&key=b6501787ccc03b523cbf986f1872bde5"></script>
+<script type="text/javascript" src="//webapi.amap.com/loca?v=1.3.0&key=b6501787ccc03b523cbf986f1872bde5"></script>
+<!--<script src="../../js/heatmapData.js"></script>-->
+<script src="//webapi.amap.com/maps?v=1.4.15&key=b6501787ccc03b523cbf986f1872bde5"></script>
+<!--<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.8&key=b6501787ccc03b523cbf986f1872bde5"></script>-->
 <script type="text/javascript">
     seajs.use('../../js/index.js')
 </script>
