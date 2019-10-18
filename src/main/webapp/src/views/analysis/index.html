@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="../../css/reset.css" />
     <link rel="stylesheet" href="../../libs/css/ol.css" />
     <link rel="stylesheet" href="../../css/main.css" />
-    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
+    <link rel="stylesheet" href="../../css/analysis.css" />
+<!--    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>-->
 
     <title>可视化分析</title>
     <style>
@@ -25,21 +26,19 @@
 </head>
 <body>
 <style>
-
     #accessin{
-        width: 1280px;
+        width: 1295px;
         height: 890px;
         float:left;
     }
 </style>
 
 <div id="nav-tpl"></div>
-<div id="accessin">
- </div>
+<div id="accessin"></div>
 <div id="square">
 <div class="btn-large" id="but-group" data-toggle="buttons">
     <label class="btn btn-primary active" id="accessiblityJump">
-        <input type="radio" name="options" id="option1" autocomplete="off" >可达性
+        <input type="radio" name="options" id="option1" autocomplete="off"  checked>可达性
     </label>
     <label class="btn btn-primary" id="propotionalityJump">
         <input type="radio" name="options" id="option2" autocomplete="off"> 均衡性
