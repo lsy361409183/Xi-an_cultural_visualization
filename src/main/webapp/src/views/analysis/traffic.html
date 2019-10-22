@@ -55,13 +55,25 @@
         </div>
         <!--新建一个地图容器-->
         <div id="map_container">
-            <div id="wrapper"></div>
+            <div style="position: relative" id="wrapper">
+                <div style="position: absolute;z-index: 2;font-size: 20px;font-weight: 800;">西安站文地可达性分布热力图</div>
+            </div>
 
-            <div id="wrapper2"></div>
+            <div id="wrapper2">
+                <div style="position: absolute;z-index: 2;font-size: 20px;font-weight: 800;
+                           margin-left: 15px;">西安南站文地可达性分布热力图</div>
+            </div>
 
-            <div id="wrapper3"></div>
+            <div id="wrapper3">
+                <div style="position: absolute;z-index: 2;font-size: 20px;font-weight: 800;
+                            margin-top: 10px">西安北站文地可达性分布热力图</div>
+            </div>
 
-            <div id="wrapper4"></div>
+            <div id="wrapper4">
+                <div style="position: absolute;z-index: 2;font-size: 20px;font-weight: 800;
+                margin-left: 15px;margin-top: 10px;">咸阳机场文地可达性分布热力图</div>
+            </div>
+
 
         </div>
         <!--右边的矩形框-->
@@ -94,6 +106,7 @@
 
             <!--车站、机场按钮-->
             <div>
+                <button id="drawing" style="margin-left:50px" type="button">点击查看可达性热力分布</button>
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#station" aria-controls="station" role="tab" data-toggle="tab">西安站</a></li>
