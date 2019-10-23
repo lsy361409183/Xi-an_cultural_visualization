@@ -16,7 +16,10 @@
 
 
      $('.back').click(function(){
-
+         Render1(610100)
+         Render2(610100)
+         // Render4(cityCode)
+         Render5(610100)
          if(deepTree.length>1) {
              mapData = deepTree[deepTree.length - 1].mapData
              deepTree.pop();
@@ -57,7 +60,10 @@
          //行政区查询
          //按照adcode进行查询可以保证数据返回的唯一性
          console.log(cityCode)
-
+         Render1(cityCode)
+         Render2(cityCode)
+         // Render4(cityCode)
+         Render5(cityCode)
          district.search(params.data.cityCode, function (status, result) {
              if (status === 'complete') {
                  deepTree.push({mapData: mapData,code: params.data.cityCode});
@@ -69,7 +75,6 @@
      };
 
      function loadMapData(areaCode) {
-         console.log(areaCode,'loadCode'),
              AMapUI.loadUI(['geo/DistrictExplorer'],function (DistrictExplorer) {
                  //创建一个实例
                  var districtExplorer = window.districtExplorer = new DistrictExplorer({
@@ -369,10 +374,7 @@
                      fontSize:30,
                      offsetCenter:[0, '50%']
                  },
-                 data: [{
-                     value: '262371',
-                     name: ''
-                 }]
+                 data: ''
              }, {
                  name: '内圈小',
                  type: 'gauge',
@@ -420,10 +422,7 @@
                      fontSize:30,
                      offsetCenter:[0, '50%']
                  },
-                 data: [{
-                     value: '262371',
-                     name: ''
-                 }]
+                 data: ''
              },
 
          ]
@@ -453,7 +452,13 @@
                 xAxis : [
                     {
                         type : 'category',
-                        data : ['A', 'B', 'C', 'D', 'E', 'F', 'G','H','I','J'],
+                        axisLabel:{
+                            show:true,
+                            interval:0,//『隔一个标签显示一个标签』
+                            rotate:90,
+                          fontSize:10
+                        },
+                        data:'',
                         axisTick: {
                             alignWithLabel: true
                         }
@@ -461,7 +466,7 @@
                 ],
                 yAxis : [
                     {
-                        type : 'value'
+                        type : 'log'
                     }
                 ],
                 series : [
@@ -469,7 +474,7 @@
                         name:'文地面积',
                         type:'bar',
                         barWidth: '60%',
-                        data:['110', '100','90' , '80', '70', '60', '50','40','30','20'],
+                        data:'',
                     }
                 ]
             };
@@ -525,77 +530,74 @@
                      }
                  },
                  data:''
-                 //     [
-                 //     {value:335, name:'未央区'},
-                 //     {value:310, name:'莲湖区'},
-                 //     {value:234, name:'灞桥区'},
-                 //     {value:135, name:'新城区'},
-                 //     {value:1548, name:'碑林区'},
-                 //     {value:1548, name:'雁塔区'},
-                 // ]
              }
          ]
      };
-console.log(option4)
      myChart4.setOption(option4);
      var myChart5 = echarts.init(document.getElementById('pic5'));
         //数据是自定义的，嗯，试试数组循环替换，或者换张图
-        var option5 = {
-         title:{
-             text:'不同区域的不同类别的文地面积对比',
-             textStyle:{
-                 color:'#1e90ff'
+    var option5 = {
+         visualMap: {
+             type: 'continuous',
+             min: 0,
+             max: 4000,
+             inRange: {
+                 color: ['#7bc7e7','#6495ED','#1E90FF','#4169E1','#4169E1', '#0000FF','#6A5ACD'],
+             }
+         },
+         series: {
+             type: 'sunburst',
+             data: '',
+             radius: [0, '90%'],
+             label: {
+                 rotate: 'radial',
+                 show:true
              },
-         },
-         legend: {
-             show: true,
-             x:'5%',
-             y:'90%',
-             data: ['一类', '二类', '三类']
-         },
-         color: ['#7bc7e7','#0b61a4','#1f9ad0',],
-         angleAxis: {
-             type: 'category',
-             data: ['未央区', '莲湖区', '灞桥区', '新城区','碑林区','雁塔区'],
-             z: 10
-         },
-         radiusAxis: {
-
-         },
-         polar: {
-             radius:'70%',
-         },
-         series: [{
-             type: 'bar',
-             data: [1, 2, 3, 4, 3, 5, ],
-             coordinateSystem: 'polar',
-             name: '一类',
-             stack: 'a'
-         }, {
-             type: 'bar',
-             data: [2, 4, 6, 1, 3, 2, ],
-             coordinateSystem: 'polar',
-             name: '二类',
-             stack: 'a'
-         }, {
-             type: 'bar',
-             data: [1, 2, 3, 6, 1, 2, ],
-             coordinateSystem: 'polar',
-             name: '三类',
-             stack: 'a'
-         }],
-
+         }
      };
+
      myChart5.setOption(option5);
 
-     function Render(cityCode,type){
-         // var path=cityCode+type
-         $.getJSON("../../json/610112pie.json", function (data){
-         // $.getJSON("../json/path.json", function (data){
+     function Render1(cityCode){
+         var path=cityCode+'1',
+             baseurl='../../json/'
+         $.getJSON(baseurl + path +".json", function (data){
+             var option1 = myChart1.getOption();
+             option1.series[0].data =option1.series[1].data=data.data;
+             myChart1.setOption(option1);
+         })
+     }
+     function Render2(cityCode){
+         var path=cityCode+'2',
+             baseurl='../../json/'
+         $.getJSON(baseurl + path +".json", function (data){
+             var option2 = myChart2.getOption();
+             option2.series[0].data =data.data1;
+             option2.xAxis[0].data=data.data0;
+             console.log(option2)
+             myChart2.setOption(option2);
+         })
+     }
+     function Render4(cityCode){
+         var path=cityCode+'4',
+             baseurl='../../json/'
+         $.getJSON(baseurl + path +".json", function (data){
              var option4 = myChart4.getOption();
              option4.series[0].data =data.data;
              myChart4.setOption(option4);
              })
          }
-    Render(610112,"pie")
+     function Render5(cityCode){
+         var path=cityCode+'5',
+             baseurl='../../json/'
+         $.getJSON(baseurl + path +".json", function (data){
+             var option5 = myChart5.getOption();
+             option5.series[0].data =data.data;
+             myChart5.setOption(option5);
+         })
+     }
+     Render1(610100);
+     Render2(610100);
+     Render4(610100);
+     Render5(610100)
  })
