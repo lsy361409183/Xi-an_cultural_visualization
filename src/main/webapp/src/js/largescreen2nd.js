@@ -88,7 +88,7 @@
                          return;
                      }
                      var mapJson = {};
-                     console.log(areaNode)
+                     // console.log(areaNode)
                      // areaNode对象执行这个方法返回的geoJSON中的features。区县级以及部分没有子级的区划（比如台湾，东莞等）不在该列表中，也没有对应的AreaNode，它们的数据存在于其父级对应的AreaNode中。
                      // 比如东莞的数据可以通过加载广东省的AreaNode，然后调用 getSubFeatureByAdcode 获取
                      mapJson.features = areaNode.getSubFeatures();
@@ -111,7 +111,6 @@
                          color:'#1e90ff'
                      },
                  },
-                 // backgroundColor: 'rgba(0,0,0,0)',
                  visualMap: {
                      type: 'piecewise',
                      pieces: [{
@@ -122,18 +121,18 @@
                      },
                          {
                              min: 1,
-                             max: 99,
+                             max: 999,
                              label:'文地面积<100万顷',
                              color:'#56acff'
                              // '#ffe475'
                          },
-                         {
-                             min: 100,
-                             max: 999,
-                             label:'文地面积<1000万顷',
-                             color: '#1e90ff'
-                             // '#ffda42'
-                         },
+                         // {
+                         //     min: 100,
+                         //     max: 999,
+                         //     label:'文地面积<1000万顷',
+                         //     color: '#1e90ff'
+                         //     // '#ffda42'
+                         // },
                          {
                              min: 1000,
                              max: 4999,
@@ -182,7 +181,7 @@
                              }
                          },
                          emphasis: {
-                             areaColor: '#1e90ff',
+                             areaColor: '#FFD700',
                              borderColor: '#fff',
                              areaStyle: {
                                  color: '#fff'
@@ -190,7 +189,7 @@
                              label: {
                                  show: true,
                                  textStyle: {
-                                     color: "rgb(249, 249, 249)"
+                                     color: "#A9A9A9"
                                  }
                              }
                          }
@@ -348,7 +347,7 @@
                      show:false
                  },
                  radius: '90%',
-                 startAngle: 160,
+                 startAngle: 200,
                  endAngle: -20,
                  splitNumber: 4,
                  axisLine: { // 坐标轴线
@@ -364,20 +363,27 @@
                  },
                  axisLabel: { //刻度标签
                      show: false,
+                     formatter:'{value}处',
                  },
                  axisTick: { //刻度样式
                      show: false,
                  },
                  detail: {
                      // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                     formatter: function(v){
+                         return v.toFixed(0);
+                     },
                      fontWeight: 'bolder',
                      fontSize:30,
                      offsetCenter:[0, '50%']
                  },
                  data: ''
-             }, {
+             },
+             {
                  name: '内圈小',
                  type: 'gauge',
+                 min:10,
+                 max:8500,
                  center: ['50%', '70%'],
                  title : {
                      // 其余属性默认使用全局文本样式，详见TEXTSTYLE
@@ -391,7 +397,7 @@
                  },
                  radius: '90%',
                  startAngle: 200,
-                 endAngle: 50,
+                 endAngle: -20,
                  splitNumber: 4,
                  axisLine: { // 坐标轴线
                      lineStyle: { // 属性lineStyle控制线条样式
@@ -412,12 +418,17 @@
                  },
                  axisLabel: { //刻度标签
                      show: false,
+                     formatter:'{value}处',//控制指针
+
                  },
                  axisTick: { //刻度样式
                      show: false,
                  },
                  detail: {
                      // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                     formatter: function(v){
+                         return v.toFixed(0);
+                     },
                      fontWeight: 'bolder',
                      fontSize:30,
                      offsetCenter:[0, '50%']
@@ -471,7 +482,7 @@
                 ],
                 series : [
                     {
-                        name:'文地面积',
+                        name:'文地面积(万顷)',
                         type:'bar',
                         barWidth: '60%',
                         data:'',
@@ -574,7 +585,6 @@
              var option2 = myChart2.getOption();
              option2.series[0].data =data.data1;
              option2.xAxis[0].data=data.data0;
-             console.log(option2)
              myChart2.setOption(option2);
          })
      }
