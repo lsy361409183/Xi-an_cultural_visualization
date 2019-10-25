@@ -23,16 +23,30 @@
 <body>
         <!--地图设置宽和高-->
         <style>
+            #map_container{
+                float: left;
+            }
             #wrapper{
-                width: 1295px;
-                height: 890px;
+                /*width: 630px;*/
+                /*height: 440px;*/
                 float:left;
             }
-            /*西安站 西安南站 机场*/
-            .btn-group{
-                padding-left: 150px;
-                padding-top: 20px;
+            #wrapper2{
+                /*width: 630px;*/
+                /*height: 440px;*/
+                float: left;
+                margin-left: 20px;
             }
+            #wrapper3{
+                float: left;
+                margin-top: 20px;
+            }
+            #wrapper4{
+                float: left;
+                margin-top: 20px;
+                margin-left: 20px;
+            }
+
 
         </style>
 
@@ -40,8 +54,29 @@
         <div id="nav-tpl">
         </div>
         <!--新建一个地图容器-->
-      <div id="wrapper"></div>
+        <div id="map_container">
+            <div style="position: relative" id="wrapper">
+                <div style="position: absolute;z-index: 2;font-size: 20px;font-weight: 800;">西安站文地可达性分布热力图</div>
+            </div>
 
+            <div id="wrapper2">
+                <div style="position: absolute;z-index: 2;font-size: 20px;font-weight: 800;
+                           margin-left: 15px;">西安南站文地可达性分布热力图</div>
+            </div>
+
+            <div id="wrapper3">
+                <div style="position: absolute;z-index: 2;font-size: 20px;font-weight: 800;
+                            margin-top: 10px">西安北站文地可达性分布热力图</div>
+            </div>
+
+            <div id="wrapper4">
+                <div style="position: absolute;z-index: 2;font-size: 20px;font-weight: 800;
+                margin-left: 15px;margin-top: 10px;">咸阳机场文地可达性分布热力图</div>
+            </div>
+
+
+        </div>
+        <!--右边的矩形框-->
       <div id="square">
     <div class="btn-large" id="but-group" data-toggle="buttons">
         <label class="btn btn-primary active" id="accessiblityJump">
@@ -71,53 +106,70 @@
 
             <!--车站、机场按钮-->
             <div>
+                <button id="drawing" style="margin-left:50px" type="button">点击查看可达性热力分布</button>
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#station" aria-controls="station" role="tab" data-toggle="tab">车站/机场</a></li>
-                    <li role="presentation"><a href="#airport" aria-controls="airport" role="tab" data-toggle="tab">热门酒店</a></li>
+                    <li role="presentation" class="active"><a href="#station" aria-controls="station" role="tab" data-toggle="tab">西安站</a></li>
+                    <li role="presentation"><a href="#sourth" aria-controls="airport" role="tab" data-toggle="tab">西安南站</a></li>
+                    <li role="presentation"><a href="#north" aria-controls="airport" role="tab" data-toggle="tab">西安北站</a></li>
+                    <li role="presentation"><a href="#airport" aria-controls="airport" role="tab" data-toggle="tab">咸阳机场</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <!--点击车站/机场显示的内容-->
+                    <!--点击西安站显示的内容-->
                     <div role="tabpanel" class="tab-pane fade in active" id="station">
                         <!--具体内容-->
-                        <div class="btn-group" data-toggle="buttons" >
-                            <label class="btn btn-primary">
-                                <input id="xian" type="checkbox" autocomplete="off"> 西安站
-                            </label>
-                            <label class="btn btn-primary">
-                                <input id="xian2" type="checkbox" autocomplete="off"> 西安南站
-                            </label>
-                            <label class="btn btn-primary">
-                                <input id="xian3" type="checkbox" autocomplete="off"> 西安北站
-                            </label>
-                            <label class="btn btn-primary">
-                                <input id="xian4" type="checkbox" autocomplete="off"> 咸阳机场
-                            </label>
-                        </div>
-                        <label id="bbb01" >可达性分布最高的五大文地</label>
-                        <div class="list-group" id="bbb02">
+                            <label class="bbb01" >西安站可达性分布最高的五大文地</label>
+                            <div class="list-group" id="bbb02">
+                                <button type="button" class="list-group-item">文地1</button>
+                                <button type="button" class="list-group-item">文地2</button>
+                                <button type="button" class="list-group-item">文地3</button>
+                                <button type="button" class="list-group-item">文地4</button>
+                                <button type="button" class="list-group-item">文地5</button>
+                            </div>
+                            <label id="bbb03" >文字解读</label>
+                            <div class="well well-lg">...</div>
+                    </div>
+                    <!--点击西安南站显示的内容-->
+                    <div role="tabpanel" class="tab-pane" id="sourth">
+                        <!--具体内容-->
+                            <label class="bbb01" >西安南站可达性分布最高的五大文地</label>
+                            <div class="list-group" id="bbb05">
+                                <button type="button" class="list-group-item">文地1</button>
+                                <button type="button" class="list-group-item">文地2</button>
+                                <button type="button" class="list-group-item">文地3</button>
+                                <button type="button" class="list-group-item">文地4</button>
+                                <button type="button" class="list-group-item">文地5</button>
+                            </div>
+                            <label id="bbb06" >文字解读</label>
+                            <div class="well well-lg">...</div>
+                    </div>
+                    <!--点击西安北站显示的内容-->
+                    <div role="tabpanel" class="tab-pane" id="north">
+                        <!--具体内容-->
+                        <label class="bbb01" >西安北站可达性分布最高的五大文地</label>
+                        <div class="list-group" id="bbb08">
                             <button type="button" class="list-group-item">文地1</button>
                             <button type="button" class="list-group-item">文地2</button>
                             <button type="button" class="list-group-item">文地3</button>
                             <button type="button" class="list-group-item">文地4</button>
                             <button type="button" class="list-group-item">文地5</button>
                         </div>
-                        <label id="bbb03" >文字解读</label>
+                        <label id="bbb09" >文字解读</label>
                         <div class="well well-lg">...</div>
                     </div>
-                    <!--点击车站/机场显示的内容-->
+                    <!--点击机场显示的内容-->
                     <div role="tabpanel" class="tab-pane" id="airport">
                         <!--具体内容-->
-                        <label id="bbb04" >可达性分布最高的五大文地</label>
-                        <div class="list-group" id="bbb05">
+                        <label class="bbb01">机场可达性分布最高的五大文地</label>
+                        <div class="list-group" id="bbb11">
                             <button type="button" class="list-group-item">文地1</button>
                             <button type="button" class="list-group-item">文地2</button>
                             <button type="button" class="list-group-item">文地3</button>
                             <button type="button" class="list-group-item">文地4</button>
                             <button type="button" class="list-group-item">文地5</button>
                         </div>
-                        <label id="bbb06" >文字解读</label>
+                        <label id="bbb12" >文字解读</label>
                         <div class="well well-lg">...</div>
                     </div>
                 </div>
