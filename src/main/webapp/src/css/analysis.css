@@ -64,48 +64,63 @@ top: 10%;
     margin-right: 30%;
     margin-top: 5%;
 }
-#ccc01{
-    float: right;
-    margin-right: 70%;
-    margin-top: 5%;
-}
-#ccc02{
-    float: right;
-    margin-right: 70%;
-    margin-top: 5%;
-}
+/*#ccc01{*/
+    /*float: right;*/
+    /*margin-right: 70%;*/
+    /*margin-top: 5%;*/
+/*}*/
+/*#ccc02{*/
+    /*float: right;*/
+    /*margin-right: 70%;*/
+    /*margin-top: 5%;*/
+/*}*/
 /*第一个搜索框*/
-#ddd01{
-     float: right;
-     /*left: 70%;*/
+/*#ddd01{*/
+     /*float: right;*/
+     /*!*left: 70%;*!*/
+/*}*/
+
+/*#form-contro01{*/
+    /*float: right;*/
+    /*margin-right: 120%;*/
+    /*margin-top: -43%;*/
+    /*width: 200px;*/
+
+/*}*/
+/*#search01{*/
+    /*width: 200px;*/
+/*}*/
+/*!*第二个搜索框*!*/
+
+/*#ddd02{*/
+    /*float: right;*/
+    /*!*left: 70%;*!*/
+/*}*/
+
+/*#form-contro02{*/
+    /*float: right;*/
+    /*margin-right: 20%;*/
+    /*margin-top: -18%;*/
+    /*width: 200px;*/
+
+/*}*/
+/*#search02{*/
+    /*width: 200px;*/
+/*}*/
+#input01{
+    float: left;
+    margin-left: 20%;
+    margin-top: 6%;
+    width: 280px;
+
 }
 
-#form-contro01{
-    float: right;
-    margin-right: 120%;
-    margin-top: -43%;
-    width: 200px;
+#input02{
+    float: left;
+    margin-left: 20%;
+    margin-top: 7%;
+    width: 280px;
 
-}
-#search01{
-    width: 200px;
-}
-/*第二个搜索框*/
-
-#ddd02{
-    float: right;
-    /*left: 70%;*/
-}
-
-#form-contro02{
-    float: right;
-    margin-right: 20%;
-    margin-top: -18%;
-    width: 200px;
-
-}
-#search02{
-    width: 200px;
 }
 
 
@@ -113,9 +128,18 @@ top: 10%;
 #landscapeAndWater04{
     float: right;
     margin-right: 20%;
-    margin-top: -10%;
+    margin-top: 15%;
 }
-
+#landscapeAndWater08{
+    float: right;
+    margin-right: 22%;
+    margin-top: 15%;
+}
+#landscapeAndWater09{
+    float: right;
+    margin-right: 24%;
+    margin-top: 15%;
+}
 
 /*三个按钮*/
 /*#landscapeAndWater05{*/
@@ -136,6 +160,12 @@ margin-left: 45%;
 #ccc04{
     float: left;
     margin-top: 8%;
+    width: 500px;
+}
+#ccc05{
+    float: left;
+    margin-top: -5%;
+    margin-left: 13%;
     width: 500px;
 }
 

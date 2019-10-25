@@ -5,6 +5,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=b6501787ccc03b523cbf986f1872bde5&plugin=AMap.Driving&plugin=AMap.Transfer&plugin=AMap.Walking&plugin=AMap.Geocoder"></script>
+    <script src="//webapi.amap.com/loca?v=1.3.2&key=b6501787ccc03b523cbf986f1872bde5"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+
     <script type="text/javascript" src="../../libs/jquery.js"></script>
     <script type="text/javascript" src="../../libs/sea.js" id="seajsnode"></script>
     <script type="text/javascript" src="../../libs/seajs-text.js"></script>
@@ -12,11 +17,45 @@
     <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../libs/ol.js"></script>
     <script type="text/javascript">seajs.use('../../js/abroad')</script>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/reset.css" />
     <link rel="stylesheet" href="../../libs/css/ol.css" />
     <link rel="stylesheet" href="../../css/main.css" />
     <link rel="stylesheet" href="../../css/analysis.css" />
+
+    <style type="text/css">
+
+        #container {
+            position: absolute;
+            width: 53%;
+            height: 800px;
+            top: 50px;
+            left: 0px;
+        }
+    </style>
+    <style type="text/css">
+        #panel{
+            float: left;
+            margin-left: 53%;
+            top: 50px;
+            background-color: white;
+            max-height: 90%;
+            overflow-y: auto;
+            width: 280px;
+        }
+        #panel .amap-call {
+            background-color: #009cf9;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+        #panel .amap-lib-driving {
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            overflow: hidden;
+        }
+    </style>
     <title>交通可达性</title>
 </head>
 <body>
@@ -48,32 +87,34 @@
 
         <div role="tabpanel" class="tab-pane" id="messages">
             <div>
-                <label id="ccc01" >出发地：</label>
-                <label id="ccc02" >目的地：</label>
-                <div class="btn-large" id="but-group02" data-toggle="buttons">
+                <!--<label id="ccc01" >出发地：</label>-->
+                <!--<label id="ccc02" >目的地：</label>-->
 
-                    <label class="btn btn-primary" id="landscapeAndWater04">
-                        <input type="radio" name="options" id="option8" autocomplete="off"> 搜索
-                    </label>
-                </div>
 
-                <div class="row" id="ddd01">
-                    <div class="col-lg-6" id="search01">
-                        <div class="input-group">
-                            <!--<span class="input-group-btn">-->
-                            <!--</span>-->
-                            <input type="text" class="form-control" id="form-contro01" placeholder="Search for...">
-                        </div>
-                    </div>
+                <!--<div class="row" id="ddd01">-->
+                        <!--<div class="input-group" >-->
+                            <!--&lt;!&ndash;<span class="input-group-btn">&ndash;&gt;-->
+                            <!--&lt;!&ndash;</span>&ndash;&gt;-->
+                            <!--<input type="text" class="form-control" id="form-contro01" placeholder="Search for...">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="input-group input-group-lg" id="input01">
+                    <span class="input-group-addon" id="sizing-addon1">出发地：</span>
+                    <input type="text" class="form-control" id="inputwidth01" placeholder="Username" aria-describedby="sizing-addon1">
                 </div>
-                <div class="row" id="ddd02">
-                    <div class="col-lg-6">
-                        <div class="input-group" id="search02">
-                            <!--<span class="input-group-btn">-->
-                            <!--</span>-->
-                            <input type="text" class="form-control" id="form-contro02" placeholder="Search for...">
-                        </div>
-                    </div>
+                <!--<div class="row" id="ddd02">-->
+                    <!--<div class="col-lg-6">-->
+                        <!--<div class="input-group" id="search02">-->
+                            <!--&lt;!&ndash;<span class="input-group-btn">&ndash;&gt;-->
+                            <!--&lt;!&ndash;</span>&ndash;&gt;-->
+                            <!--<input type="text" class="form-control" id="form-contro02" placeholder="Search for...">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="input-group input-group-lg" id="input02">
+                    <span class="input-group-addon" id="sizing-addon2">到达地：</span>
+                    <input type="text" class="form-control" id="inputwidth02" placeholder="Username" aria-describedby="sizing-addon1">
                 </div>
             </div>
 
@@ -81,14 +122,36 @@
 
             <label id="ccc03" >目的选项</label>
 
+
+            <div id="ccc05">
+            <div class="btn-large" id="but-group02" data-toggle="buttons">
+
+                <label class="btn btn-primary" id="landscapeAndWater04" onclick="selectdrive()">
+                    <input type="radio" name="options" id="option8" autocomplete="off"> 驾驶
+                </label>
+            </div>
+            <div class="btn-large" id="but-group03" data-toggle="buttons">
+
+                <label class="btn btn-primary" id="landscapeAndWater08" onclick="selectwalk()">
+                    <input type="radio" name="options" id="option12" autocomplete="off"> 步行
+                </label>
+            </div>
+            <div class="btn-large" id="but-group04" data-toggle="buttons">
+
+                <label class="btn btn-primary" id="landscapeAndWater09" onclick="selectbus()">
+                    <input type="radio" name="options" id="option13" autocomplete="off"> 公交
+                </label>
+            </div>
+            </div>
+
             <div id="ccc04">
-                <label class="btn btn-primary" id="landscapeAndWater05">
-                    <input type="radio" name="options" id="option9" autocomplete="off"> 30公里内
+                <label class="btn btn-primary" id="landscapeAndWater05" onclick="TenKilometers()">
+                    <input type="radio" name="options" id="option9" autocomplete="off"> 10公里内
                 </label>
-                <label class="btn btn-primary" id="landscapeAndWater06">
-                    <input type="radio" name="options" id="option10" autocomplete="off"> 50公里内
+                <label class="btn btn-primary" id="landscapeAndWater06" onclick="ThirtyKilometers()">
+                    <input type="radio" name="options" id="option10" autocomplete="off"> 20公里内
                 </label>
-                <label class="btn btn-primary" id="landscapeAndWater07">
+                <label class="btn btn-primary" id="landscapeAndWater07" onclick="InfiniteKilometers()">
                     <input type="radio" name="options" id="option11" autocomplete="off"> 不限
                 </label>
             </div>
@@ -97,8 +160,185 @@
 
     </div>
 </div>
+
+<div id="container"></div>
+<div id="panel"></div>
+
 </body>
 <script language="JavaScript">
+    //文地点数据传入
+    function load_val2() {
+        // data = null;
+        var result;
+        $.ajax({
+            url:"/getUserDefineData",
+            type : "get",
+            //  dataType : "json",
+            async:false,
+            success: function (data,textStatus) {
+
+                result = data;
+                // re = data.data;
+                // return re;
+                // data = ret.data;
+                // data = data.substring(1,data.length()-1)
+                console.log(typeof data[0].dot);
+// re = re.data;
+
+            }
+
+        });
+        return result;
+    }
+    data = load_val2();
+
+    var tempData = data.filter(function (item) {
+    return item.basePoint !== null
+    });
+
+    var NowData = tempData.map(function (item) {
+        return {
+            name: item.baseName,
+            lnglat: item.basePoint
+        }
+    });
+    console.log('NowData',NowData);
+
+
+    var map = new AMap.Map("container", {
+        resizeEnable: true,
+        center: [108.941803, 34.287857],//地图中心点
+        zoom: 13 //地图显示的缩放级别
+    });
+    var layer = new Loca.PointLayer({
+        eventSupport: true,
+        map: map
+    });
+
+
+    layer.on('mousemove', function(ev) {
+        openInfoWin(map, ev.originalEvent, {
+            '文地名称': ev.rawData.name,
+            '坐标': ev.rawData.lnglat02,
+            '距离': ev.rawData.distance + '米'
+        });
+    });
+
+    layer.on('mouseleave', function (ev) {
+        closeInfoWin();
+    });
+
+    var driving;
+    var walking;
+    var transfer;
+    walking = new AMap.Walking({
+        map: map,
+        panel: "panel"
+    });
+    driving = new AMap.Driving({
+        map: map,
+        panel: "panel"
+    });
+    var transOptions = {
+        map: map,
+        city: '西安市',
+        panel: 'panel',
+        policy: AMap.TransferPolicy.LEAST_TIME //乘车策略
+    };
+    //构造公交换乘类
+    transfer = new AMap.Transfer(transOptions);
+
+    function selectdrive() {
+    var departure = $('#inputwidth01').val();
+    var arrive = $('#inputwidth02').val();
+    console.log(departure);
+    console.log(arrive);
+//构造路线导航类
+
+        // driving.clear();
+        walking.clear();
+        transfer.clear();
+// 根据起终点名称规划驾车导航路线
+         driving = new AMap.Driving({
+            map: map,
+            panel: "panel"
+        });
+    driving.search([
+        {keyword: departure,city:'西安'},
+        {keyword: arrive,city:'西安'}
+    ], function(status, result) {
+        // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
+        if (status === 'complete') {
+            log.success('绘制驾车路线完成')
+        } else {
+            log.error('获取驾车数据失败：' + result)
+        }
+    });
+}
+
+function selectwalk() {
+    var departure = $('#inputwidth01').val();
+    var arrive = $('#inputwidth02').val();
+    console.log(departure);
+    console.log(arrive);
+
+    driving.clear();
+    // walking.clear();
+    transfer.clear();
+    //步行导航
+
+    walking = new AMap.Walking({
+        map: map,
+        panel: "panel"
+    });
+    walking.search([
+        {keyword: departure,city:'西安'},
+        {keyword: arrive,city:'西安'}
+    ], function(status, result) {
+        // result即是对应的步行路线数据信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_WalkingResult
+        if (status === 'complete') {
+            log.success('绘制步行路线完成')
+        } else {
+            log.error('步行路线数据查询失败' + result)
+        }
+    });
+}
+
+function selectbus() {
+    var departure = $('#inputwidth01').val();
+    var arrive = $('#inputwidth02').val();
+    console.log(departure);
+    console.log(arrive);
+
+    driving.clear();
+    walking.clear();
+    // transfer.clear();
+
+    var transOptions = {
+        map: map,
+        city: '西安市',
+        panel: 'panel',
+        policy: AMap.TransferPolicy.LEAST_TIME //乘车策略
+    };
+    //构造公交换乘类
+    transfer = new AMap.Transfer(transOptions);
+    //根据起、终点名称查询公交换乘路线
+    transfer.search([
+        {keyword: departure,city:'西安'},
+        //第一个元素city缺省时取transOptions的city属性
+        {keyword: arrive,city:'西安'}
+        //第二个元素city缺省时取transOptions的cityd属性
+    ], function(status, result) {
+        // result即是对应的公交路线数据信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_TransferResult
+        if (status === 'complete') {
+            log.success('绘制公交路线完成')
+        } else {
+            log.error('公交路线数据查询失败' + result)
+        }
+    });
+
+}
+
 
     var accessiblityJump = document.getElementById("accessiblityJump");
     accessiblityJump.onclick = function () {
@@ -119,6 +359,296 @@
     landscapeAndWater.onclick = function () {
         window.location.href='landscapeAndWater.html';
     };
+
+
+    //10公里 20公里 无限制的文地点
+    //10公里
+    function TenKilometers() {
+        var departure = $('#inputwidth01').val();
+
+        console.log(departure);
+
+        $(function(){
+            $('#inputwidth02').attr('disabled',true);
+        });
+
+        var geocoder = new AMap.Geocoder({
+            city: "029" //城市设为北京，默认：“全国”
+        });
+            // var address = '西安北站';
+            // address  = document.getElementById('address').value;
+            geocoder.getLocation(departure, function(status, result) {
+                if (status === 'complete'&&result.geocodes.length) {
+                    var lnglat = result.geocodes[0].location;
+                    console.log(lnglat);
+                    var position = [lnglat.lng, lnglat.lat];
+                    console.log(position);
+
+                    // 循环计算距离， 添加到data中
+                    var tData= NowData.map(function (item) {
+                        var test = item.lnglat.split(',');
+                        var testEnd =  [Number(test[0]), Number(test[1])];
+                        console.log(test);
+                        var dis = AMap.GeometryUtil.distance(position, testEnd);
+                        return {
+                            name: item.name,
+                            lnglat: testEnd,
+                            lnglat02:item.lnglat,
+                            distance: dis
+                        }
+                    });
+                    console.log("tData===",tData);
+                    var tenKils = tData.filter(function (item) {
+                        return item.distance < 10000
+                    });
+                         console.log(tenKils);
+
+                         //引入高德地图
+
+
+                    layer.setData(tenKils, {
+                        lnglat: 'lnglat02'
+                    });
+
+                    layer.setOptions({
+                        style: {
+                            radius: 10,
+                            color: '#4fc2ff',
+                            borderColor: '#ffffff',
+                            borderWidth: 1.5,
+                            opacity: 0.8
+                        },
+                        selectStyle: {
+                            radius: 14,
+                            color: '#ffe30a'
+                        }
+                    });
+
+                    layer.render();
+
+
+                }else{
+                    log.error('根据地址查询位置失败');
+                }
+            });
+    }
+
+    //20公里
+function ThirtyKilometers() {
+    var departure = $('#inputwidth01').val();
+
+    console.log(departure);
+
+    $(function(){
+        $('#inputwidth02').attr('disabled',true);
+    });
+
+    var geocoder = new AMap.Geocoder({
+        city: "029" //城市设为北京，默认：“全国”
+    });
+    // var address = '西安北站';
+    // address  = document.getElementById('address').value;
+    geocoder.getLocation(departure, function(status, result) {
+        if (status === 'complete'&&result.geocodes.length) {
+            var lnglat = result.geocodes[0].location;
+            console.log(lnglat);
+            var position = [lnglat.lng, lnglat.lat];
+            console.log(position);
+
+            // 循环计算距离， 添加到data中
+            var tData= NowData.map(function (item) {
+                var test = item.lnglat.split(',');
+                var testEnd =  [Number(test[0]), Number(test[1])];
+                console.log(test);
+                var dis = AMap.GeometryUtil.distance(position, testEnd);
+                return {
+                    name: item.name,
+                    lnglat: testEnd,
+                    lnglat02:item.lnglat,
+                    distance: dis
+                }
+            });
+            console.log("tData===",tData);
+            var tenKils = tData.filter(function (item) {
+                return item.distance < 20000
+            });
+            console.log(tenKils);
+
+            var layer = new Loca.PointLayer({
+                eventSupport: true,
+                map: map
+            });
+
+
+                layer.on('mousemove', function(ev) {
+                    openInfoWin(map, ev.originalEvent, {
+                        '文地名称': ev.rawData.name,
+                        '坐标': ev.rawData.lnglat02,
+                        '距离': ev.rawData.distance + '米'
+                    });
+                });
+
+            layer.on('mouseleave', function (ev) {
+                closeInfoWin();
+            });
+
+            layer.setData(tenKils, {
+                lnglat: 'lnglat02'
+            });
+
+            layer.setOptions({
+                style: {
+                    radius: 10,
+                    color: '#4fc2ff',
+                    borderColor: '#ffffff',
+                    borderWidth: 1.5,
+                    opacity: 0.8
+                },
+                selectStyle: {
+                    radius: 14,
+                    color: '#ffe30a'
+                }
+            });
+
+            layer.render();
+
+        }else{
+            log.error('根据地址查询位置失败');
+        }
+    });
+}
+
+     //不限制
+    function InfiniteKilometers() {
+        var departure = $('#inputwidth01').val();
+
+        console.log(departure);
+
+        $(function(){
+            $('#inputwidth02').attr('disabled',true);
+        });
+
+        var geocoder = new AMap.Geocoder({
+            city: "029" //城市设为北京，默认：“全国”
+        });
+        // var address = '西安北站';
+        // address  = document.getElementById('address').value;
+        geocoder.getLocation(departure, function(status, result) {
+            if (status === 'complete'&&result.geocodes.length) {
+                var lnglat = result.geocodes[0].location;
+                console.log(lnglat);
+                var position = [lnglat.lng, lnglat.lat];
+                console.log(position);
+
+                // 循环计算距离， 添加到data中
+                var tData= NowData.map(function (item) {
+                    var test = item.lnglat.split(',');
+                    var testEnd =  [Number(test[0]), Number(test[1])];
+                    console.log(test);
+                    var dis = AMap.GeometryUtil.distance(position, testEnd);
+                    return {
+                        name: item.name,
+                        lnglat: testEnd,
+                        lnglat02:item.lnglat,
+                        distance: dis
+                    }
+                });
+                console.log("tData===",tData);
+
+                var layer = new Loca.PointLayer({
+                    eventSupport: true,
+                    map: map
+                });
+
+
+                    layer.on('mousemove', function(ev) {
+                        openInfoWin(map, ev.originalEvent, {
+                            '文地名称': ev.rawData.name,
+                            '坐标': ev.rawData.lnglat02,
+                            '距离': ev.rawData.distance + '米'
+                        });
+                    });
+
+                layer.on('mouseleave', function (ev) {
+                    closeInfoWin();
+                });
+
+                layer.setData(tData, {
+                    lnglat: 'lnglat02'
+                });
+
+                layer.setOptions({
+                    style: {
+                        radius: 10,
+                        color: '#4fc2ff',
+                        borderColor: '#ffffff',
+                        borderWidth: 1.5,
+                        opacity: 0.8
+                    },
+                    selectStyle: {
+                        radius: 14,
+                        color: '#ffe30a'
+                    }
+                });
+
+                layer.render();
+
+            }else{
+                log.error('根据地址查询位置失败');
+            }
+        });
+    }
+
+
+    //引入点击事件代码
+    var infoWin;
+    var tableDom;
+    /**
+     * 封装便捷的撞题
+     * @param {AMap.Map} map
+     * @param {Array} event
+     * @param {Object} content
+     */
+    function openInfoWin(map, event, content) {
+        if (!infoWin) {
+            infoWin = new AMap.InfoWindow({
+                isCustom: true,  //使用自定义窗体
+                offset: new AMap.Pixel(130, 100)
+            });
+        }
+
+        var x = event.offsetX;
+        var y = event.offsetY;
+        var lngLat = map.containerToLngLat(new AMap.Pixel(x, y));
+
+        if (!tableDom) {
+            let infoDom = document.createElement('div');
+            infoDom.className = 'info';
+            tableDom = document.createElement('table');
+            infoDom.appendChild(tableDom);
+            infoWin.setContent(infoDom);
+        }
+
+        var trStr = '';
+        for (var name in content) {
+            var val = content[name];
+            trStr +=
+                '<tr>' +
+                '<td class="label">' + name + '</td>' +
+                '<td>&nbsp;</td>' +
+                '<td class="content">' + val + '</td>' +
+                '</tr>'
+        }
+
+        tableDom.innerHTML = trStr;
+        infoWin.open(map, lngLat);
+    }
+
+    function closeInfoWin() {
+        if (infoWin) {
+            infoWin.close();
+        }
+    }
 
 </script>
 </html>
