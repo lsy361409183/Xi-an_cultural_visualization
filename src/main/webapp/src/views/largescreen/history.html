@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>大屏展示</title>
+    <script type="text/javascript" src="../../libs/sea.js" id="seajsnode"></script>
+    <script type="text/javascript" src="../../libs/seajs-text.js"></script>
+    <script type="text/javascript" src="../../libs/seajs-css.js"></script>
+    <script type="text/javascript" src="../../libs/jquery.js"></script>
+    <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../libs/echarts.js"></script>
+    <script type="text/javascript" src="../../js/china.js"></script>
+    <script src="../../libs/swiper.min.js"></script>
+    <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../libs/css/swiper.min.css">
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/secondhtml.css">
+    <style>
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+        }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            width: 100%;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+        .swiper-pagination-bullet {
+            width: 45px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            font-size: 12px;
+            color:#000;
+            opacity: 1;
+            background: rgba(0,0,0,0.2);
+        }
+        .swiper-pagination-bullet-active {
+            color:#fff;
+            background: #007aff;
+        }
+        .history-img{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="nav-tpl"></div>
+<div class="wrapper">
+    <div class="container-fluid">
+        <div class="row fill-h">
+            <div class="col-lg-12 fill-h">
+                <div class="xpanel-wrapper xpanel-wrapper-1">
+                    <div class="xpanel">
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide"><img class="history-img" src="../../static/images/2017-01.jpg"/></div>
+                                <div class="swiper-slide"><img class="history-img" src="../../static/images/2017-02.jpg"/></div>
+                                <div class="swiper-slide"><img class="history-img" src="../../static/images/2012.jpg"/></div>
+                                <div class="swiper-slide"><img class="history-img" src="../../static/images/2008-01.jpg"/></div>
+                                <div class="swiper-slide"><img class="history-img" src="../../static/images/2008-02.jpg"/></div>
+                                <div class="swiper-slide"><img class="history-img" src="../../static/images/2008-03.jpg"/></div>
+                                <div class="swiper-slide"><img class="history-img" src="../../static/images/1995.jpg"/></div>
+                            </div>
+                            <!-- Add Pagination -->
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 'auto',
+        loop : true,
+        autoplay: {
+            delay: 3000,
+            stopOnLastSlide: false,
+            disableOnInteraction: true
+        },
+        spaceBetween: 100,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+            renderBullet: function (index, className) {
+                var text = index === 0 ? 2017:
+                    index === 1 ? 2017:
+                        index === 2 ? 2012:
+                            index ===3 || index === 4 || index === 5 ? 2008:
+                                index === 6 ? 1995 : null
+                return '<span class="' + className + '">' + text + '</span>';
+            }
+    }});
+</script>
+<!--<script type="text/javascript" src="../../libs/vue.js"></script>-->
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=4c4050aecc55468f218b12408fecc9cb"></script>
+<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+<script type="text/javascript">
+    seajs.use('../../js/largescreen2nd.js')
+</script>
+</html>
