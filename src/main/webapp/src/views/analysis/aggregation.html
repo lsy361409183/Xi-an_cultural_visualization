@@ -28,8 +28,8 @@
     <div class="draw-left draw-left-one" id="KNNMap">
 
     </div>
-    <div class="draw-left draw-left-two">
-
+    <div class="draw-left draw-left-two" id="KDEMap">
+        <img id="KDEMap-img" src=""/>
     </div>
     <div id="square">
         <div class="btn-large" id="but-group" data-toggle="buttons">
@@ -107,8 +107,25 @@
             kdeContent = $('.draw-left-two');
         knnContent.css('z-index', 1);
         kdeContent.css('z-index', 2);
+        getKDE()
     })
 
+    function getKDE() {
+        $.ajax({
+            type: "get",
+            url: '/getKDEPoint',
+            dataType: "text",
+            success: function (res) {
+                console.log(res)
+                var a = document.getElementById("KDEMap-img");
+                console.log(a)
+                a.src = "data:image/png;base64,"+res;
+            },
+            error:function (err) {
+                console.log(err)
+            }
+        })
+    }
 </script>
 <script src="https://webapi.amap.com/maps?v=1.4.15&key=2f80880dccbc4291d4c02e7964c81ed5"></script>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=2f80880dccbc4291d4c02e7964c81ed5&plugin=AMap.MarkerClusterer"></script>

@@ -74,7 +74,7 @@ function getPointData(areas, types) {
             }
             addCluster();
         }
-    })
+    });
 }
 getPointData("'全部'","'全部'");
 
@@ -113,5 +113,4 @@ function addCluster() {
         renderClusterMarker: _renderClusterMarker
     });
 }
-
 

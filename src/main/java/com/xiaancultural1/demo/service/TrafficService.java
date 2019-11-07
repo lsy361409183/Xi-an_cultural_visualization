@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import static com.xiaancultural1.demo.controller.GetDistance.getDistance;
+import static com.xiaancultural1.demo.controller.ImportKDE.getKDE;
 
 @Service
 public class TrafficService {
@@ -175,5 +176,29 @@ public class TrafficService {
         }
 //        System.out.println("名称"+after.get(0).getBaseName()+"可达性"+after.get(0).getAccessibility());
         return after3;
+    }
+
+    // KDE
+    public String selectKDEPoint(){
+        String picStr = null;
+        List<TrafficData> list = trafficMapper.selectPoint();
+        List<Double> lngList = new ArrayList<>();
+        List<Double> latList = new ArrayList<>();
+        for (int i = 0; i<list.size(); i++){
+            Double a = list.get(i).getBaseLongitude();
+            if (a != null){
+                lngList.add(a);
+            }
+
+
+            Double b = list.get(i).getBaseLatitude();
+            if (b != null){
+                latList.add(b);
+            }
+
+        }
+        System.out.println(lngList);
+        picStr = getKDE(lngList,latList);
+        return picStr;
     }
 }

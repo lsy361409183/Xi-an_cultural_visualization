@@ -3,8 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def adder(a,b):
-    m1 = np.array(a)
-    m2 = np.array(b)
+    m1 = np.array([1,2,3,4,5])
+    m2 = np.array([6,7,8,9,10])
     xmin = m1.min()
     xmax = m1.max()
     ymin = m2.min()
@@ -22,4 +22,5 @@ def adder(a,b):
     ax.plot(m1, m2, 'k.', markersize=2)
     ax.set_xlim([xmin, xmax])
     ax.set_ylim([ymin, ymax])
+    print(plt)
     plt.show()
