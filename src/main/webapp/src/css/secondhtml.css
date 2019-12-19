@@ -83,3 +83,16 @@ html, body {
     cursor:pointer;
     z-index: 100;
 }
+.HistoricalPlace{
+    position: absolute;
+    width: 80px;
+    padding: 10px 0;
+    top: 82%;
+    right: 60px;
+    background: #1e90ff;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    cursor:pointer;
+    z-index: 100;
+}
