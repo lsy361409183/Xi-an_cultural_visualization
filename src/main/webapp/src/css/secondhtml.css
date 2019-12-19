@@ -96,3 +96,14 @@ html, body {
     cursor:pointer;
     z-index: 100;
 }
+.link{
+    background: #1e90ff;
+    color: #fff;
+    display: block;
+    height: auto;
+    width: 100%;
+}
+.HistoricalPlace>a{
+    text-decoration:none;
+    color: #fff;
+}
