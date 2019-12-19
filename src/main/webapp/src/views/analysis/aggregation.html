@@ -29,7 +29,7 @@
 
     </div>
     <div class="draw-left draw-left-two" id="KDEMap">
-        <img id="KDEMap-img" src=""/>
+        <img id="KDEMap-img" src="../../static/images/kdeimg.png"/>
     </div>
     <div id="square">
         <div class="btn-large" id="but-group" data-toggle="buttons">
@@ -107,6 +107,7 @@
             kdeContent = $('.draw-left-two');
         knnContent.css('z-index', 1);
         kdeContent.css('z-index', 2);
+        kdeContent.css('background','url("../static/images/loading.gif") no-repeat center');
         getKDE()
     })
 
@@ -119,7 +120,7 @@
                 console.log(res)
                 var a = document.getElementById("KDEMap-img");
                 console.log(a)
-                a.src = "data:image/png;base64,"+res;
+                // a.src = "data:image/png;base64,"+res;
             },
             error:function (err) {
                 console.log(err)
