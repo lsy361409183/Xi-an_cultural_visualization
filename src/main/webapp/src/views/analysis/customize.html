@@ -16,7 +16,7 @@
     <script type="text/javascript" src="../../libs/seajs-css.js"></script>
     <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../libs/ol.js"></script>
-    <script type="text/javascript">seajs.use('../../js/abroad')</script>
+    <script type="text/javascript">seajs.use('../../js/customize')</script>
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
 
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
@@ -27,23 +27,25 @@
 
     <style type="text/css">
 
-        #container {
-            position: absolute;
-            width: 53%;
-            height: 800px;
-            top: 50px;
-            left: 0px;
+        /*#container {*/
+            /*position: absolute;*/
+            /*width: 69%;*/
+            /*!*height: 900px;*!*/
+            /*top: 50px;*/
+            /*left: 0px;*/
         }
     </style>
     <style type="text/css">
         #panel{
             float: left;
-            margin-left: 53%;
+            /*margin-left: 53%;*/
             top: 50px;
-            background-color: white;
-            max-height: 90%;
+            margin-left: 25px;
+            background-color: #d7d7d7;
+            /*max-height:30%;*/
             overflow-y: auto;
-            width: 280px;
+            width: 550px;
+            height: 420px;
         }
         #panel .amap-call {
             background-color: #009cf9;
@@ -54,6 +56,14 @@
             border-bottom-left-radius: 4px;
             border-bottom-right-radius: 4px;
             overflow: hidden;
+            background: #d7d7d7;
+        }
+        #nothing{
+            float: left;;
+            width: 500px;
+        }
+        .amap-lib-driving .planTitle{
+            background: #d7d7d7
         }
     </style>
     <title>交通可达性</title>
@@ -87,42 +97,21 @@
 
         <div role="tabpanel" class="tab-pane" id="messages">
             <div>
-                <!--<label id="ccc01" >出发地：</label>-->
-                <!--<label id="ccc02" >目的地：</label>-->
-
-
-                <!--<div class="row" id="ddd01">-->
-                        <!--<div class="input-group" >-->
-                            <!--&lt;!&ndash;<span class="input-group-btn">&ndash;&gt;-->
-                            <!--&lt;!&ndash;</span>&ndash;&gt;-->
-                            <!--<input type="text" class="form-control" id="form-contro01" placeholder="Search for...">-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
+ <!--出发地,目的地-->
                 <div class="input-group input-group-lg" id="input01">
                     <span class="input-group-addon" id="sizing-addon1">出发地：</span>
                     <input type="text" class="form-control" id="inputwidth01" placeholder="Username" aria-describedby="sizing-addon1">
                 </div>
-                <!--<div class="row" id="ddd02">-->
-                    <!--<div class="col-lg-6">-->
-                        <!--<div class="input-group" id="search02">-->
-                            <!--&lt;!&ndash;<span class="input-group-btn">&ndash;&gt;-->
-                            <!--&lt;!&ndash;</span>&ndash;&gt;-->
-                            <!--<input type="text" class="form-control" id="form-contro02" placeholder="Search for...">-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
                 <div class="input-group input-group-lg" id="input02">
-                    <span class="input-group-addon" id="sizing-addon2">到达地：</span>
+                    <span class="input-group-addon" id="sizing-addon2">目的地：</span>
                     <input type="text" class="form-control" id="inputwidth02" placeholder="Username" aria-describedby="sizing-addon1">
                 </div>
             </div>
+            <div id="nothing">
+                <label id="ccc03" >目的选项</label>
 
-
-
-            <label id="ccc03" >目的选项</label>
-
-
+            </div>
+ <!--出行工具-->
             <div id="ccc05">
             <div class="btn-large" id="but-group02" data-toggle="buttons">
 
@@ -131,7 +120,6 @@
                 </label>
             </div>
             <div class="btn-large" id="but-group03" data-toggle="buttons">
-
                 <label class="btn btn-primary" id="landscapeAndWater08" onclick="selectwalk()">
                     <input type="radio" name="options" id="option12" autocomplete="off"> 步行
                 </label>
@@ -143,7 +131,7 @@
                 </label>
             </div>
             </div>
-
+<!--距离-->
             <div id="ccc04">
                 <label class="btn btn-primary" id="landscapeAndWater05" onclick="TenKilometers()">
                     <input type="radio" name="options" id="option9" autocomplete="off"> 10公里内
@@ -156,13 +144,15 @@
                 </label>
             </div>
 
+            <div id="panel"></div>
+
         </div>
 
     </div>
 </div>
 
 <div id="container"></div>
-<div id="panel"></div>
+<!--<div id="panel"></div>-->
 
 </body>
 <script language="JavaScript">
@@ -176,7 +166,6 @@
             //  dataType : "json",
             async:false,
             success: function (data,textStatus) {
-
                 result = data;
                 // re = data.data;
                 // return re;
@@ -339,7 +328,7 @@ function selectbus() {
 
 }
 
-
+    //可达性、均衡性等的点击切换页面
     var accessiblityJump = document.getElementById("accessiblityJump");
     accessiblityJump.onclick = function () {
         window.location.href='index.html';
@@ -519,7 +508,7 @@ function ThirtyKilometers() {
 }
 
      //不限制
-    function InfiniteKilometers() {
+ function InfiniteKilometers() {
         var departure = $('#inputwidth01').val();
 
         console.log(departure);

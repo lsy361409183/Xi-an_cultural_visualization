@@ -26,9 +26,9 @@
 #square{
     float: right;
     margin-top: 0%;
-    margin-right: 0%;
+    margin-right:0%;
     height: 900px;
-    width: 600px;
+    width: 31%;
     background-color: #d7d7d7;
     z-index: 1;
 }
@@ -109,16 +109,16 @@ top: 10%;
 /*}*/
 #input01{
     float: left;
-    margin-left: 20%;
-    margin-top: 6%;
+    margin-left: 30%;
+    margin-top: 3%;
     width: 280px;
 
 }
 
 #input02{
     float: left;
-    margin-left: 20%;
-    margin-top: 7%;
+    margin-left: 30%;
+    margin-top: 3%;
     width: 280px;
 
 }
@@ -126,19 +126,20 @@ top: 10%;
 
 
 #landscapeAndWater04{
-    float: right;
-    margin-right: 20%;
-    margin-top: 15%;
+    float: left;
+    margin-right: 58px;
+    margin-top: 5%;
+    font-size: 16px;
 }
 #landscapeAndWater08{
-    float: right;
-    margin-right: 22%;
-    margin-top: 15%;
+    float: left;
+    margin-right: 58px;
+    margin-top: 5%;
 }
 #landscapeAndWater09{
-    float: right;
-    margin-right: 24%;
-    margin-top: 15%;
+    float: left;
+    margin-right: 3%;
+    margin-top: 5%;
 }
 
 /*三个按钮*/
@@ -148,25 +149,28 @@ top: 10%;
 /*}*/
 #landscapeAndWater05,#landscapeAndWater06,#landscapeAndWater07{
     float: left;
-    margin-left: 15%;
+    margin-right: 3%;
+
 }
-
-
 #ccc03{
     float: left;
     margin-top: 5%;
-margin-left: 45%;
+margin-left: 37%;
 }
 #ccc04{
     float: left;
-    margin-top: 8%;
-    width: 500px;
+    /*margin-top: 8%;*/
+    width: 450px;
+    margin-left:30%;
+    padding:3% 0;
+
+
 }
 #ccc05{
     float: left;
-    margin-top: -5%;
-    margin-left: 13%;
-    width: 500px;
+    /*margin-top: -5%;*/
+    margin-left:30%;
+    width: 450px;
 }
 
 
