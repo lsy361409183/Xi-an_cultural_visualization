@@ -23,5 +23,10 @@ define(function(require, exports, module){
         setMapHeight();
     });
 
+$("#distance").click(function () {
+    $("#panel").empty()
+})
+
+
 
 });

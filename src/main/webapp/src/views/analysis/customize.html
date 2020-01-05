@@ -27,12 +27,13 @@
 
     <style type="text/css">
 
-        /*#container {*/
-            /*position: absolute;*/
-            /*width: 69%;*/
-            /*!*height: 900px;*!*/
-            /*top: 50px;*/
-            /*left: 0px;*/
+        #container {
+            position: absolute;
+            width: 68%;
+            /*height: 900px;*/
+            top: 50px;
+            left: 0px;
+            margin-left: 10px;
         }
     </style>
     <style type="text/css">
@@ -61,6 +62,12 @@
         #nothing{
             float: left;;
             width: 500px;
+            margin-left: 17%;
+        }
+        #nothing1>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus
+       {
+            background-color: #337ab7;
+            color: #ffffff;
         }
         .amap-lib-driving .planTitle{
             background: #d7d7d7
@@ -100,7 +107,7 @@
  <!--出发地,目的地-->
                 <div class="input-group input-group-lg" id="input01">
                     <span class="input-group-addon" id="sizing-addon1">出发地：</span>
-                    <input type="text" class="form-control" id="inputwidth01" placeholder="Username" aria-describedby="sizing-addon1">
+                    <input type="text" class="form-control" id="inputwidth01" placeholder="Username" aria-describedby="sizing-addon1" style=" background: #ffffff !important;">
                 </div>
                 <div class="input-group input-group-lg" id="input02">
                     <span class="input-group-addon" id="sizing-addon2">目的地：</span>
@@ -108,40 +115,57 @@
                 </div>
             </div>
             <div id="nothing">
-                <label id="ccc03" >目的选项</label>
+                <ul class="nav nav-tabs" role="tablist" id="nothing1">
+                    <li role="presentation" class="active" id="tool"><a href="#home" role="tab" data-toggle="tab">出行工具</a></li>
+                    <li role="presentation" id="distance"><a href="#profile" role="tab" data-toggle="tab">文地距离</a></li>
 
+                </ul>
             </div>
- <!--出行工具-->
-            <div id="ccc05">
-            <div class="btn-large" id="but-group02" data-toggle="buttons">
+            <!-- 面板区 -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <!--出行工具-->
+                    <div id="ccc05">
+                        <!--<a class="btn  btn-primary" href="#" role="button" id="landscapeAndWater04" onclick="selectdrive()">驾驶</a>-->
 
-                <label class="btn btn-primary" id="landscapeAndWater04" onclick="selectdrive()">
-                    <input type="radio" name="options" id="option8" autocomplete="off"> 驾驶
-                </label>
-            </div>
-            <div class="btn-large" id="but-group03" data-toggle="buttons">
-                <label class="btn btn-primary" id="landscapeAndWater08" onclick="selectwalk()">
-                    <input type="radio" name="options" id="option12" autocomplete="off"> 步行
-                </label>
-            </div>
-            <div class="btn-large" id="but-group04" data-toggle="buttons">
+                        <button class="btn  btn-primary" type="submit"  id="landscapeAndWater04" onclick="selectdrive()">驾驶</button>
+                        <button class="btn  btn-primary" type="submit"  id="landscapeAndWater08" onclick="selectwalk()">步行</button>
+                        <button class="btn  btn-primary" type="submit"  id="landscapeAndWater09" onclick="selectbus()">公交</button>
 
-                <label class="btn btn-primary" id="landscapeAndWater09" onclick="selectbus()">
-                    <input type="radio" name="options" id="option13" autocomplete="off"> 公交
-                </label>
-            </div>
-            </div>
-<!--距离-->
-            <div id="ccc04">
-                <label class="btn btn-primary" id="landscapeAndWater05" onclick="TenKilometers()">
-                    <input type="radio" name="options" id="option9" autocomplete="off"> 10公里内
-                </label>
-                <label class="btn btn-primary" id="landscapeAndWater06" onclick="ThirtyKilometers()">
-                    <input type="radio" name="options" id="option10" autocomplete="off"> 20公里内
-                </label>
-                <label class="btn btn-primary" id="landscapeAndWater07" onclick="InfiniteKilometers()">
-                    <input type="radio" name="options" id="option11" autocomplete="off"> 不限
-                </label>
+                        <!--<input class="btn  btn-primary" type="button" value="公交" id="landscapeAndWater09" onclick="selectbus()">-->
+
+                        <!--<div class="btn-large" id="but-group02" data-toggle="buttons">-->
+                        <!--<label class="btn btn-primary" id="landscapeAndWater04" onclick="selectdrive()">-->
+                        <!--<input type="radio" name="options" id="option8" autocomplete="off"> 驾驶-->
+                        <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="btn-large" id="but-group03" data-toggle="buttons">-->
+                        <!--<label class="btn btn-primary" id="landscapeAndWater08" onclick="selectwalk()">-->
+                        <!--<input type="radio" name="options" id="option12" autocomplete="off"> 步行-->
+                        <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="btn-large" id="but-group04" data-toggle="buttons">-->
+
+                        <!--<label class="btn btn-primary" id="landscapeAndWater09" onclick="selectbus()">-->
+                        <!--<input type="radio" name="options" id="option13" autocomplete="off"> 公交-->
+                        <!--</label>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="profile">
+                    <!--距离-->
+                    <div id="ccc04">
+                        <label class="btn btn-primary" id="landscapeAndWater05" onclick="TenKilometers()">
+                            <input type="radio" name="options" id="option9" autocomplete="off"> 10公里内
+                        </label>
+                        <label class="btn btn-primary" id="landscapeAndWater06" onclick="ThirtyKilometers()">
+                            <input type="radio" name="options" id="option10" autocomplete="off"> 20公里内
+                        </label>
+                        <label class="btn btn-primary" id="landscapeAndWater07" onclick="InfiniteKilometers()">
+                            <input type="radio" name="options" id="option11" autocomplete="off"> 不限
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div id="panel"></div>
@@ -152,7 +176,7 @@
 </div>
 
 <div id="container"></div>
-<!--<div id="panel"></div>-->
+
 
 </body>
 <script language="JavaScript">
