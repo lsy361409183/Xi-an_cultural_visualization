@@ -21,7 +21,7 @@ if __name__ == '__main__':
     list_str[len(sys.argv)-2] = list_str[len(sys.argv)-2].replace("]", "")
     # print("list1Size==", list_str[list_str.__len__()-1])
     # print(type(list_str[list_str.__len__()-1]))
-    temp = list_str[list_str.__len__()-1][:-2]
+    temp = list_str[len(list_str)-1][:-2]
     list1Size=int(temp)
 
     list1_str=list_str[0:list1Size]

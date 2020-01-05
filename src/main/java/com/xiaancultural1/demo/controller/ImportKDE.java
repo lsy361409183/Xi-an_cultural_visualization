@@ -19,7 +19,7 @@ public class ImportKDE {
         //将size加到list1最后
         Double list1size =Double.valueOf(list1Size);
         lng.add(list1size);
-        System.out.println("line========="+lng);
+        System.out.println(lng);
         try {
             Process process = Runtime.getRuntime().exec("python ./src/main/java/com/xiaancultural1/demo/utils/test.py"+" "+lng);
             InputStreamReader ir = new InputStreamReader(process.getInputStream());

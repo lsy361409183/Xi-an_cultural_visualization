@@ -10,15 +10,74 @@
     <script type="text/javascript" src="../../libs/seajs-text.js"></script>
     <script type="text/javascript" src="../../libs/seajs-css.js"></script>
     <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
+    <script src="../../libs/swiper.min.js"></script>
+    <link rel="stylesheet" href="../../libs/css/swiper.min.css">
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/reset.css" />
     <link rel="stylesheet" href="../../css/main.css" />
     <title>Document</title>
+    <style>
+        .swiper-container {
+            width: 1800px;
+            height: 900px;
+        }
+        .history-img{
+            width: 1700px;
+            height: 800px;
+        }
+    </style>
 </head>
 <body>
 <div id="nav-tpl"></div>
-</body>
 
+<center>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide"><img class="history-img" src="../../static/images/1.jfif"/></div>
+        <div class="swiper-slide"><img class="history-img" src="../../static/images/2.jfif"/></div>
+        <div class="swiper-slide"><img class="history-img" src="../../static/images/3.jfif"/></div>
+        <div class="swiper-slide"><img class="history-img" src="../../static/images/4.jfif"/></div>
+        <div class="swiper-slide"><img class="history-img" src="../../static/images/5.jfif"/></div>
+        <div class="swiper-slide"><img class="history-img" src="../../static/images/6.jfif"/></div>
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="swiper-pagination"></div>
+
+    <!-- 如果需要导航按钮 -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+    <!-- 如果需要滚动条 -->
+    <div class="swiper-scrollbar"></div>
+</div>
+
+
+</center>
+
+</body>
+<script>
+    var mySwiper = new Swiper ('.swiper-container', {
+        direction: 'vertical', // 垂直切换选项
+        loop: true, // 循环模式选项
+
+        // 如果需要分页器
+        pagination: {
+            el: '.swiper-pagination',
+        },
+
+        // 如果需要前进后退按钮
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // // 如果需要滚动条
+        // scrollbar: {
+        //     el: '.swiper-scrollbar',
+        // },
+    })
+
+</script>
 <script type="text/javascript">
     seajs.use('../../js/visualization')
 </script>

@@ -31,20 +31,22 @@ define(function(require, exports, module) {
         //地图容器
         var map_container =$('#map_container');
         var clientWidth = $(window).width();
+        console.log("clientWidth",clientWidth)
         var clientHeight = $(window).height();
         var s_height = $('#square').height();
         var s_width = $('#square').width();
+        console.log("s_width",s_width)
         // 获取导航高度
         var nav_height = $('#nav-tpl').height();
         map_container.css('height',(clientHeight-nav_height)+'px');
-        map_container.css('width',(clientWidth-s_width)+'px');
+        map_container.css('width',(clientWidth-s_width-17)+'px');
         //第一张图
         var map = $('#wrapper');
         var map_container_height =$('#map_container').height();
         var map_container_width =$('#map_container').width();
         map.css('width',(map_container_width-20)/2+'px');
         map.css('height',(map_container_height/2)+'px');
-        console.log(map_container_height)
+        console.log("map_container",map_container_width)
         //第二张图
         var map2=$('#wrapper2');
         map2.css('width',(map_container_width-20)/2+'px');
