@@ -11,8 +11,8 @@
     <script type="text/javascript" src="../../libs/seajs-css.js"></script>
     <script type="text/javascript" src="../../libs/jquery.js"></script>
     <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../libs/echarts.js"></script>
-    <script type="text/javascript" src="../../js/china.js"></script>
+    <!--<script type="text/javascript" src="../../libs/echarts.js"></script>-->
+    <!--<script type="text/javascript" src="../../js/china.js"></script>-->
     <script src="../../libs/swiper.min.js"></script>
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../libs/css/swiper.min.css">
@@ -62,6 +62,30 @@
             width: 100%;
             height: 100%;
         }
+        .backTo{
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            z-index: 1000;
+            width: 50px;
+            height: 30px;
+            text-align: center;
+            opacity: 0;
+        }
+        .backTo:hover{
+            opacity: 1;
+        }
+        .backTo a{
+            display: block;
+            text-decoration: none;
+
+            background: #1e90ff;
+            color: #fff;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor:pointer;
+        }
     </style>
 </head>
 <body>
@@ -70,6 +94,9 @@
     <div class="container-fluid">
         <div class="row fill-h">
             <div class="col-lg-12 fill-h">
+                <div class="backTo">
+                    <a href="secondhtml.html">返回</a>
+                </div>
                 <div class="xpanel-wrapper xpanel-wrapper-1">
                     <div class="xpanel">
                         <div class="swiper-container">
