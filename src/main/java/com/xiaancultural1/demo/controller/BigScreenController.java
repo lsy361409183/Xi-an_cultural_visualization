@@ -41,19 +41,45 @@ public class BigScreenController {
     @RequestMapping("/getCodeArea")
     @ResponseBody
     HashMap<String, Object> selectArea(@Param("cityCode")String cityCode) {
-        List<BigScreenBase> list1 = bigScreenService.selectArea(cityCode);
-        HashMap<String, Object> o = new HashMap<>();
-       Area a = new Area();
-        for (int m = 0; m < list1.size(); m++) {
-            BigScreenBase b = new BigScreenBase();
-            String district = list1.get(m).getBaseDistrict();
-            Integer area = list1.get(m).getVisualArea();
-            b.setBaseDistrict(district);
-            b.setVisualArea(area);
-            a.setName(b.getBaseDistrict());
-            a.setValue(b.getVisualArea());
-            o.put("data",a);
+
+            List<BigScreenBase> list1 = bigScreenService.selectArea(cityCode);
+            HashMap<String, Object> o = new HashMap<>();
+            Area a = new Area();
+            for (int m = 0; m < list1.size(); m++) {
+                BigScreenBase b = new BigScreenBase();
+                String district = list1.get(m).getBaseDistrict();
+                Integer area = list1.get(m).getVisualArea();
+                b.setBaseDistrict(district);
+                b.setVisualArea(area);
+                a.setName(b.getBaseDistrict());
+                a.setValue(b.getVisualArea());
+                o.put("data", a);
+            }
+            return o;
         }
+
+
+    //查询不同区域的面积 不传参数
+    @RequestMapping("/getAllArea")
+    @ResponseBody
+    HashMap<String, Object> selectallArea(){
+        List<BigScreenBase> list1 = bigScreenService.selectallArea();
+        List<Area> list2 = new ArrayList<>();
+        HashMap<String, Object> o = new HashMap<>();
+
+        for (int m = 0; m < list1.size(); m++) {
+
+            Area a = new Area();
+            a.setName(list1.get(m).getBaseDistrict());
+            a.setValue(list1.get(m).getVisualArea());
+            list2.add(m,a);
+        }
+        for(int i=0;i<list2.size();i++)
+        {
+            System.out.println(list2.get(i).getName());
+            System.out.println(list1.get(i).getBaseDistrict());
+        }
+            o.put("data", list2);
         return o;
     }
 }
