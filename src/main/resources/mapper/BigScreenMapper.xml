@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaancultural1.demo.mapper.BigScreenMapper">
+    <resultMap id="bigscreen" type="com.xiaancultural1.demo.pojo.BigScreenBase">
+
+        <result column="base_district"  property="baseDistrict"/>
+        <result column="visual_area" property="visualArea"/>
+        <!--<result column="visual_first" property="visualFirst"/>-->
+        <!--<result column="visual_second" property="visualSecond"/>-->
+        <!--<result column="visual_third" property="visualThird"/>-->
+        <!--<result column="visual_fourth" property="visualFourth"/>-->
+        <!--<result column="visual_fifth" property="visualFifth"/>-->
+        <!--<result column="visual_sixth" property="visualSixth"/>-->
+    </resultMap>
+    <!--/查询各区域的面积-->
+    <select id = "selectArea" resultMap="bigscreen">
+    select tb_visual_data.* from tb_visual_data
+    left JOIN tb_code on tb_visual_data.base_district=tb_code.base_district WHERE tb_code.city_code=${cityCode};
+    </select>
+</mapper>
