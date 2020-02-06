@@ -29,7 +29,6 @@
              console.log(deepTree[deepTree.length - 1].code)
          }
      })
-
      map = new AMap.Map('pic3', {
          resizeEnable: true,
          center: [116.30946, 39.937629],
@@ -59,7 +58,9 @@
          district.setExtensions('all');
          //行政区查询
          //按照adcode进行查询可以保证数据返回的唯一性
+         //把citycode码传给各个图的渲染函数
          console.log(cityCode)
+         // console.log(typeof cityCode)
          Render1(cityCode)
          Render2(cityCode)
          // Render4(cityCode)
@@ -568,8 +569,23 @@
      };
 
      myChart5.setOption(option5);
-
      function Render1(cityCode){
+         //数据库取数
+         // $.ajax({
+         //     url: '',
+         //     type: 'get',
+         //     async: false,
+         //     dataType: 'json',
+         //     data:{
+         //         cityCode:cityCode
+         //     },
+         //     success:function (data) {
+         //         var option1 = myChart1.getOption();
+         //         option1.series[0].data =option1.series[1].data=data.data;
+         //         myChart1.setOption(option1);
+         //     }
+         // })
+
          var path=cityCode+'1',
              baseurl='../../json/'
          $.getJSON(baseurl + path +".json", function (data){
@@ -579,6 +595,24 @@
          })
      }
      function Render2(cityCode){
+
+         //数据库取数
+         // $.ajax({
+         //     url: '',
+         //     type: 'get',
+         //     async: false,
+         //     dataType: 'json',
+         //     data:{
+         //         cityCode:cityCode
+         //     },
+         //     success:function (data) {
+         //          var option2 = myChart2.getOption();
+         //              option2.series[0].data =data.data1;
+         //              option2.xAxis[0].data=data.data0;
+         //              myChart2.setOption(option2);
+         //     }
+         // })
+
          var path=cityCode+'2',
              baseurl='../../json/'
          $.getJSON(baseurl + path +".json", function (data){
@@ -589,6 +623,23 @@
          })
      }
      function Render4(cityCode){
+
+         //数据库取数
+         // $.ajax({
+         //     url: '',
+         //     type: 'get',
+         //     async: false,
+         //     dataType: 'json',
+         //     data:{
+         //         cityCode:cityCode
+         //     },
+         //     success:function (data) {
+         //          var option4 = myChart4.getOption();
+         //              option4.series[0].data =data.data;
+         //              myChart4.setOption(option4);
+         //     }
+         // })
+
          var path=cityCode+'4',
              baseurl='../../json/'
          $.getJSON(baseurl + path +".json", function (data){
@@ -598,6 +649,23 @@
              })
          }
      function Render5(cityCode){
+
+         //数据库取数
+         // $.ajax({
+         //     url: '',
+         //     type: 'get',
+         //     async: false,
+         //     dataType: 'json',
+         //     data:{
+         //         cityCode:cityCode
+         //     },
+         //     success:function (data) {
+         //        var option5 = myChart5.getOption();
+         //              option5.series[0].data =data.data;
+         //              myChart5.setOption(option5);
+         //     }
+         // })
+
          var path=cityCode+'5',
              baseurl='../../json/'
          $.getJSON(baseurl + path +".json", function (data){
