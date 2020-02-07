@@ -15,7 +15,7 @@
     <!--/查询各区域的面积-->
     <select id = "selectArea" resultMap="bigscreen">
     select tb_visual_data.* from tb_visual_data
-    left JOIN tb_code on tb_visual_data.base_district=tb_code.base_district WHERE tb_code.city_code=${cityCode};
+    left JOIN tb_code on tb_visual_data.base_district=tb_code.base_district WHERE tb_code.city_code=#{cityCode};
     </select>
     <!--//查询不同区域的面积 不传参数-->
     <select id = "selectallArea" resultMap="bigscreen">

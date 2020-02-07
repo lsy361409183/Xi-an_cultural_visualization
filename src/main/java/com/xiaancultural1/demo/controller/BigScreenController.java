@@ -62,24 +62,28 @@ public class BigScreenController {
     //查询不同区域的面积 不传参数
     @RequestMapping("/getAllArea")
     @ResponseBody
-    HashMap<String, Object> selectallArea(){
-        List<BigScreenBase> list1 = bigScreenService.selectallArea();
-        List<Area> list2 = new ArrayList<>();
-        HashMap<String, Object> o = new HashMap<>();
+    HashMap<String, Object> selectallArea(@Param("cityCode")String cityCode){
+        System.out.println(cityCode);
+        if(cityCode!=null||cityCode=="") {
+            List<BigScreenBase> list1 = bigScreenService.selectallArea(cityCode);
+            List<Area> list2 = new ArrayList<>();
+            HashMap<String, Object> o = new HashMap<>();
 
-        for (int m = 0; m < list1.size(); m++) {
+            for (int m = 0; m < list1.size(); m++) {
 
-            Area a = new Area();
-            a.setName(list1.get(m).getBaseDistrict());
-            a.setValue(list1.get(m).getVisualArea());
-            list2.add(m,a);
-        }
-        for(int i=0;i<list2.size();i++)
-        {
-            System.out.println(list2.get(i).getName());
-            System.out.println(list1.get(i).getBaseDistrict());
-        }
+                Area a = new Area();
+                a.setName(list1.get(m).getBaseDistrict());
+                a.setValue(list1.get(m).getVisualArea());
+                list2.add(m, a);
+            }
+            for (int i = 0; i < list2.size(); i++) {
+                System.out.println(list2.get(i).getName());
+                System.out.println(list1.get(i).getBaseDistrict());
+            }
             o.put("data", list2);
-        return o;
+            return o;
+        }
+        else
+            return null;
     }
 }

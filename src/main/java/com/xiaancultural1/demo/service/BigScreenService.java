@@ -16,7 +16,7 @@ public class BigScreenService {
         return bigScreenMapper.selectArea(cityCode);
 }
     //查询不同区域的面积 不传参数
-    public List<BigScreenBase> selectallArea(){
-        return bigScreenMapper.selectallArea();
+    public List<BigScreenBase> selectallArea(String cityCode){
+        return bigScreenMapper.selectallArea(cityCode);
     }
 }

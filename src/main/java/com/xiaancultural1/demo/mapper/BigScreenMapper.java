@@ -9,6 +9,6 @@ import java.util.List;
 public interface BigScreenMapper {
     //查询各区域的面积
     List<BigScreenBase> selectArea(@Param("cityCode")String cityCode);
-    //查询不同区域的面积 不传参数
-    List<BigScreenBase> selectallArea();
+    //查询不同区域的面积 传参数
+    List<BigScreenBase> selectallArea(@Param("cityCode")String cityCode);
 }
