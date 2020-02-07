@@ -384,7 +384,7 @@
                  name: '内圈小',
                  type: 'gauge',
                  min:10,
-                 max:8500,
+                 max:85000,
                  center: ['50%', '70%'],
                  title : {
                      // 其余属性默认使用全局文本样式，详见TEXTSTYLE
@@ -570,29 +570,41 @@
 
      myChart5.setOption(option5);
      function Render1(cityCode){
-         //数据库取数
-         // $.ajax({
-         //     url: '',
-         //     type: 'get',
-         //     async: false,
-         //     dataType: 'json',
-         //     data:{
-         //         cityCode:cityCode
-         //     },
-         //     success:function (data) {
-         //         var option1 = myChart1.getOption();
-         //         option1.series[0].data =option1.series[1].data=data.data;
-         //         myChart1.setOption(option1);
-         //     }
-         // })
+        ;
+         var cityCode = cityCode.toString();
+         console.log(typeof cityCode)
+         // 数据库取数
+         $.ajax({
+             url: '/getCodeArea',
+             type: 'get',
+             // async: false,
+             dataType: 'text',
+             data:{
+                 cityCode:"'"+cityCode+"'"
+             },
+             success:function (e) {
+                 var data = JSON.parse(e);
+                 console.log(data)
+                 // var option1 = myChart1.getOption();
+                 console.log(option1)
 
-         var path=cityCode+'1',
-             baseurl='../../json/'
-         $.getJSON(baseurl + path +".json", function (data){
-             var option1 = myChart1.getOption();
-             option1.series[0].data =option1.series[1].data=data.data;
-             myChart1.setOption(option1);
+                 option1.series[0].data =option1.series[1].data=data.data;
+                 myChart1.setOption(option1);
+             }
+             // ,error:function (e) {
+             //    console.log("取数失败")
+             //     console.log(e)
+             // }
          })
+
+         // var path=cityCode+'1',
+         //     baseurl='../../json/'
+         // $.getJSON(baseurl + path +".json", function (data){
+         //     console.log(typeof data)
+         //     var option1 = myChart1.getOption();
+         //     option1.series[0].data =option1.series[1].data=data.data;
+         //     myChart1.setOption(option1);
+         // })
      }
      function Render2(cityCode){
 
@@ -600,8 +612,8 @@
          // $.ajax({
          //     url: '',
          //     type: 'get',
-         //     async: false,
-         //     dataType: 'json',
+
+         //     dataType: 'text',
          //     data:{
          //         cityCode:cityCode
          //     },
@@ -625,28 +637,28 @@
      function Render4(cityCode){
 
          //数据库取数
-         // $.ajax({
-         //     url: '',
-         //     type: 'get',
-         //     async: false,
-         //     dataType: 'json',
-         //     data:{
-         //         cityCode:cityCode
-         //     },
-         //     success:function (data) {
-         //          var option4 = myChart4.getOption();
-         //              option4.series[0].data =data.data;
-         //              myChart4.setOption(option4);
-         //     }
-         // })
+         $.ajax({
+             url: '/getAllArea',
+             type: 'get',
 
-         var path=cityCode+'4',
-             baseurl='../../json/'
-         $.getJSON(baseurl + path +".json", function (data){
-             var option4 = myChart4.getOption();
-             option4.series[0].data =data.data;
-             myChart4.setOption(option4);
-             })
+             dataType: 'text',
+             data:{
+                 cityCode:"'"+cityCode+"'"
+             },
+             success:function (data) {
+                  var option4 = myChart4.getOption();
+                      option4.series[0].data =data.data;
+                      myChart4.setOption(option4);
+             }
+         })
+
+         // var path=cityCode+'4',
+         //     baseurl='../../json/'
+         // $.getJSON(baseurl + path +".json", function (data){
+         //     var option4 = myChart4.getOption();
+         //     option4.series[0].data =data.data;
+         //     myChart4.setOption(option4);
+         //     })
          }
      function Render5(cityCode){
 
@@ -655,7 +667,7 @@
          //     url: '',
          //     type: 'get',
          //     async: false,
-         //     dataType: 'json',
+         //     dataType: 'text',
          //     data:{
          //         cityCode:cityCode
          //     },
@@ -674,6 +686,7 @@
              myChart5.setOption(option5);
          })
      }
+
      Render1(610100);
      Render2(610100);
      Render4(610100);
