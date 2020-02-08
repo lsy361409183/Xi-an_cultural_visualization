@@ -326,8 +326,6 @@
          map.setCenter(obj[obj.options.selectedIndex].center)
      }
 
-
-
      var myChart1 = echarts.init(document.getElementById('pic1'));
          var option1 = {
          // backgroundColor: '#f0f2f5',
@@ -384,7 +382,7 @@
                  name: '内圈小',
                  type: 'gauge',
                  min:10,
-                 max:85000,
+                 max:500000,
                  center: ['50%', '70%'],
                  title : {
                      // 其余属性默认使用全局文本样式，详见TEXTSTYLE
@@ -436,7 +434,6 @@
                  },
                  data: ''
              },
-
          ]
      };
          myChart1.setOption(option1);
@@ -570,95 +567,67 @@
 
      myChart5.setOption(option5);
      function Render1(cityCode){
-        ;
-         var cityCode = cityCode.toString();
+         // var cityCode = cityCode.toString();
          console.log(typeof cityCode)
          // 数据库取数
          $.ajax({
              url: '/getCodeArea',
              type: 'get',
-             // async: false,
              dataType: 'text',
              data:{
-                 cityCode:"'"+cityCode+"'"
+                 cityCode:cityCode
              },
              success:function (e) {
                  var data = JSON.parse(e);
+                 var num=data.data.value
+                 console.log(num)
+                 var data= [{
+                     value: num,
+                     name: ""
+                 }];
                  console.log(data)
-                 // var option1 = myChart1.getOption();
+                 var option1 = myChart1.getOption();
+                 option1.series[0].data =option1.series[1].data=data;
                  console.log(option1)
-
-                 option1.series[0].data =option1.series[1].data=data.data;
                  myChart1.setOption(option1);
              }
-             // ,error:function (e) {
-             //    console.log("取数失败")
-             //     console.log(e)
-             // }
          })
-
-         // var path=cityCode+'1',
-         //     baseurl='../../json/'
-         // $.getJSON(baseurl + path +".json", function (data){
-         //     console.log(typeof data)
-         //     var option1 = myChart1.getOption();
-         //     option1.series[0].data =option1.series[1].data=data.data;
-         //     myChart1.setOption(option1);
-         // })
      }
      function Render2(cityCode){
-
          //数据库取数
-         // $.ajax({
-         //     url: '',
-         //     type: 'get',
-
-         //     dataType: 'text',
-         //     data:{
-         //         cityCode:cityCode
-         //     },
-         //     success:function (data) {
-         //          var option2 = myChart2.getOption();
-         //              option2.series[0].data =data.data1;
-         //              option2.xAxis[0].data=data.data0;
-         //              myChart2.setOption(option2);
-         //     }
-         // })
-
-         var path=cityCode+'2',
-             baseurl='../../json/'
-         $.getJSON(baseurl + path +".json", function (data){
-             var option2 = myChart2.getOption();
-             option2.series[0].data =data.data1;
-             option2.xAxis[0].data=data.data0;
-             myChart2.setOption(option2);
+         $.ajax({
+             url: '/getRanking',
+             type: 'get',
+             dataType: 'text',
+             data:{
+                 cityCode:cityCode
+             },
+             success:function (e) {
+                 var data = JSON.parse(e);
+                 var option2 = myChart2.getOption();
+                      option2.series[0].data =data.data1;
+                      option2.xAxis[0].data=data.data0;
+                      myChart2.setOption(option2);
+             }
          })
      }
      function Render4(cityCode){
-
          //数据库取数
          $.ajax({
              url: '/getAllArea',
              type: 'get',
-
              dataType: 'text',
              data:{
-                 cityCode:"'"+cityCode+"'"
+                 cityCode:cityCode
              },
-             success:function (data) {
-                  var option4 = myChart4.getOption();
+             success:function (e) {
+                 var data = JSON.parse(e);
+                 var option4 = myChart4.getOption();
                       option4.series[0].data =data.data;
                       myChart4.setOption(option4);
              }
          })
 
-         // var path=cityCode+'4',
-         //     baseurl='../../json/'
-         // $.getJSON(baseurl + path +".json", function (data){
-         //     var option4 = myChart4.getOption();
-         //     option4.series[0].data =data.data;
-         //     myChart4.setOption(option4);
-         //     })
          }
      function Render5(cityCode){
 
@@ -686,7 +655,6 @@
              myChart5.setOption(option5);
          })
      }
-
      Render1(610100);
      Render2(610100);
      Render4(610100);
