@@ -12,6 +12,10 @@
         <!--<result column="visual_fifth" property="visualFifth"/>-->
         <!--<result column="visual_sixth" property="visualSixth"/>-->
     </resultMap>
+    <resultMap id="ranking" type="com.xiaancultural1.demo.pojo.visualBase">
+        <result column="base_name" property="baseName"/>
+        <result column="base_area" property="baseArea"/>
+    </resultMap>
     <!--/查询各区域的面积-->
     <select id = "selectArea" resultMap="bigscreen">
     select tb_visual_data.* from tb_visual_data
@@ -21,4 +25,14 @@
     <select id = "selectallArea" resultMap="bigscreen">
 select tb_visual_data.* from tb_visual_data left JOIN tb_code on tb_visual_data.base_district=tb_code.base_district WHERE tb_code.city_code!='610100';
     </select>
+    <!--//查询排名前十-->
+    <select id = "selectRanking" resultMap="ranking">
+select tb_base_data.base_name,tb_base_data.base_area from tb_base_data left JOIN tb_code on tb_base_data.base_district=tb_code.base_district
+WHERE tb_code.city_code=#{cityCode} and tb_base_data.base_area is not null ORDER BY tb_base_data.base_area desc limit 10;
+ </select>
+    <!--查询西安排名前十-->
+    <select id = "selectXianRanking" resultMap="ranking">
+select tb_base_data.base_name,tb_base_data.base_area from tb_base_data
+WHERE tb_base_data.base_area is not null ORDER BY tb_base_data.base_area desc limit 10;
+ </select>
 </mapper>

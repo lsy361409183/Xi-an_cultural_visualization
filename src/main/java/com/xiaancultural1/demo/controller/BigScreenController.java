@@ -2,6 +2,7 @@ package com.xiaancultural1.demo.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.xiaancultural1.demo.pojo.BigScreenBase;
+import com.xiaancultural1.demo.pojo.visualBase;
 import com.xiaancultural1.demo.service.BigScreenService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,6 @@ public class BigScreenController {
     @RequestMapping("/getAllArea")
     @ResponseBody
     HashMap<String, Object> selectallArea(@Param("cityCode")String cityCode){
-        System.out.println(cityCode);
         if(cityCode!=null||cityCode=="") {
             List<BigScreenBase> list1 = bigScreenService.selectallArea(cityCode);
             List<Area> list2 = new ArrayList<>();
@@ -76,14 +76,37 @@ public class BigScreenController {
                 a.setValue(list1.get(m).getVisualArea());
                 list2.add(m, a);
             }
-            for (int i = 0; i < list2.size(); i++) {
-                System.out.println(list2.get(i).getName());
-                System.out.println(list1.get(i).getBaseDistrict());
-            }
             o.put("data", list2);
             return o;
         }
         else
             return null;
+    }
+    //查询排名前十的文地
+    @RequestMapping("/getRanking")
+    @ResponseBody
+    HashMap<String, Object> selectRanking(@Param("cityCode")String cityCode){
+        HashMap<String, Object> o = new HashMap<>();
+        System.out.println(cityCode);
+        List<visualBase> data = new ArrayList<>();
+        if (cityCode.equals(610100)||cityCode.equals("610100")){
+            System.out.println("西安");
+          data =bigScreenService.selectXianRanking(cityCode);
+        }else {
+            data = bigScreenService.selectRanking(cityCode);
+        }
+        String[] name = new String[10];
+        Double[] area = new Double[10];
+        for (int m = 0; m < data.size(); m++) {
+            String a = data.get(m).getBaseName();
+            Double b = data.get(m).getBaseArea();
+            while (name[m] == null || area[m] == null) {
+                name[m] = a;
+                area[m] = b;
+            }
+            o.put("data0", name);
+            o.put("data1", area);
+        }
+        return o;
     }
 }
