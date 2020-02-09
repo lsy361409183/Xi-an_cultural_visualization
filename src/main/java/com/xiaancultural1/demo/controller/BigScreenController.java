@@ -60,7 +60,7 @@ public class BigScreenController {
         }
 
 
-    //查询不同区域的面积 不传参数
+    //查询不同区域的面积
     @RequestMapping("/getAllArea")
     @ResponseBody
     HashMap<String, Object> selectallArea(@Param("cityCode")String cityCode){
@@ -108,5 +108,44 @@ public class BigScreenController {
             o.put("data1", area);
         }
         return o;
+    }
+    //查询不同区域的类别面积
+    @RequestMapping("/getTypeArea")
+    @ResponseBody
+    HashMap<String, Object> selectTypeArea(@Param("cityCode")String cityCode){
+        HashMap<String, Object> o = new HashMap<>();
+        HashMap<String, Object> o2 = new HashMap<>();
+        List<Area> list2 = new ArrayList<>();
+        List<BigScreenBase> data = bigScreenService.selectArea(cityCode);
+        for (int m = 0; m < data.size(); m++) {
+            Area a = new Area();
+            Area b = new Area();
+            Area c = new Area();
+            Area d = new Area();
+            Area e = new Area();
+            Area f = new Area();
+            a.setValue(data.get(m).getVisualFirst());
+            a.setName("一类");
+            list2.add(0,a);
+            b.setValue(data.get(m).getVisualSecond());
+            b.setName("二类");
+            list2.add(1,b);
+            c.setValue(data.get(m).getVisualThird());
+            c.setName("三类");
+            list2.add(2,c);
+            d.setValue(data.get(m).getVisualFourth());
+            d.setName("四类");
+            list2.add(3,d);
+            e.setValue(data.get(m).getVisualFifth());
+            e.setName("五类");
+            list2.add(4,e);
+            f.setValue(data.get(m).getVisualSixth());
+            f.setName("六类");
+            list2.add(5,f);
+            o.put("name", data.get(m).getBaseDistrict());
+            o.put("children",list2);
+            o2.put("data",o);
+        }
+        return o2;
     }
 }

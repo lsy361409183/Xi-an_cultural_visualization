@@ -5,12 +5,12 @@
 
         <result column="base_district"  property="baseDistrict"/>
         <result column="visual_area" property="visualArea"/>
-        <!--<result column="visual_first" property="visualFirst"/>-->
-        <!--<result column="visual_second" property="visualSecond"/>-->
-        <!--<result column="visual_third" property="visualThird"/>-->
-        <!--<result column="visual_fourth" property="visualFourth"/>-->
-        <!--<result column="visual_fifth" property="visualFifth"/>-->
-        <!--<result column="visual_sixth" property="visualSixth"/>-->
+        <result column="visual_first" property="visualFirst"/>
+        <result column="visual_second" property="visualSecond"/>
+        <result column="visual_third" property="visualThird"/>
+        <result column="visual_fourth" property="visualFourth"/>
+        <result column="visual_fifth" property="visualFifth"/>
+        <result column="visual_sixth" property="visualSixth"/>
     </resultMap>
     <resultMap id="ranking" type="com.xiaancultural1.demo.pojo.visualBase">
         <result column="base_name" property="baseName"/>
