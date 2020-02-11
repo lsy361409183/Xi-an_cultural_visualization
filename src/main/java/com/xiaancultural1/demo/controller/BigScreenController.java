@@ -45,6 +45,7 @@ public class BigScreenController {
     HashMap<String, Object> selectArea(@Param("cityCode")String cityCode) {
 
             List<BigScreenBase> list1 = bigScreenService.selectArea(cityCode);
+            List<Area> k=new ArrayList();
             HashMap<String, Object> o = new HashMap<>();
             Area a = new Area();
             for (int m = 0; m < list1.size(); m++) {
@@ -55,7 +56,8 @@ public class BigScreenController {
                 b.setVisualArea(area);
                 a.setName(b.getBaseDistrict());
                 a.setValue(b.getVisualArea());
-                o.put("data", a);
+                k.add(0,a);
+                o.put("data", k);
             }
             return o;
         }
