@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -112,10 +113,11 @@ public class BigScreenController {
     //查询不同区域的类别面积
     @RequestMapping("/getTypeArea")
     @ResponseBody
-    HashMap<String, Object> selectTypeArea(@Param("cityCode")String cityCode){
+    Object[] selectTypeArea(@Param("cityCode")String cityCode){
         HashMap<String, Object> o = new HashMap<>();
         HashMap<String, Object> o2 = new HashMap<>();
         List<Area> list2 = new ArrayList<>();
+        Object[] h =new Array[100];
         List<BigScreenBase> data = bigScreenService.selectArea(cityCode);
         for (int m = 0; m < data.size(); m++) {
             Area a = new Area();
@@ -145,7 +147,8 @@ public class BigScreenController {
             o.put("name", data.get(m).getBaseDistrict());
             o.put("children",list2);
             o2.put("data",o);
+            h =o2.values().toArray();
         }
-        return o2;
+        return h;
     }
 }
