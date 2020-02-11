@@ -566,6 +566,7 @@
      };
 
      myChart5.setOption(option5);
+
      function Render1(cityCode){
          // var cityCode = cityCode.toString();
          console.log(typeof cityCode)
@@ -578,17 +579,17 @@
                  cityCode:cityCode
              },
              success:function (e) {
+
                  var data = JSON.parse(e);
-                 var num=data.data.value
-                 console.log(num)
+                 // console.log(data.data[0].value)
+
+                 var num=data.data[0].value
                  var data= [{
                      value: num,
                      name: ""
                  }];
-                 console.log(data)
                  var option1 = myChart1.getOption();
                  option1.series[0].data =option1.series[1].data=data;
-                 console.log(option1)
                  myChart1.setOption(option1);
              }
          })
@@ -632,28 +633,32 @@
      function Render5(cityCode){
 
          //数据库取数
-         // $.ajax({
-         //     url: '',
-         //     type: 'get',
-         //     async: false,
-         //     dataType: 'text',
-         //     data:{
-         //         cityCode:cityCode
-         //     },
-         //     success:function (data) {
-         //        var option5 = myChart5.getOption();
-         //              option5.series[0].data =data.data;
-         //              myChart5.setOption(option5);
-         //     }
-         // })
-
-         var path=cityCode+'5',
-             baseurl='../../json/'
-         $.getJSON(baseurl + path +".json", function (data){
-             var option5 = myChart5.getOption();
-             option5.series[0].data =data.data;
-             myChart5.setOption(option5);
+         $.ajax({
+             url: '/getTypeArea',
+             type: 'get',
+             dataType: 'text',
+             data:{
+                 cityCode:cityCode
+             },
+             success:function (e) {
+                 // console.log(e)
+                 var data = JSON.parse(e);
+                 // console.log(data)
+                 var option5 = myChart5.getOption();
+                 // console.log(option5)
+                      option5.series[0].data =data;
+                      myChart5.setOption(option5);
+             }
          })
+
+         // var path=cityCode+'5',
+         //     baseurl='../../json/'
+         // $.getJSON(baseurl + path +".json", function (data){
+         // console.log(data)
+         //     var option5 = myChart5.getOption();
+         //     option5.series[0].data =data.data;
+         //     myChart5.setOption(option5);
+         // })
      }
      Render1(610100);
      Render2(610100);
