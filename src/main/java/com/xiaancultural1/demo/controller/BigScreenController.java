@@ -39,6 +39,27 @@ public class BigScreenController {
         private String name;
         private Integer value;
     }
+    public class Child{
+        public String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public List<Area> getChildren() {
+            return children;
+        }
+
+        public void setChildren(List<Area> children) {
+            this.children = children;
+        }
+
+        public List<Area> children;
+    }
     //查询各区域的面积
     @RequestMapping("/getCodeArea")
     @ResponseBody
@@ -90,10 +111,8 @@ public class BigScreenController {
     @ResponseBody
     HashMap<String, Object> selectRanking(@Param("cityCode")String cityCode){
         HashMap<String, Object> o = new HashMap<>();
-        System.out.println(cityCode);
         List<visualBase> data = new ArrayList<>();
         if (cityCode.equals(610100)||cityCode.equals("610100")){
-            System.out.println("西安");
           data =bigScreenService.selectXianRanking(cityCode);
         }else {
             data = bigScreenService.selectRanking(cityCode);
@@ -115,42 +134,81 @@ public class BigScreenController {
     //查询不同区域的类别面积
     @RequestMapping("/getTypeArea")
     @ResponseBody
-    Object[] selectTypeArea(@Param("cityCode")String cityCode){
-        HashMap<String, Object> o = new HashMap<>();
-        HashMap<String, Object> o2 = new HashMap<>();
+    HashMap<String, Object> selectTypeArea(@Param("cityCode")String cityCode) {
         List<Area> list2 = new ArrayList<>();
-        Object[] h =new Array[100];
-        List<BigScreenBase> data = bigScreenService.selectArea(cityCode);
-        for (int m = 0; m < data.size(); m++) {
-            Area a = new Area();
-            Area b = new Area();
-            Area c = new Area();
-            Area d = new Area();
-            Area e = new Area();
-            Area f = new Area();
-            a.setValue(data.get(m).getVisualFirst());
-            a.setName("一类");
-            list2.add(0,a);
-            b.setValue(data.get(m).getVisualSecond());
-            b.setName("二类");
-            list2.add(1,b);
-            c.setValue(data.get(m).getVisualThird());
-            c.setName("三类");
-            list2.add(2,c);
-            d.setValue(data.get(m).getVisualFourth());
-            d.setName("四类");
-            list2.add(3,d);
-            e.setValue(data.get(m).getVisualFifth());
-            e.setName("五类");
-            list2.add(4,e);
-            f.setValue(data.get(m).getVisualSixth());
-            f.setName("六类");
-            list2.add(5,f);
-            o.put("name", data.get(m).getBaseDistrict());
-            o.put("children",list2);
-            o2.put("data",o);
-            h =o2.values().toArray();
+        List<Child> list3 = new ArrayList<>();
+        HashMap<String, Object> haha= new HashMap<>();
+        List<BigScreenBase> data = new ArrayList<>();
+        if (cityCode.equals(610100) || cityCode.equals("610100")) {
+            data = bigScreenService.selectallArea(cityCode);
+            for (int m = 0; m < data.size(); m++) {
+                List<Area> list4 = new ArrayList<>();
+                Child child = new Child();
+                Area a = new Area();
+                Area b = new Area();
+                Area c = new Area();
+                Area d = new Area();
+                Area e = new Area();
+                Area f = new Area();
+                a.setValue(data.get(m).getVisualFirst());
+                a.setName("一类");
+                list4.add(0, a);
+                b.setValue(data.get(m).getVisualSecond());
+                b.setName("二类");
+                list4.add(1, b);
+                c.setValue(data.get(m).getVisualThird());
+                c.setName("三类");
+                list4.add(2, c);
+                d.setValue(data.get(m).getVisualFourth());
+                d.setName("四类");
+                list4.add(3, d);
+                e.setValue(data.get(m).getVisualFifth());
+                e.setName("五类");
+                list4.add(4, e);
+                f.setValue(data.get(m).getVisualSixth());
+                f.setName("六类");
+                list4.add(5, f);
+                child.setName(data.get(m).getBaseDistrict());
+                child.setChildren(list4);
+                 list3.add(0, child);
+            }
+                haha.put("data",list3);
         }
-        return h;
+
+            else {
+            data = bigScreenService.selectArea(cityCode);
+            for (int m = 0; m < data.size(); m++) {
+                Area a = new Area();
+                Area b = new Area();
+                Area c = new Area();
+                Area d = new Area();
+                Area e = new Area();
+                Area f = new Area();
+                a.setValue(data.get(m).getVisualFirst());
+                a.setName("一类");
+                list2.add(0, a);
+                b.setValue(data.get(m).getVisualSecond());
+                b.setName("二类");
+                list2.add(1, b);
+                c.setValue(data.get(m).getVisualThird());
+                c.setName("三类");
+                list2.add(2, c);
+                d.setValue(data.get(m).getVisualFourth());
+                d.setName("四类");
+                list2.add(3, d);
+                e.setValue(data.get(m).getVisualFifth());
+                e.setName("五类");
+                list2.add(4, e);
+                f.setValue(data.get(m).getVisualSixth());
+                f.setName("六类");
+                list2.add(5, f);
+                Child child =new Child();
+                child.setName(data.get(m).getBaseDistrict());
+                child.setChildren(list2);
+                list3.add(m,child);
+                haha.put("data",list3);
+            }
+        }
+        return haha;
     }
 }
