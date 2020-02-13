@@ -646,19 +646,11 @@
                  // console.log(data)
                  var option5 = myChart5.getOption();
                  // console.log(option5)
-                      option5.series[0].data =data;
+                      option5.series[0].data =data.data;
                       myChart5.setOption(option5);
              }
          })
 
-         // var path=cityCode+'5',
-         //     baseurl='../../json/'
-         // $.getJSON(baseurl + path +".json", function (data){
-         // console.log(data)
-         //     var option5 = myChart5.getOption();
-         //     option5.series[0].data =data.data;
-         //     myChart5.setOption(option5);
-         // })
      }
      Render1(610100);
      Render2(610100);
