@@ -27,14 +27,15 @@ public class TrafficService {
                 TrafficData a = new TrafficData();
                 String point = list.get(i).getBasePoint();
                 Double dis = 0.00;
-                String[] k={"b1c8c31729c23c2712acb0017eb915f6",
-                        "10ac57c56404c6713bc970dc8b1192ca",
-                        "57f8d8f793af2a1c5969aa4ea0160682"
-                        };
+//                String[] k={"b1c8c31729c23c2712acb0017eb915f6",
+//                        "10ac57c56404c6713bc970dc8b1192ca",
+//                        "57f8d8f793af2a1c5969aa4ea0160682"
+//                        };
                 // 返回一个0~(指定数-1)之间的随机值
                 Random random = new Random();
                 int ran = random.nextInt(2);
-                String key = k[ran];
+//                String key = k[ran];
+                String key ="57f8d8f793af2a1c5969aa4ea0160682";
                     if (point == null) {
                         dis = null;
                        // System.out.println("point为空");
@@ -53,7 +54,7 @@ public class TrafficService {
                      a.setBaseLatitude(list.get(i).getBaseLatitude());
                      //System.out.println(a.getBaseName()+a.getBasePoint()+a.getAccessibility());
                      after.add(i,a);
-                     // System.out.println(i+"名称"+after.get(i).getBaseName()+"可达性"+after.get(i).getAccessibility());
+                      System.out.println(i+"名称"+after.get(i).getBaseName()+"可达性"+after.get(i).getAccessibility());
                 }
 //        System.out.println("名称"+after.get(0).getBaseName()+"可达性"+after.get(0).getAccessibility());
         return after;
@@ -108,7 +109,7 @@ public class TrafficService {
             Double dis2 = 0.00;
             String[] k2={"98d7b2968923dcf4a0222fb07c1cdf67",
                     "ab26aae06df35bc076a928d722de40f8",
-                    "c81d5b57fe288af2c84e71a76ddd9340"
+                    "d764400433da3e6e2395c4406a293c9f"
             };
             // 返回一个0~(指定数-1)之间的随机值
             Random random2 = new Random();
@@ -145,10 +146,10 @@ public class TrafficService {
             TrafficData a3 = new TrafficData();
             String point3 = list3.get(m).getBasePoint();
             Double dis3 = 0.00;
-            String[] k3={"a6cf1b9378362a5e98a01dbd0dea44ab",
-                    "595119ffba7b522251c3b003fd8a9670",
-                    "1d54973156f6caa2a557dc5d6cdbea4c",
-                    "91ab4abc30069c37dc209791dd1ac224"
+            String[] k3={
+                    "91ab4abc30069c37dc209791dd1ac224",
+                    "d764400433da3e6e2395c4406a293c9f",
+                    "1d54973156f6caa2a557dc5d6cdbea4c"
             };
             // 返回一个0~(指定数-1)之间的随机值
             Random random3 = new Random();

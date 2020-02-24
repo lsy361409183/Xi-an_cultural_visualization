@@ -13,7 +13,7 @@
     <script type="text/javascript" src="../../libs/seajs-css.js"></script>
     <script type="text/javascript" src="../../libs/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../libs/ol.js"></script>
-    <script src="../../libs/echarts.js"></script>
+    <script type="text/javascript" src="../../libs/echarts.js"></script>
     <script type="text/javascript">seajs.use('../../js/abroad')</script>
 
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
@@ -92,10 +92,60 @@
 </head>
 <body>
 <div id="nav-tpl"></div>
-<div id="container" class="container">
+<div id="container" class="container" style="position:relative;z-index:-1;">
 
+    <div id="Histogram" style="width: 600px;height:400px;position: absolute;z-index:1;margin-left: 1200px;margin-top: 400px">
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('Histogram'));
+
+            // 指定图表的配置项和数据
+            var option = {
+                title: {
+                    text: '国内城市文地率对比柱状图',
+                    textStyle:{
+                        color: '#ffffff'//字体颜色
+                    }
+                },
+                tooltip: {},
+                legend: {
+                    data:['文地率'],
+                    textStyle:{
+                        color: '#ffffff'//字体颜色
+                    }
+                },
+                xAxis: {
+                    data: ["北京","天津","沈阳","西安","上海","郑州","深圳","太原","杭州","广州"],
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: '#ffffff',
+
+                            fontSize: 15,//字体大小
+                        }
+                    }
+                },
+                yAxis: {
+                    axisLabel : {
+                        textStyle: {
+                            color: '#ffffff'
+                        }
+                    }
+                },
+                series: [{
+                    name: '文地率',
+                    type: 'bar',
+                    data: [3.14,1.87, 0.87,11.76,0.82,0.75,0.44,6.22,1.72]
+                }]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        </script>
+    </div>
     <div id="info05" class="info">
-    <div class="main" id="main" style="width: 250px;height:200px;left:15px"></div></div>
+    <div class="main" id="main" style="width: 250px;height:200px;left:15px;"></div></div>
+
 
 
     <!--<div id="info01" class="info">-->

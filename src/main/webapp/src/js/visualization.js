@@ -797,7 +797,7 @@ define(function(require, exports, module){
      * */
     function getAreaData(areas, types) {
         var params = {
-            baseDistrict: areas === "'全部'" || areas.length===0? "'未央区','灞桥区','明城区','新城区','碑林区','莲湖区'" : areas.map(function (item) {
+            baseDistrict: areas === "'全部'" || areas.length===0? "'未央区','灞桥区','长安区','新城区','碑林区','雁塔区','莲湖区'" : areas.map(function (item) {
                 return "\'" + item + "\'"
             }).join(','),
             baseClassification: types === "'全部'" || types.length===0 ? "'visual_first','visual_second','visual_third','visual_fourth','visual_fifth','visual_sixth'": types.map(function (item) {
