@@ -10,11 +10,11 @@ define(function(require, exports, module) {
     var hot = new Handsontable(container, {
         data: [],
         exportFile: true,
-        colHeaders: ['区域', '地块编号', '编号', '名称', '区位', '规模', '建成年代', '平面形态', '文地分类', '依据', '文保单位', '备注'],
+        colHeaders: ['区域', '编号', '名称', '区位', '规模', '建成年代', '平面形态', '文地分类', '依据', '文保单位', '备注'],
         columns: [
             //表头与对应列的关系
             {data: 'baseDistrict'},
-            {data: 'baseDistrictId'},
+            // {data: 'baseDistrictId'},
             {data: 'baseId'},
             {data: 'baseName'},
             {data: 'baseRegion'},
