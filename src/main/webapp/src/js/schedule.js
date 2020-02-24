@@ -29,7 +29,7 @@ define(function(require, exports, module) {
         rowHeaders: false,
         width: 1150,
         minRows: 40,
-        minCols: 12,
+        minCols: 11,
         // colWidths: ['65', '84', '65', '65', '65', '65', '84', '84', '84', '65', '84', '65'],//x轴上的每行的距离
         rowWidths: 75,
         contextMenu: true,
@@ -126,7 +126,7 @@ define(function(require, exports, module) {
 
     $("#table td").on('click',function (){
         //取点击行的名称
-        var x = $(this).parent().find("td").eq(2).text()
+        var x = $(this).parent().find("td").eq(1).text()
         console.log(x)
         $.ajax({
             url:'/click',
