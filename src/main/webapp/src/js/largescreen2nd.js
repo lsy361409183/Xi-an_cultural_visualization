@@ -382,7 +382,7 @@
                  name: '内圈小',
                  type: 'gauge',
                  min:10,
-                 max:500000,
+                 max:2000,
                  center: ['50%', '70%'],
                  title : {
                      // 其余属性默认使用全局文本样式，详见TEXTSTYLE
