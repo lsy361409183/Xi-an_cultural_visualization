@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -27,15 +28,15 @@ public class TrafficService {
                 TrafficData a = new TrafficData();
                 String point = list.get(i).getBasePoint();
                 Double dis = 0.00;
-//                String[] k={"b1c8c31729c23c2712acb0017eb915f6",
-//                        "10ac57c56404c6713bc970dc8b1192ca",
-//                        "57f8d8f793af2a1c5969aa4ea0160682"
-//                        };
-                // 返回一个0~(指定数-1)之间的随机值
+                String[] k={"b1c8c31729c23c2712acb0017eb915f6",
+                        "10ac57c56404c6713bc970dc8b1192ca",
+                        "57f8d8f793af2a1c5969aa4ea0160682"
+                        };
+                 //返回一个0~(指定数-1)之间的随机值
                 Random random = new Random();
                 int ran = random.nextInt(2);
-//                String key = k[ran];
-                String key ="57f8d8f793af2a1c5969aa4ea0160682";
+                String key = k[ran];
+
                     if (point == null) {
                         dis = null;
                        // System.out.println("point为空");
@@ -54,10 +55,9 @@ public class TrafficService {
                      a.setBaseLatitude(list.get(i).getBaseLatitude());
                      //System.out.println(a.getBaseName()+a.getBasePoint()+a.getAccessibility());
                      after.add(i,a);
-                      System.out.println(i+"名称"+after.get(i).getBaseName()+"可达性"+after.get(i).getAccessibility());
+//                      System.out.println("名称"+after.get(i).getBaseName()+","+"可达性"+after.get(i).getAccessibility());
                 }
-//        System.out.println("名称"+after.get(0).getBaseName()+"可达性"+after.get(0).getAccessibility());
-        return after;
+                 return after;
     }
     //西安南站
     public List<TrafficData> selectPoint1() {
@@ -93,7 +93,7 @@ public class TrafficService {
             a1.setBaseLatitude(list1.get(j).getBaseLatitude());
             //System.out.println(a.getBaseName()+a.getBasePoint()+a.getAccessibility());
             after1.add(j,a1);
-           // System.out.println(j+"名称"+after1.get(j).getBaseName()+"可达性"+after1.get(j).getAccessibility());
+            System.out.println("名称"+after1.get(j).getBaseName()+"可达性"+after1.get(j).getAccessibility());
         }
 //        System.out.println("名称"+after.get(0).getBaseName()+"可达性"+after.get(0).getAccessibility());
         return after1;
@@ -133,7 +133,7 @@ public class TrafficService {
             a2.setBaseLatitude(list2.get(l).getBaseLatitude());
             //System.out.println(a.getBaseName()+a.getBasePoint()+a.getAccessibility());
             after2.add(l,a2);
-            // System.out.println(i+"名称"+after.get(i).getBaseName()+"可达性"+after.get(i).getAccessibility());
+             System.out.println("名称"+after2.get(l).getBaseName()+"可达性"+after2.get(l).getAccessibility());
         }
 //        System.out.println("名称"+after.get(0).getBaseName()+"可达性"+after.get(0).getAccessibility());
         return after2;
@@ -173,7 +173,7 @@ public class TrafficService {
             a3.setBaseLatitude(list3.get(m).getBaseLatitude());
             //System.out.println(a.getBaseName()+a.getBasePoint()+a.getAccessibility());
             after3.add(m,a3);
-             System.out.println(m+"名称"+after3.get(m).getBaseName()+"可达性"+after3.get(m).getAccessibility());
+             System.out.println("名称"+after3.get(m).getBaseName()+"可达性"+after3.get(m).getAccessibility());
         }
 //        System.out.println("名称"+after.get(0).getBaseName()+"可达性"+after.get(0).getAccessibility());
         return after3;
