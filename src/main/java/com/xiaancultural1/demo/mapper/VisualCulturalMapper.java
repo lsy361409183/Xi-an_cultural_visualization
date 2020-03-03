@@ -16,11 +16,17 @@ public interface VisualCulturalMapper {
     List<MapData> selectJson(@Param("mapId")Integer mapId);
     //查询全部Geojson
      List<geoBase> selectAllGeojson();
+    //区域和类别筛选Geojson
+    List<geoBase> selectFileterGeojson(@Param("baseDistrict")String baseDistrict,
+                                       @Param("baseClassification")String baseClassification);
+    //区域筛选Geojson
+    List<geoBase> selectRegionGeojson(@Param("baseDistrict")String baseDistrict);
+    //类别筛选Geojson
+    List<geoBase> selectTypeGeojson(@Param("baseClassification")String baseClassification);
+
 
     //查询出文地的基本信息：区域、类别、名称、位置、面积
     List<visualBase> selectAllInfo();
-    //区域和类别筛选Geojson
-
     //区域和类别筛选
     List<visualBase> selectInfo(@Param("baseDistrict")String baseDistrict,
                                 @Param("baseClassification")String baseClassification);

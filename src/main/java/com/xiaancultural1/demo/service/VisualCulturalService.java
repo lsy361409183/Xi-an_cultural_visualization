@@ -25,6 +25,20 @@ public class VisualCulturalService {
     public List<geoBase> selectAllGeojson(){
         return visualCulturalMapper.selectAllGeojson();
     }
+    //查询Geojson
+    public List<geoBase> selectFileterGeojson(String baseDistrict,String baseClassification){
+        return visualCulturalMapper.selectFileterGeojson(baseDistrict,baseClassification);
+    }
+    //区域筛选Geojson
+    public List<geoBase> selectRegionGeojson(String baseDistrict){
+        return visualCulturalMapper.selectRegionGeojson(baseDistrict);
+    }
+    //类别筛选Geojson
+    public List<geoBase> selectTypeGeojson(String baseClassification){
+        return visualCulturalMapper.selectTypeGeojson(baseClassification);
+    }
+
+
 
     //查询出文地的基本信息：区域、类别、名称、位置、面积
     public List<visualBase> selectAllInfo(){

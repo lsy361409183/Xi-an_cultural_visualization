@@ -88,42 +88,49 @@ public class VisualCulturalController {
     //区域和类别筛选
     @RequestMapping("/getFilterData")
     @ResponseBody
-    public List<visualBase> selectInfo(@RequestParam(value = "baseDistrict", required = false) String baseDistrict,
+    public BaseGeojson selectInfo(@RequestParam(value = "baseDistrict", required = false) String baseDistrict,
                                        @RequestParam(value = "baseClassification", required = false) String baseClassification,
                                        HttpServletRequest request) throws UnsupportedEncodingException {
         request.setCharacterEncoding("UTF-8");
          System.out.println("区域："+baseDistrict+"类别:"+baseClassification);
-
-//        String[] str=baseClassification.split(",");
-//        for(int i=0;i<str.length;i++ ){
-//            str[i] = str[i].replaceAll(str[i],"'" + str[i] + "'");
-//        }
-//        String s = "";
-//        for(int a=0;a<str.length;a++)
-//            for (String string: str) {
-//                s = s + str[a];
-//            }
-//        System.out.println("改变后的类别:" +s);
-        //   String diatrict ="'" . join("','", baseDistrict) . "'";
-//        String s = Pattern.compile
-//                ("\\b([\\w\\W])\\b").matcher(baseClassification.toString()).replaceAll("'$1'");
-//         List<String> b=  new ArrayList<String>();
-//        for (String string:baseClassification){
-//            b.add("'"+string+"'");
-//        }
-
-        //JSONParser(baseClassification);
+        //创建需要的数据格式
+        BaseGeojson data = new BaseGeojson();
+        List<visualBase> all =new ArrayList<>();
+        List<geoBase> geo = new ArrayList<>();
+        List<String>  json=new ArrayList<>();
         if (baseDistrict.equals("'全部'") && baseClassification.equals("'全部'")) {
-            return visualCulturalService.selectAllInfo();
+            //查询出所有的数据
+            all =visualCulturalService.selectAllInfo();
+            geo = visualCulturalService.selectAllGeojson();
+//        String geojson= StringUtils.strip(json.toString(), "[]");
+            data.setPointData(all);
+            data.setPointArea(json);
         } else if (baseDistrict.equals("'全部'")) {
-//            JSONArray array =JSONArray.fromObject(baseClassification);
-//            System.out.println("改变后的类别:" +array);
-            return visualCulturalService.selectInfoByType(baseClassification);
+            all =visualCulturalService.selectInfoByType(baseClassification);
+            geo = visualCulturalService.selectTypeGeojson(baseClassification);
+            System.out.println("类别进入了"+geo.get(0).getAreaGeojson());
         } else if (baseClassification.equals("'全部'")) {
-            return visualCulturalService.selectInfoByRegion(baseDistrict);
+            all =visualCulturalService.selectInfoByRegion(baseDistrict);
+            geo = visualCulturalService.selectRegionGeojson(baseDistrict);
+            System.out.println("区域进入了----------------------");
         } else {
-            return visualCulturalService.selectInfo(baseDistrict, baseClassification);
+            all =visualCulturalService.selectInfo(baseDistrict,baseClassification);
+            geo = visualCulturalService.selectFileterGeojson(baseDistrict,baseClassification);
+            System.out.println("类别区域进入了"+geo.get(0).getAreaGeojson());
         }
+        List<String> aaa= new ArrayList<>();
+        if (geo!=null) {
+            for (int i=0;i<geo.size();i++) {
+                String a = geo.get(i).getAreaGeojson();
+                aaa.add(i,a);
+            }
+        }
+        else{
+            aaa=null;
+        }
+        data.setPointData(all);
+        data.setPointArea(aaa);
+        return data;
     }
 
     /**
@@ -153,7 +160,6 @@ public class VisualCulturalController {
     @ResponseBody
     public List<HistogramData> selectAreaData(@Param("baseDistrict")String baseDistrict,
                                        @Param("baseClassification")String baseClassification){
-        System.out.println("地区："+baseDistrict+"\n"+"类别："+baseClassification);
         return visualCulturalService.selectAreaData(baseDistrict,baseClassification);
     }
 }
