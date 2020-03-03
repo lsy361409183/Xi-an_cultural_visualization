@@ -1,4 +1,10 @@
-#select-conditions .input-group{
+#searchType0,#searchType1{
+    height: 100%;
+}
+.radio-inline{
+    margin-top: 1.25rem;
+}
+.radio-inline+.radio-inline{
     margin-top: 1.25rem;
 }
 #select-conditions .select-row{

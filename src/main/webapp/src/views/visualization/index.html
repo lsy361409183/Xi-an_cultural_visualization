@@ -14,6 +14,8 @@
     <script type="text/javascript" src="../../libs/turf.min.js"></script>
     <script type="text/javascript" src="../../libs/echarts.js"></script>
     <script type="text/javascript" src="../../js/xianJson2.js"></script>
+    <script type="text/javascript" src="../../js/epanggong1.js"></script>
+    <script type="text/javascript" src="../../js/daminggong.js"></script>
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/reset.css" />
     <link rel="stylesheet" href="../../libs/css/ol.css" />
@@ -28,6 +30,12 @@
         <div class="col-md-3 col-xs-12" id="select-conditions">
             <div class="row">
                 <div class="col-md-12">
+                    <label class="radio-inline">
+                        <input type="radio" name="searchType" id="searchType0" value="0"> 按名称
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="searchType" id="searchType1" value="1"> 按片区
+                    </label>
                     <div class="input-group">
                         <input id="POI" type="text" class="form-control" placeholder="请输入...">
                         <span class="input-group-btn">

@@ -34,6 +34,8 @@ define(function(require, exports, module){
         pointData = [],
         allPointData = [],
         cultural_mapData = {};
+    var areaJsonData = []; // 片区geoJson数据
+    var areaJsonLayer = null; // 片区geoJson图层
     var isShowImageIcon = false; // 是否显示图形化图标
     var isBoxSelect = false; // 是否是框选
     var boxSelectData = []; // 框选数据
@@ -146,7 +148,7 @@ define(function(require, exports, module){
      * render             传入地图渲染函数renderPoint()
      *
      * */
-    function getPointData(areas, types, render) {
+    function getPointData(areas, types, render, areaRender) {
         // 构造请求参数，在每一项上加单引号
         var params = {
             baseDistrict: areas === "'全部'"? areas : areas.map(function (item) {
@@ -163,8 +165,9 @@ define(function(require, exports, module){
             data: params,
             success: function (res) {
                 console.log('文地点res==============',res);
-                pointData = res;               // 返回数据由全局变量pointData接收，以便后续使用
-                render(res, isShowImageIcon)
+                pointData = res.pointData;               // 返回数据由全局变量pointData接收，以便后续使用
+                render(res.pointData, isShowImageIcon);
+                areaRender(res.pointArea)
             }
         })
     }
@@ -197,6 +200,53 @@ define(function(require, exports, module){
     }
 
     /**
+     * 渲染相应的片区
+     * data
+     * */
+    function renderAreaJson(data){
+        if (areaJsonLayer !=null){
+            map.removeLayer(areaJsonLayer);
+        }
+        var areaHighlight = new ol.style.Style({
+            fill: new ol.style.Fill({               //填充样式
+                color: 'rgba(255,255,255, 0.2)'
+            }),
+            stroke: new ol.style.Stroke({           //线样式
+                color: 'rgba(0,255,255)',
+                width: 2
+            }),
+            image: new ol.style.Circle({            //点样式
+                radius: 7,
+                fill: new ol.style.Fill({
+                    color: '#ffcc33'
+                })
+            }),
+            text: new ol.style.Text({
+                font: '16px Calibri,sans-serif',
+                fill: new ol.style.Fill({
+                    color: '#000'
+                })
+            })
+        });
+
+        // 转换成片区geojson数据的集合
+        var tempAreaJson = [];
+        data.map(function (item) {
+            // geoJson转成features 是一个数组
+            var geoArr = (new ol.format.GeoJSON()).readFeatures(item);
+            tempAreaJson = tempAreaJson.concat(geoArr)
+        });
+        areaJsonLayer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: tempAreaJson
+            }),
+            style: areaHighlight,
+            zIndex: 1
+        });
+        map.addLayer(areaJsonLayer);
+    }
+
+    /**
      * 渲染西安底图
      * data               西安geojson数据
      *
@@ -219,11 +269,11 @@ define(function(require, exports, module){
 
     var xianJsonStyle = new ol.style.Style({
         fill: new ol.style.Fill({               //填充样式
-            color: 'rgba(255,255,255, 0.5)'
+            color: 'rgba(255,255,255, 0)'
         }),
         stroke: new ol.style.Stroke({           //线样式
-            color: 'rgba(145,199,174)',
-            width: 2
+            color: 'rgba(0,0,0)',
+            width: 1
         }),
         image: new ol.style.Circle({            //点样式
             radius: 7,
@@ -517,7 +567,7 @@ define(function(require, exports, module){
 
     // 初始化加载所需图层
     getMapGeoJson(renderMap);
-    getPointData("'全部'", "'全部'", renderPoint);
+    getPointData("'全部'", "'全部'", renderPoint, renderAreaJson);
     getAllPointData("'全部'", "'全部'");
     // getCulturalMap(renderCulturalMap);
 
@@ -554,13 +604,13 @@ define(function(require, exports, module){
             // 控制复选框和全选的操作联动
             if (areaCheckedVal.length === 7) {
                 $('#area-all').prop('checked', true);
-                getPointData("'全部'", types, renderPoint)
+                getPointData("'全部'", types, renderPoint, renderAreaJson)
             } else if (areaCheckedVal.length === 0) {
                 $('#area-all').prop('checked', false);
-                getPointData("'全部'",types, renderPoint)
+                getPointData("'全部'",types, renderPoint, renderAreaJson)
             } else {
                 $('#area-all').prop('checked', false);
-                getPointData(areaCheckedVal, types, renderPoint)
+                getPointData(areaCheckedVal, types, renderPoint, renderAreaJson)
             }
         }
     });
@@ -577,13 +627,13 @@ define(function(require, exports, module){
         // 控制复选框和全选的操作联动
         if (typeCheckedVal.length === 6) {
             $('#type-all').prop('checked', true);
-            getPointData(areas, "'全部'", renderPoint)
+            getPointData(areas, "'全部'", renderPoint, renderAreaJson)
         } else if (typeCheckedVal.length === 0) {
             $('#type-all').prop('checked', false);
-            getPointData(areas,"'全部'", renderPoint)
+            getPointData(areas,"'全部'", renderPoint, renderAreaJson)
         } else {
             $('#type-all').prop('checked', false);
-            getPointData(areas,typeCheckedVal, renderPoint)
+            getPointData(areas,typeCheckedVal, renderPoint, renderAreaJson)
         }
     });
 
@@ -597,7 +647,7 @@ define(function(require, exports, module){
                 ? "'全部'" : typeCheckedValTemp;
 
             console.log('点击区域全选-类型传参==============', typeCheckedVal)
-            getPointData("'全部'", typeCheckedVal, renderPoint);
+            getPointData("'全部'", typeCheckedVal, renderPoint, renderAreaJson);
             getAreaData(valChange('area-districts'),valChange('area-types'));
         }
         else {
@@ -613,7 +663,7 @@ define(function(require, exports, module){
             ? "'全部'" : areaCheckedValTemp;
 
         console.log('点击类型全选-区域传参==============',areaCheckedVal)
-        getPointData(areaCheckedVal, "'全部'", renderPoint);
+        getPointData(areaCheckedVal, "'全部'", renderPoint, renderAreaJson);
         getAreaData(valChange('area-districts'),valChange('area-types'));
 
     });
@@ -624,34 +674,64 @@ define(function(require, exports, module){
         $('.area-types').prop('checked', true);
         $('#area-all').prop('checked', true);
         $('#type-all').prop('checked', true);
+        $('#searchType0').prop('checked', true);
     })();
 
     // POI搜索
     // 请求POI拿到文地数据
-    function POISelect(render) {
+    function POISelect(searchType) {
         var poi=$('#POI').val();
 
         var areaCheckedVal = valChange('area-districts');
         var area=areaCheckedVal.map(function (item) {
             return "\'" + item + "\'"}).join(',')
-        var params = {
-            baseDistrict: area,
-            baseName: poi
-        };
+        var params = {};
+        if (searchType === "0"){
+            params = {
+                baseDistrict: area,
+                baseName: poi
+            }
+            POISelectByName(params, renderPoint, renderAreaJson)
+        } else {
+            params = {
+                baseGeo:poi
+            }
+            POISelectByAreaJson(params, renderPoint, renderAreaJson)
+        }
+
+    }
+    // 通过名称搜索
+    function POISelectByName(params, render, areaRender){
         $.ajax({
             type:"get",
             url:"/getSearchData",
             data: params,
             dataType:"json",
             success:function(res){
-                pointData = res;
-                render(res)
+                pointData = res.pointData;
+                render(res.pointData);
+                areaRender(res.pointArea);
+            }
+        });
+    }
+    // 通过片区搜索
+    function POISelectByAreaJson(params, render, areaRender){
+        $.ajax({
+            type:"get",
+            url:"/getSearchData",
+            data: params,
+            dataType:"json",
+            success:function(res){
+                pointData = res.pointData;
+                render(res.pointData);
+                areaRender(res.pointArea);
             }
         });
     }
     // 点击搜索，调用方法
     $('#POIName').on('click',function (){
-        POISelect(renderPoint)
+        var searchType = $('input[type="radio"]:checked').val();
+        POISelect(searchType);
     });
     // 改变焦点 类别变暗
     $("#POI").on('input propertychange',function(){
@@ -664,7 +744,8 @@ define(function(require, exports, module){
             $('.area-types').prop("disabled",false);
             $('#type-all').prop("disabled",false);
         }
-    })
+    });
+
 
     /**
      * 添加信息窗体
