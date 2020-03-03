@@ -49,4 +49,5 @@ public class visualBase {
     private double baseArea;
     private String baseClassification;
 
+
 }

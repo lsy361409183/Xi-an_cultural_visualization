@@ -2,9 +2,11 @@ package com.xiaancultural1.demo.mapper;
 
 import com.xiaancultural1.demo.pojo.HistogramData;
 import com.xiaancultural1.demo.pojo.MapData;
+import com.xiaancultural1.demo.pojo.geoBase;
 import com.xiaancultural1.demo.pojo.visualBase;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -12,8 +14,13 @@ import java.util.List;
 public interface VisualCulturalMapper {
     //加载地图
     List<MapData> selectJson(@Param("mapId")Integer mapId);
+    //查询全部Geojson
+     List<geoBase> selectAllGeojson();
+
     //查询出文地的基本信息：区域、类别、名称、位置、面积
     List<visualBase> selectAllInfo();
+    //区域和类别筛选Geojson
+
     //区域和类别筛选
     List<visualBase> selectInfo(@Param("baseDistrict")String baseDistrict,
                                 @Param("baseClassification")String baseClassification);
@@ -22,6 +29,8 @@ public interface VisualCulturalMapper {
     //类别筛选
     List<visualBase> selectInfoByType(@Param("baseClassification")String baseClassification);
 
+
+    //模糊查询Geojson
     // 模糊查询文地点
     List<visualBase> selectInfoBySearchText(@Param("baseName") String baseName,
                                             @Param("baseDistrict") String baseDistrict);

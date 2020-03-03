@@ -1,7 +1,9 @@
 package com.xiaancultural1.demo.controller;
 
+import com.xiaancultural1.demo.mapper.VisualCulturalMapper;
 import com.xiaancultural1.demo.pojo.HistogramData;
 import com.xiaancultural1.demo.pojo.MapData;
+import com.xiaancultural1.demo.pojo.geoBase;
 import com.xiaancultural1.demo.pojo.visualBase;
 import com.xiaancultural1.demo.service.VisualCulturalService;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +24,31 @@ import java.util.stream.Collectors;
 public class VisualCulturalController {
     @Autowired(required = true)
     private VisualCulturalService visualCulturalService;
+
+    //设置传参的对象
+    public class BaseGeojson{
+
+        private List<visualBase> pointData;
+
+        public List<visualBase> getPointData() {
+            return pointData;
+        }
+
+        public void setPointData(List<visualBase> pointData) {
+            this.pointData = pointData;
+        }
+
+
+        public List<String> getPointArea() {
+            return pointArea;
+        }
+
+        public void setPointArea(List<String> pointArea) {
+            this.pointArea = pointArea;
+        }
+
+        private List<String> pointArea;
+    }
 
     //拿到geojson，加载地图
     @RequestMapping("/getMapData")
@@ -33,13 +61,28 @@ public class VisualCulturalController {
         // return visualCulturalService.selectJson(mapId);
     }
 
-    ;
+
 
     //查询出文地的基本信息：区域、类别、名称、位置、面积
     @RequestMapping("/getVisualData")
     @ResponseBody
-    public List<visualBase> selectAllInfo() {
-        return visualCulturalService.selectAllInfo();
+    public BaseGeojson selectAllInfo() {
+        //查询出所有的数据
+        List<visualBase> all =visualCulturalService.selectAllInfo();
+        List<geoBase> geo = visualCulturalService.selectAllGeojson();
+        List<String> json = geo.stream().map(geoBase::getAreaGeojson).collect(Collectors.toList());
+//        String geojson= StringUtils.strip(json.toString(), "[]");
+        //创建需要的数据格式
+        BaseGeojson data = new BaseGeojson();
+//        List<String> aaa= new ArrayList<>();
+//        for (int i=0;i<geo.size();i++) {
+//            String a = geo.get(i).getAreaGeojson();
+//            aaa.add(i,a);
+//        }
+        data.setPointData(all);
+        data.setPointArea(json);
+        return data;
+
     }
 
     //区域和类别筛选

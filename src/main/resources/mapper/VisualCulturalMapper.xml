@@ -7,6 +7,7 @@
         <result column="base_point"  property="basePoint"/>
         <result column="base_district" property="baseDistrict"/>
         <result column="base_classification" property="baseClassification"/>
+        <result column="area_geojson" property="areaGeojson"/>
     </resultMap>
     <!--//查询出文地的基本信息：区域、类别、名称、位置、面积-->
     <select id = "selectAllInfo" resultMap="VisualBase">

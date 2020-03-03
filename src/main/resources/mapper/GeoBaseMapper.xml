@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaancultural1.demo.mapper.VisualCulturalMapper">
+    <resultMap id="geo" type="com.xiaancultural1.demo.pojo.geoBase">
+        <result column="area_geojson" property="areaGeojson"/>
+    </resultMap>
+
+    <!--//查询出文地的Geojson-->
+    <select id = "selectAllGeojson" resultMap="geo">
+     select DISTINCT tb_area_geojson.area_geojson from public.tb_base_data
+left join tb_area_cultural on tb_base_data.base_id=tb_area_cultural.culatural_id
+left join tb_area_geojson on tb_area_geojson.area_name=tb_area_cultural.culatural_area
+where tb_area_geojson.area_geojson is not null ;
+    </select>
+
+    <!--&lt;!&ndash;//筛选区域、类别&ndash;&gt;-->
+    <!--<select id = "selectInfo" resultMap="VisualBase">-->
+       <!--select base_name,base_area,base_point,base_district,base_classification from public."tb_base_data"-->
+        <!--where base_district in(${baseDistrict}) and base_classification in (${baseClassification});-->
+    <!--</select>-->
+    <!--&lt;!&ndash;//筛选区域&ndash;&gt;-->
+    <!--<select id = "selectInfoByRegion" resultMap="VisualBase">-->
+       <!--select base_name,base_area,base_point,base_district,base_classification from public."tb_base_data"-->
+        <!--where base_district in(${baseDistrict}) ;-->
+    <!--</select>-->
+    <!--&lt;!&ndash;//筛选类别&ndash;&gt;-->
+    <!--<select id = "selectInfoByType" resultMap="VisualBase">-->
+       <!--select base_name,base_area,base_point,base_district,base_classification from public."tb_base_data"-->
+        <!--where  base_classification in (${baseClassification});-->
+    <!--</select>-->
+    <!--&lt;!&ndash;// 模糊查询&ndash;&gt;-->
+    <!--<select id="selectInfoBySearchText" resultMap="VisualBase">-->
+        <!--select base_name,base_area,base_point,base_district,base_classification from public."tb_base_data"-->
+        <!--where base_name like '%${baseName}%' and base_district in (${baseDistrict});-->
+    <!--</select>-->
+</mapper>
