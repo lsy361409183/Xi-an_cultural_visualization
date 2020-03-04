@@ -28,19 +28,16 @@
        select base_name,base_area,base_point,base_district,base_classification from public."tb_base_data"
         where  base_classification in (${baseClassification});
     </select>
-    <!--// 模糊查询-->
+    <!--// 按名称模糊查询-->
     <select id="selectInfoBySearchText" resultMap="VisualBase">
-        <!--<choose>-->
-            <!--<when test='baseDistrict == ""'>-->
-                <!--select base_name,base_area,base_point,base_district,base_classification from public."tb_base_data"-->
-                <!--where base_name like '%${baseName}%';-->
-            <!--</when>-->
-            <!--<otherwise>-->
-                <!--select base_name,base_area,base_point,base_district,base_classification from public."tb_base_data"-->
-                <!--where base_name like '%${baseName}%' and base_district in (${baseDistrict});-->
-            <!--</otherwise>-->
-        <!--</choose>-->
         select base_name,base_area,base_point,base_district,base_classification from public."tb_base_data"
         where base_name like '%${baseName}%' and base_district in (${baseDistrict});
     </select>
+    <!--// 按片区模糊查询-->
+    <select id="selecPointByRegion" resultMap="VisualBase">
+        select tb_base_data.base_name,tb_base_data.base_area,tb_base_data.base_point,tb_base_data.base_district,tb_base_data.base_classification from public.tb_base_data
+left join tb_area_cultural on tb_base_data.base_id=tb_area_cultural.culatural_id
+left join tb_area_geojson on tb_area_geojson.area_name=tb_area_cultural.culatural_area
+where tb_area_geojson.area_geojson is not null and tb_area_geojson.area_name like '%${baseGeo}%';
+</select>
 </mapper>

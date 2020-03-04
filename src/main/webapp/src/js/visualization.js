@@ -718,7 +718,7 @@ define(function(require, exports, module){
     function POISelectByAreaJson(params, render, areaRender){
         $.ajax({
             type:"get",
-            url:"/getSearchData",
+            url:"/getAreaSearchData",
             data: params,
             dataType:"json",
             success:function(res){

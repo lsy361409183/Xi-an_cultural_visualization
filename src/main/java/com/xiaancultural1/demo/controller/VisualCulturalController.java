@@ -108,15 +108,12 @@ public class VisualCulturalController {
         } else if (baseDistrict.equals("'全部'")) {
             all =visualCulturalService.selectInfoByType(baseClassification);
             geo = visualCulturalService.selectTypeGeojson(baseClassification);
-            System.out.println("类别进入了"+geo.get(0).getAreaGeojson());
         } else if (baseClassification.equals("'全部'")) {
             all =visualCulturalService.selectInfoByRegion(baseDistrict);
             geo = visualCulturalService.selectRegionGeojson(baseDistrict);
-            System.out.println("区域进入了----------------------");
         } else {
             all =visualCulturalService.selectInfo(baseDistrict,baseClassification);
             geo = visualCulturalService.selectFileterGeojson(baseDistrict,baseClassification);
-            System.out.println("类别区域进入了"+geo.get(0).getAreaGeojson());
         }
         List<String> aaa= new ArrayList<>();
         if (geo!=null) {
@@ -140,12 +137,49 @@ public class VisualCulturalController {
      * */
     @RequestMapping("/getSearchData")
     @ResponseBody
-    public List<visualBase> selectInfoBySearchText(@RequestParam(value = "baseName", required = false) String baseName,
+    public BaseGeojson selectInfoBySearchText(@RequestParam(value = "baseName", required = false) String baseName,
                                                    @RequestParam(value = "baseDistrict", required = false) String baseDistrict,
                                                    HttpServletRequest request) throws UnsupportedEncodingException {
         request.setCharacterEncoding("UTF-8");
-        return visualCulturalService.selectInfoBySearchText(baseName, baseDistrict);
+        //根据关键字查询文地点的信息
+        List<visualBase> point = visualCulturalService.selectInfoBySearchText(baseName, baseDistrict);
+        //根据关键字查询所在在Geojson片区
+        List<geoBase> geo = visualCulturalService.selectGeoBySearchText(baseName,baseDistrict);
+        //放进对象中
+        List<String> json = geo.stream().map(geoBase::getAreaGeojson).collect(Collectors.toList());
+//        String geojson= StringUtils.strip(json.toString(), "[]");
+        //创建需要的数据格式
+        BaseGeojson data = new BaseGeojson();
+//        List<String> aaa= new ArrayList<>();
+//        for (int i=0;i<geo.size();i++) {
+//            String a = geo.get(i).getAreaGeojson();
+//            aaa.add(i,a);
+//        }
+        data.setPointData(point);
+        data.setPointArea(json);
+        return data;
     }
+    /**
+     * 关键字模糊查询
+     * baseName             搜索关键字
+     * baseDistrict           片区
+     * */
+    @RequestMapping("/getAreaSearchData")
+    @ResponseBody
+    public BaseGeojson selectGeoByArea(@RequestParam(value = "baseGeo", required = false) String baseGeo){
+        //根据关键字查询文地点的信息
+        List<visualBase> point = visualCulturalService.selecPointByRegion(baseGeo);
+        //根据关键字查询所在在Geojson片区
+        List<geoBase> geo =visualCulturalService.selectGeoByRegion(baseGeo);
+        //放进对象中
+        List<String> json = geo.stream().map(geoBase::getAreaGeojson).collect(Collectors.toList());
+        BaseGeojson data = new BaseGeojson();
+        data.setPointData(point);
+        data.setPointArea(json);
+        return data;
+    }
+
+
 
     //堆叠柱状图
     @RequestMapping("/getHistogramData")

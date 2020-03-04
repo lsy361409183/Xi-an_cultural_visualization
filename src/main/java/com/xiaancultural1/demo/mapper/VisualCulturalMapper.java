@@ -35,9 +35,16 @@ public interface VisualCulturalMapper {
     //类别筛选
     List<visualBase> selectInfoByType(@Param("baseClassification")String baseClassification);
 
+    //按片区模糊查询geo
+    List<geoBase> selectGeoByRegion(@Param("baseGeo") String baseGeo);
+    //按片区模糊查询文地点
+    List<visualBase> selecPointByRegion(@Param("baseGeo") String baseGeo);
 
-    //模糊查询Geojson
-    // 模糊查询文地点
+    //按名称模糊查询Geojson
+    List<geoBase> selectGeoBySearchText(@Param("baseName") String baseName,
+                                        @Param("baseDistrict") String baseDistrict);
+
+    // 按名称模糊查询文地点
     List<visualBase> selectInfoBySearchText(@Param("baseName") String baseName,
                                             @Param("baseDistrict") String baseDistrict);
     //堆叠柱状图

@@ -57,6 +57,21 @@ public class VisualCulturalService {
         return visualCulturalMapper.selectInfoByType(baseClassification);
     }
 
+    //按片区模糊查询geo
+    public List<geoBase> selectGeoByRegion(@Param("baseGeo") String baseGeo){
+        return visualCulturalMapper.selectGeoByRegion(baseGeo);
+    }
+    //按片区模糊查询文地点
+    public List<visualBase> selecPointByRegion(@Param("baseGeo") String baseGeo){
+        return visualCulturalMapper.selecPointByRegion(baseGeo);
+    }
+
+
+    //按名称模糊查询Geojson
+    public List<geoBase> selectGeoBySearchText(String baseName, String baseDistrict){
+        return visualCulturalMapper.selectGeoBySearchText(baseName,baseDistrict);
+    }
+
     // 模糊查询
     public List<visualBase> selectInfoBySearchText(String baseName, String baseDistrict){
         return visualCulturalMapper.selectInfoBySearchText(baseName, baseDistrict);
