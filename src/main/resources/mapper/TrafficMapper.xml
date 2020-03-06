@@ -12,7 +12,7 @@
 
     <!--查询出所有的文地的经纬度点-->
     <select id="selectPoint" resultMap="Point">
-                select base_name,base_point,base_longitude,base_latitude from public."tb_base_data"
+                select base_name,base_point,base_longitude,base_latitude from public."tb_base_data" order by base_id;
     </select>
 
 </mapper>

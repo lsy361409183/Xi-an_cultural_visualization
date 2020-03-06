@@ -53,4 +53,15 @@ public class TrafficController {
 
         return picStr;
     }
+
+    // KDE
+    @RequestMapping("/getWGSPoint")
+    @ResponseBody
+    public List<String> selectWGS() {
+        List<String> a =trafficService.transform();
+        for (String b:a){
+            System.out.println(b);
+        }
+        return a;
+    }
 }

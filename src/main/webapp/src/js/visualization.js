@@ -50,7 +50,7 @@ define(function(require, exports, module){
     // 设置地图显示中心点、默认缩放级别、缩放级别限制
     var view = new ol.View({
         projection: projection,
-        center:  [108.936229,34.26215],
+        center:  [108.947347,34.275941],
         zoom:12,
         maxZoom:25,
         minZoom:5

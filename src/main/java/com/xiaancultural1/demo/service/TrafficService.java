@@ -5,19 +5,19 @@ import com.xiaancultural1.demo.pojo.TrafficData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static com.xiaancultural1.demo.controller.GetDistance.getDistance;
 import static com.xiaancultural1.demo.controller.ImportKDE.getKDE;
+import static com.xiaancultural1.demo.transform.CoordinateUtil.getWgs84xy;
 
 @Service
 public class TrafficService {
     @Autowired
     private TrafficMapper trafficMapper;
     //查询出所有的文地的经纬度点和可达性
+
+
 
     //西安站
     public List<TrafficData> selectPoint() {
@@ -202,4 +202,25 @@ public class TrafficService {
         picStr = getKDE(lngList,latList);
         return picStr;
     }
+
+    //坐标转换
+    public List<String> transform()throws NullPointerException{
+        List<TrafficData> list = trafficMapper.selectPoint();
+        List<String> a = new ArrayList<>();
+        String b =null;
+        for(int i=0;i<list.size();i++) {
+            if(list.get(i).getBaseLongitude()==null&&list.get(i).getBaseLatitude()==null)
+            {
+                a.add(i,"0,0");
+            }
+            else {
+               b = getWgs84xy(list.get(i).getBaseLongitude(), list.get(i).getBaseLatitude());
+                a.add(i, b);
+               // System.out.println("经度" + list.get(i).getBaseLongitude() + "纬度" + list.get(i).getBaseLatitude());
+            }
+            //System.out.println(list.get(i).getBaseName()+"转换后的经纬度:" + b);
+        }
+        return a;
+    }
 }
+
