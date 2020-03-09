@@ -194,7 +194,7 @@ define(function(require, exports, module){
             dataType: 'json',
             data: params,
             success: function (res) {
-                allPointData = res;             // 返回数据由全局变量allPointData接收，以便框选使用
+                allPointData = res.pointData;             // 返回数据由全局变量allPointData接收，以便框选使用
             }
         })
     }
@@ -762,16 +762,34 @@ define(function(require, exports, module){
     // 改变焦点 类别变暗
     $("#POI").on('input propertychange',function(){
         var poi=$('#POI').val();
+        var searchType = $('input[type="radio"]:checked').val();
         if(!(poi == null || poi === "" || poi === undefined)) {
-            $('.area-types').prop("disabled",true);
-            $('#type-all').prop("disabled",true);
+            if (searchType === "0") {
+                $('.area-types').prop("disabled",true);
+                $('#type-all').prop("disabled",true);
+            } else {
+                $('.area-types').prop("disabled",true);
+                $('#type-all').prop("disabled",true);
+                $('.area-districts').prop("disabled",true);
+                $('#area-all').prop("disabled",true);
+            }
+
         }
         else {
             $('.area-types').prop("disabled",false);
             $('#type-all').prop("disabled",false);
+            $('.area-districts').prop("disabled",false);
+            $('#area-all').prop("disabled",false);
         }
-    });
 
+    });
+    $('input[type="radio"]').on("click",function(){
+        $('#POI').val("");
+        $('.area-types').prop("disabled",false);
+        $('#type-all').prop("disabled",false);
+        $('.area-districts').prop("disabled",false);
+        $('#area-all').prop("disabled",false);
+    });
 
     /**
      * 添加信息窗体
@@ -1014,7 +1032,18 @@ define(function(require, exports, module){
 
     $('#draw-button-toggle').bind('click', function (e) {
         e.preventDefault();
+        // 清除地图上存在的高亮
+        if (highlight) {
+            overlay.setPosition(undefined);
+            closer.blur();
+            featureOverlay.getSource().removeFeature(highlight);  // 清除高亮样式
+            highlight = null;
+        }
+
         map.removeLayer(cultural_point);     // 清空点图层
+        map.removeLayer(areaJsonLayer);
+
+
 
         $("#draw-button-box").slideToggle(1000,function () {
             var btnDisplay = $('#draw-button-box').css('display');
@@ -1027,7 +1056,7 @@ define(function(require, exports, module){
                 $('#type-all').prop('disabled', true);
                 isBoxSelect = true;   // 立一个flag，为图形化标注做准备
             } else {
-                getPointData("'全部'", "'全部'", renderPoint);
+                getPointData("'全部'", "'全部'", renderPoint, renderAreaJson);
                 drawSource.clear();
                 $('.area-districts').prop('disabled', false);
                 $('.area-types').prop('disabled', false);
