@@ -105,8 +105,8 @@
              echarts.registerMap(mapName, data);
              var option = {
                  title:{
-                     x:'40%',
-                     Y:'30%',
+                     left:'center',
+                    top:'4%',
                      text: '西安文地分布',
                      textStyle:{
                          color:'#1e90ff'
@@ -114,47 +114,24 @@
                  },
                  visualMap: {
                      type: 'piecewise',
-                     pieces: [{
-                         max: 1,
-                         label:'没数据',
-                         color:'#83c2ff',
-                         // '#fffb74'
-                     },
-                         {
-                             min: 1,
-                             max: 999,
-                             label:'文地面积<100万顷',
-                             color:'#56acff'
-                             // '#ffe475'
-                         },
-                         // {
-                         //     min: 100,
-                         //     max: 999,
-                         //     label:'文地面积<1000万顷',
-                         //     color: '#1e90ff'
-                         //     // '#ffda42'
-                         // },
-                         {
-                             min: 1000,
-                             max: 4999,
-                             label:'文地面积<5000万顷',
-                             color: '#4169E1'
-                         },
-                         {
-                             min: 4000,
-                             max: 9999,
-                             label:'文地面积<10000万顷',
-                             color:'#0000FF'
-                             // '#ffa303'
-                         },
-                         {
-                             min: 10000,
-                             label:'文地面积>10000万顷',
-                             color: '#00008B'
-                             // '#ff6903'
-                         },
+                     // min:0,
+                     // max: 600,
+                     // text:['600公顷','0'],
+                     // realtime: false,
+                     // calculable : true,
+                     color: [
+                         '#1352b5',
+                         '#4169E1',
+                         '#40acff',
+                         '#81c2ff'],
+                     align:'right',
+                     bottom:'5%',
+                     pieces:[
+                         {min: 300, max: 600},
+                         {min: 100, max: 300},
+                         {min: 1, max: 100},
+                         {max: 1}
                      ],
-                     // color: '#fff',
                      textStyle: {
                          color: '#1352b5',
                      },
@@ -203,14 +180,14 @@
                              {name: "鄠邑区", value: 0, cityCode: "610118", level: "district"},
                              {name: "高陵区", value: 0, cityCode: "610117", level: "district"},
                              {name: "蓝田县", value: 0, cityCode: "610122", level: "district"},
-                             {name: "长安区", value: 0, cityCode: "610116", level: "district"},
-                             {name: "未央区", value: 350774.93, cityCode: "610112", level: "district"},
-                             {name: "莲湖区", value: 36.41, cityCode: "610104", level: "district"},
+                             {name: "长安区", value: 13.14, cityCode: "610116", level: "district"},
+                             {name: "未央区", value: 172.83, cityCode: "610112", level: "district"},
+                             {name: "莲湖区", value: 34.69, cityCode: "610104", level: "district"},
                              {name: "周至县", value: 0, cityCode: "610124", level: "district"},
-                             {name: "灞桥区", value: 2087.91, cityCode: "610111", level: "district"},
-                             {name: "新城区", value: 371.10, cityCode: "610102", level: "district"},
-                             {name: "碑林区", value: 84.11, cityCode: "610103", level: "district"},
-                             {name: "雁塔区", value: 518.56, cityCode: "610113", level: "district"},
+                             {name: "灞桥区", value: 118.83, cityCode: "610111", level: "district"},
+                             {name: "新城区", value: 67.2, cityCode: "610102", level: "district"},
+                             {name: "碑林区", value: 114.78, cityCode: "610103", level: "district"},
+                             {name: "雁塔区", value: 502.78, cityCode: "610113", level: "district"},
                          ],
                  }]
              };
@@ -330,7 +307,7 @@
          var option1 = {
          // backgroundColor: '#f0f2f5',
          title: {
-             text: '文地总面积(单位：万顷)',
+             text: '文地总面积(单位：公顷)',
              x:'10%',
              y:'5%',
              textStyle:{
@@ -480,7 +457,7 @@
                 ],
                 series : [
                     {
-                        name:'文地面积(万顷)',
+                        name:'文地面积(公顷)',
                         type:'bar',
                         barWidth: '60%',
                         data:'',
