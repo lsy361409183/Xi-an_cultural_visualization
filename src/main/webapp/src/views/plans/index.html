@@ -33,12 +33,10 @@
 <center>
 <div class="swiper-container">
     <div class="swiper-wrapper">
-        <div class="swiper-slide"><img class="history-img" src="../../static/images/1.jfif"/></div>
-        <div class="swiper-slide"><img class="history-img" src="../../static/images/2.jfif"/></div>
-        <div class="swiper-slide"><img class="history-img" src="../../static/images/3.jfif"/></div>
-        <div class="swiper-slide"><img class="history-img" src="../../static/images/4.jfif"/></div>
-        <div class="swiper-slide"><img class="history-img" src="../../static/images/5.jfif"/></div>
-        <div class="swiper-slide"><img class="history-img" src="../../static/images/6.jfif"/></div>
+        <div class="swiper-slide"><img class="history-img" src="../../static/images/二轮规划图.jpg"/></div>
+        <div class="swiper-slide"><img class="history-img" src="../../static/images/三轮规划图.jpg"/></div>
+        <div class="swiper-slide"><img class="history-img" src="../../static/images/二轮、三轮规划图.jpg"/></div>
+        <div class="swiper-slide"><img class="history-img" src="../../static/images/四轮规划图.jpg"/></div>
     </div>
     <!-- 如果需要分页器 -->
     <div class="swiper-pagination"></div>
@@ -64,17 +62,21 @@
         pagination: {
             el: '.swiper-pagination',
         },
-
+        //设置自动轮播
+        autoplay: {
+            disableOnInteraction: false, //手动滑动之后不打断播放
+            delay: 1500
+        },
         // 如果需要前进后退按钮
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
 
-        // // 如果需要滚动条
-        // scrollbar: {
-        //     el: '.swiper-scrollbar',
-        // },
+        // 如果需要滚动条
+        scrollbar: {
+            el: '.swiper-scrollbar',
+        },
     })
 
 </script>

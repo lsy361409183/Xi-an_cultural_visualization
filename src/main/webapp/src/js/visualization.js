@@ -931,7 +931,7 @@ define(function(require, exports, module){
                 });
 
                 var option = {
-
+                    color :['#FFA500','#FF7F00','#FF6347','#FF0000','#CD0000', '#8B0000'],
                     title: {
                         // text: '堆叠柱状图'
                     },
