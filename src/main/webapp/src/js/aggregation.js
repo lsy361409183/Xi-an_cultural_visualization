@@ -23,7 +23,7 @@ var map = new AMap.Map("KNNMap", {
     resizeEnable: true,
     center: [108.948204,34.275512],
     zoom: 11,
-    zooms:[11,15],
+    // zooms:[11,25],
     zoomEnable:true
 });
 var geojson = new AMap.GeoJSON({
@@ -61,13 +61,13 @@ function getPointData(areas, types) {
         data: params,
         success: function (res) {
             console.log('文地点res==============',res);
-            pointsData = res;
+            pointsData = res.pointData;
             for (var i = 0; i < pointsData.length; i++) {
                 if (pointsData[i].basePoint !== null){
                     console.log('basePoint=====', [pointsData[i].basePoint.split(',')[0], pointsData[i].basePoint.split(',')[1]])
                     markers.push(new AMap.Marker({
                         position: [pointsData[i].basePoint.split(',')[0], pointsData[i].basePoint.split(',')[1]],
-                        content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+                        content: '<div style="background-color: rgb(255,0,0); height: 12px; width: 12px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
                         offset: new AMap.Pixel(-15, -15)
                     }))
                     console.log('makers====',markers)

@@ -209,10 +209,10 @@ define(function(require, exports, module){
         }
         var areaHighlight = new ol.style.Style({
             fill: new ol.style.Fill({               //填充样式
-                color: 'rgba(255,255,255, 0.2)'
+                color: 'rgba(88,158,212, 0.2)'
             }),
             stroke: new ol.style.Stroke({           //线样式
-                color: 'rgba(0,255,255)',
+                color: 'rgba(88,158,212)',
                 width: 2
             }),
             image: new ol.style.Circle({            //点样式
@@ -259,6 +259,7 @@ define(function(require, exports, module){
             source: new ol.source.Vector({
                 features: (new ol.format.GeoJSON()).readFeatures(data)
             }),
+            style: mapStyle,
             zIndex: 0
         });
 
@@ -267,12 +268,13 @@ define(function(require, exports, module){
         map.addLayer(vectorLayer);
     }
 
-    var xianJsonStyle = new ol.style.Style({
+    // 底图样式
+    var mapStyle = new ol.style.Style({
         fill: new ol.style.Fill({               //填充样式
-            color: 'rgba(255,255,255, 0)'
+            color: 'rgba(187,215,141, 0.8)'
         }),
         stroke: new ol.style.Stroke({           //线样式
-            color: 'rgba(0,0,0)',
+            color: 'rgba(238,237,223)',
             width: 1
         }),
         image: new ol.style.Circle({            //点样式
@@ -285,6 +287,30 @@ define(function(require, exports, module){
             font: '16px Calibri,sans-serif',
             fill: new ol.style.Fill({
                 color: '#000'
+            })
+        })
+    });
+
+
+    var xianJsonStyle = new ol.style.Style({
+        fill: new ol.style.Fill({               //填充样式
+            color: 'rgba(255,255,255, 0)'
+        }),
+        stroke: new ol.style.Stroke({           //线样式
+            color: 'rgba(153,153,153)',
+            lineDash: [5],
+            width: 1
+        }),
+        image: new ol.style.Circle({            //点样式
+            radius: 7,
+            fill: new ol.style.Fill({
+                color: '#ffcc33'
+            })
+        }),
+        text: new ol.style.Text({
+            font: '16px Calibri,sans-serif',
+            fill: new ol.style.Fill({
+                color: 'rgba(153,153,153)'
             })
         })
     });
@@ -761,7 +787,8 @@ define(function(require, exports, module){
         element: container,
         autoPan: true,
         autoPanAnimation: {
-            duration: 250
+            duration: 100,
+            easing: ol.easing.upAndDown(100)
         }
     });
 
