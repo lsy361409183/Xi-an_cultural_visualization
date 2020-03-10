@@ -27,6 +27,108 @@
     width: 100%;
     height: 100%;
 }
-.aggregation-content #KDEMap{
+.aggLegend{
+    float: left;
+    margin-top: 5%;
+    background-color: rgb(245,245,245);
+    width: 100%;
+    height: 100px;
+    border-radius: 4px;
+}
+.aggLegend ul{
+    margin: 10px auto;
+    width: 420px;
+    padding: 0;
+    position: relative;
+}
+.aggLegend ul li{
+    display: inline-block;
+    list-style: none;
+    width: 100px;
+    height: 50px;
+    line-height: 50px;
+    position: relative;
+}
+.aggLegend ul li .legendStyle{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;
+}
+.aggLegend ul li .lnd1{
+    width: 26px;
+    height: 26px;
+    background-color: rgb(134,250,44);
+}
+.aggLegend ul li .lnd2{
+    width: 34px;
+    height: 34px;
+    background-color: rgb(238,243,35);
+}
+.aggLegend ul li .lnd3{
+    width: 42px;
+    height: 42px;
+    background-color: rgb(246,184,43);
+}
+.aggLegend ul li .lnd4{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(246,76,43);
+}
+.aggLegend ul .legendStyle-text{
+    position: relative;
+    height: 25px;
+    line-height: 25px;
+}
+.aggLegend ul .legendStyle-text .text-arrow1{
+    margin-bottom: 6px;
+    display: inline-block;
+    width: 350px;
+    height: 5px;
+    background-color: #1b1d1d;
+}
+.aggLegend ul .legendStyle-text .text-arrow2{
+    margin-top: 2px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 10px solid #1b1d1d;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+.aggLegend ul .legendStyle-text span:last-child{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.results-text{
+    float: left;
+    margin-top: 5%;
+    width: 100%;
+    height: 150px;
+    border-radius: 4px;
+    background-color: rgb(254,254,254);
+    position: relative;
+}
+.results-text .results-text-ul{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.results-text .results-text-ul li{
+    margin: 0 auto;
+    width: 400px;
+    list-style-type: disc;
+    
+}
+.results-text .results-text-ul li p{
+    font-size: 18px;
 
 }

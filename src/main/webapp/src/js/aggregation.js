@@ -23,7 +23,7 @@ var map = new AMap.Map("KNNMap", {
     resizeEnable: true,
     center: [108.948204,34.275512],
     zoom: 11,
-    // zooms:[11,25],
+    zooms:[10,13],
     zoomEnable:true
 });
 var geojson = new AMap.GeoJSON({
@@ -84,8 +84,8 @@ var _renderClusterMarker = function (context) {
     var factor = Math.pow(context.count / count, 1 / 18);
     console.log('factor======', factor);
     var div = document.createElement('div');
-    var Hue = 300 - (factor * 120);
-    var bgColor = 'hsla(' + Hue + ',100%,50%,0.7)';
+    var Hue = 360 - (factor * 360);
+    var bgColor = 'hsla(' + Hue + ',100%,50%,0.8)';
     var fontColor = 'hsla(' + Hue + ',100%,20%,1)';
     var borderColor = 'hsla(' + Hue + ',100%,40%,1)';
     var shadowColor = 'hsla(' + Hue + ',100%,50%,1)';

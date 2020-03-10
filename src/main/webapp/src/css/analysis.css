@@ -200,8 +200,9 @@ textarea{
 }
 #aggregationText01{
     float: left;
-    font-size: x-large;
-    margin-top: 15%;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 5%;
     margin-left: 5%;
 }
 #aggregationText02{

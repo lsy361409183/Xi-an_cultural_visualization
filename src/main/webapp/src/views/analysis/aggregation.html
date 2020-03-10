@@ -29,7 +29,7 @@
 
     </div>
     <div class="draw-left draw-left-two" id="KDEMap">
-        <img id="KDEMap-img" src="../../static/images/kdeimg.png"/>
+        <img id="KDEMap-img" src="../../static/images/kde02.png"/>
     </div>
     <div id="square">
         <div class="btn-large" id="but-group" data-toggle="buttons">
@@ -56,12 +56,39 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="home">
-                    <p id="aggregationText01">聚集性分析</p>
-                    <textarea id="aggregationText02" readonly></textarea>
+                    <p id="aggregationText01">聚集性结果分析</p>
+
+                    <div class="aggLegend">
+                        <ul>
+                            <li><div class="legendStyle lnd1"></div></li>
+                            <li><div class="legendStyle lnd2"></div></li>
+                            <li><div class="legendStyle lnd3"></div></li>
+                            <li><div class="legendStyle lnd4"></div></li>
+                            <div class="legendStyle-text">
+                                <span>低</span>
+                                <span class="text-arrow1"></span><span class="text-arrow2"></span>
+                                <span>高</span>
+                            </div>
+                        </ul>
+                    </div>
+                    <p style="float: left;font-size: 20px;font-weight: bold; margin-left: 5%;margin-top: 5%;">文字解读</p>
+                    <div class="results-text">
+                        <ul class="results-text-ul">
+                            <li><p>在同一缩放级别下，聚合圆标注的值越大，半径越大，颜色越趋近于红色，聚集性越高。</p></li>
+                            <li><p>缩放级别增大，最近邻半径减小，聚合分类增多；</p></li>
+                            <li><p>缩放级别减小，最近邻半径增大，聚合分类减少。</p></li>
+                        </ul>
+                    </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="profile">
-                    <p id="aggregationText03">核密度分析</p>
-                    <textarea id="aggregationText04" readonly></textarea>
+                    <p style="float: left;font-size: 20px;font-weight: bold; margin-left: 5%;margin-top: 10%;">文字解读</p>
+                    <div class="results-text">
+                        <ul class="results-text-ul">
+                            <li><p>采用高斯核函数</p></li>
+                            <li><p>颜色越深的区域，文地密度越大</p></li>
+                            <li><p>颜色越浅的区域，文地密度越小</p></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -117,7 +144,7 @@
             url: '/getKDEPoint',
             dataType: "text",
             success: function (res) {
-                console.log(res)
+                console.log("kderes========", res)
                 var a = document.getElementById("KDEMap-img");
                 console.log(a)
                 // a.src = "data:image/png;base64,"+res;
