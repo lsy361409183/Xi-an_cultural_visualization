@@ -127,8 +127,8 @@
                      align:'right',
                      bottom:'5%',
                      pieces:[
-                         {min: 300, max: 600},
-                         {min: 100, max: 300},
+                         {min: 500},
+                         {min: 100, max: 500},
                          {min: 1, max: 100},
                          {max: 1}
                      ],
@@ -180,14 +180,14 @@
                              {name: "鄠邑区", value: 0, cityCode: "610118", level: "district"},
                              {name: "高陵区", value: 0, cityCode: "610117", level: "district"},
                              {name: "蓝田县", value: 0, cityCode: "610122", level: "district"},
-                             {name: "长安区", value: 13.14, cityCode: "610116", level: "district"},
+                             {name: "长安区", value: 1793.24, cityCode: "610116", level: "district"},
                              {name: "未央区", value: 172.83, cityCode: "610112", level: "district"},
-                             {name: "莲湖区", value: 34.69, cityCode: "610104", level: "district"},
+                             {name: "莲湖区", value: 36.61, cityCode: "610104", level: "district"},
                              {name: "周至县", value: 0, cityCode: "610124", level: "district"},
                              {name: "灞桥区", value: 118.83, cityCode: "610111", level: "district"},
-                             {name: "新城区", value: 67.2, cityCode: "610102", level: "district"},
-                             {name: "碑林区", value: 114.78, cityCode: "610103", level: "district"},
-                             {name: "雁塔区", value: 502.78, cityCode: "610113", level: "district"},
+                             {name: "新城区", value: 67.74, cityCode: "610102", level: "district"},
+                             {name: "碑林区", value: 114.91, cityCode: "610103", level: "district"},
+                             {name: "雁塔区", value: 552.44, cityCode: "610113", level: "district"},
                          ],
                  }]
              };
@@ -359,7 +359,7 @@
                  name: '内圈小',
                  type: 'gauge',
                  min:10,
-                 max:2000,
+                 max:3000,
                  center: ['50%', '70%'],
                  title : {
                      // 其余属性默认使用全局文本样式，详见TEXTSTYLE
