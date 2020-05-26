@@ -19,7 +19,11 @@ public class TrafficService {
 
 
 
-    //西安站
+
+
+
+
+    //钟楼商圈
     public List<TrafficData> selectPoint() {
         List<TrafficData> list = trafficMapper.selectPoint();
         List<TrafficData> after = new ArrayList<>();
@@ -41,7 +45,7 @@ public class TrafficService {
                         dis = null;
                        // System.out.println("point为空");
                     } else {
-                        String startLonLat = "108.961711,34.277604";
+                        String startLonLat = "108.953465,34.265719";
                         String endLonLat = point;
                        // System.out.println(startLonLat);
                         //System.out.println(endLonLat);
@@ -53,13 +57,13 @@ public class TrafficService {
                      a.setBasePoint(point);
                      a.setBaseLongitude(list.get(i).getBaseLongitude());
                      a.setBaseLatitude(list.get(i).getBaseLatitude());
-                     //System.out.println(a.getBaseName()+a.getBasePoint()+a.getAccessibility());
                      after.add(i,a);
-//                      System.out.println("名称"+after.get(i).getBaseName()+","+"可达性"+after.get(i).getAccessibility());
+                System.out.println("名称"+i+after.get(i).getBaseName()+"可达性"+after.get(i).getAccessibility());
                 }
-                 return after;
+//                   findFifth(after);
+                   return after;
     }
-    //西安南站
+    //小寨商圈
     public List<TrafficData> selectPoint1() {
         List<TrafficData> list1 = trafficMapper.selectPoint();
         List<TrafficData> after1 = new ArrayList<>();
@@ -79,7 +83,7 @@ public class TrafficService {
                 dis1 = null;
                 // System.out.println("point为空");
             } else {
-                String startLonLat1 = "109.101981,34.092766";
+                String startLonLat1 = "108.953166,34.229089";
                 String endLonLat1 = point1;
                 // System.out.println(startLonLat);
                 //System.out.println(endLonLat);
@@ -91,15 +95,12 @@ public class TrafficService {
             a1.setBasePoint(point1);
             a1.setBaseLongitude(list1.get(j).getBaseLongitude());
             a1.setBaseLatitude(list1.get(j).getBaseLatitude());
-            //System.out.println(a.getBaseName()+a.getBasePoint()+a.getAccessibility());
             after1.add(j,a1);
-            System.out.println("名称"+after1.get(j).getBaseName()+"可达性"+after1.get(j).getAccessibility());
         }
-//        System.out.println("名称"+after.get(0).getBaseName()+"可达性"+after.get(0).getAccessibility());
         return after1;
     }
 
-    //西安北站
+    //大雁塔商圈
     public List<TrafficData> selectPoint2() {
         List<TrafficData> list2 = trafficMapper.selectPoint();
         List<TrafficData> after2 = new ArrayList<>();
@@ -119,7 +120,7 @@ public class TrafficService {
                 dis2 = null;
                 // System.out.println("point为空");
             } else {
-                String startLonLat2 = "108.938602,34.37608";
+                String startLonLat2 = "108.971153,34.225566";
                 String endLonLat2 = point2;
                 // System.out.println(startLonLat);
                 //System.out.println(endLonLat);
@@ -131,14 +132,12 @@ public class TrafficService {
             a2.setBasePoint(point2);
             a2.setBaseLongitude(list2.get(l).getBaseLongitude());
             a2.setBaseLatitude(list2.get(l).getBaseLatitude());
-            //System.out.println(a.getBaseName()+a.getBasePoint()+a.getAccessibility());
+//            System.out.println("名称"+after2.get(l).getBaseName()+"可达性"+after2.get(l).getAccessibility());
             after2.add(l,a2);
-             System.out.println("名称"+after2.get(l).getBaseName()+"可达性"+after2.get(l).getAccessibility());
         }
-//        System.out.println("名称"+after.get(0).getBaseName()+"可达性"+after.get(0).getAccessibility());
         return after2;
     }
-    //机场
+    //龙首原商圈
     public List<TrafficData> selectPoint3() {
         List<TrafficData> list3 = trafficMapper.selectPoint();
         List<TrafficData> after3 = new ArrayList<>();
@@ -159,7 +158,7 @@ public class TrafficService {
                 dis3 = null;
                 // System.out.println("point为空");
             } else {
-                String startLonLat3 = "108.764882,34.438179";
+                String startLonLat3 = "108.953634,34.299031";
                 String endLonLat3 = point3;
                 // System.out.println(startLonLat);
                 //System.out.println(endLonLat);
@@ -171,11 +170,8 @@ public class TrafficService {
             a3.setBasePoint(point3);
             a3.setBaseLongitude(list3.get(m).getBaseLongitude());
             a3.setBaseLatitude(list3.get(m).getBaseLatitude());
-            //System.out.println(a.getBaseName()+a.getBasePoint()+a.getAccessibility());
             after3.add(m,a3);
-             System.out.println("名称"+after3.get(m).getBaseName()+"可达性"+after3.get(m).getAccessibility());
         }
-//        System.out.println("名称"+after.get(0).getBaseName()+"可达性"+after.get(0).getAccessibility());
         return after3;
     }
 
