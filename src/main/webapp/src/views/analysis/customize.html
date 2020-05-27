@@ -119,8 +119,10 @@
             </div>
             <div id="nothing">
                 <ul class="nav nav-tabs" role="tablist" id="nothing1">
-                    <li role="presentation" class="active" id="tool"><a href="#home" role="tab" data-toggle="tab">出行工具</a></li>
-                    <li role="presentation" id="distance"><a href="#profile" role="tab" data-toggle="tab">文地距离</a></li>
+                    <li role="presentation" class="active" id="tool"><a href="#home" role="tab" data-toggle="tab"
+                                                                        onclick="chuxing()">出行工具</a></li>
+                    <li role="presentation" id="distance"><a href="#profile" role="tab" data-toggle="tab"
+                                                             onclick="juli()">文地距离</a></li>
 
                 </ul>
             </div>
@@ -291,6 +293,17 @@
         }
     });
 }
+    //目的地不显示
+    function chuxing(){
+        $(function(){
+            $('#inputwidth02').removeAttr('disabled');
+    });
+    }
+    function juli(){
+        $(function(){
+            $('#inputwidth02').attr('disabled',true);
+        });
+    }
 
 function selectwalk() {
     var departure = $('#inputwidth01').val();
@@ -380,13 +393,14 @@ function selectbus() {
     //10公里 20公里 无限制的文地点
     //10公里
     function TenKilometers() {
+
         var departure = $('#inputwidth01').val();
 
         console.log(departure);
 
-        $(function(){
-            $('#inputwidth02').attr('disabled',true);
-        });
+        // $(function(){
+        //     $('#inputwidth02').attr('disabled',true);
+        // });
 
         var geocoder = new AMap.Geocoder({
             city: "029" //城市设为北京，默认：“全国”
@@ -394,11 +408,10 @@ function selectbus() {
             // var address = '西安北站';
             // address  = document.getElementById('address').value;
             geocoder.getLocation(departure, function(status, result) {
+
                 if (status === 'complete'&&result.geocodes.length) {
                     var lnglat = result.geocodes[0].location;
-                    console.log(lnglat);
                     var position = [lnglat.lng, lnglat.lat];
-                    console.log(position);
 
                     // 循环计算距离， 添加到data中
                     var tData= NowData.map(function (item) {
@@ -418,7 +431,6 @@ function selectbus() {
                         return item.distance < 10000
                     });
                          console.log(tenKils);
-
                          //引入高德地图
 
 
@@ -455,9 +467,9 @@ function ThirtyKilometers() {
 
     console.log(departure);
 
-    $(function(){
-        $('#inputwidth02').attr('disabled',true);
-    });
+    // $(function(){
+    //     $('#inputwidth02').attr('disabled',true);
+    // });
 
     var geocoder = new AMap.Geocoder({
         city: "029" //城市设为北京，默认：“全国”
@@ -490,10 +502,10 @@ function ThirtyKilometers() {
             });
             console.log(tenKils);
 
-            var layer = new Loca.PointLayer({
-                eventSupport: true,
-                map: map
-            });
+            // var layer = new Loca.PointLayer({
+            //     eventSupport: true,
+            //     map: map
+            // });
 
 
                 layer.on('mousemove', function(ev) {
@@ -540,9 +552,9 @@ function ThirtyKilometers() {
 
         console.log(departure);
 
-        $(function(){
-            $('#inputwidth02').attr('disabled',true);
-        });
+        // $(function(){
+        //     $('#inputwidth02').attr('disabled',true);
+        // });
 
         var geocoder = new AMap.Geocoder({
             city: "029" //城市设为北京，默认：“全国”
@@ -571,10 +583,10 @@ function ThirtyKilometers() {
                 });
                 console.log("tData===",tData);
 
-                var layer = new Loca.PointLayer({
-                    eventSupport: true,
-                    map: map
-                });
+                // var layer = new Loca.PointLayer({
+                //     eventSupport: true,
+                //     map: map
+                // });
 
 
                     layer.on('mousemove', function(ev) {
